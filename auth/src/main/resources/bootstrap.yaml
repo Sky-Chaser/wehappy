@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: auth-service
+
+oauth2:
+  secret: "wehappy"
+
+jwt:
+  keyPair:
+    alias: "jwt"
+    password: "123456"
+    filename: "jwt.jks"

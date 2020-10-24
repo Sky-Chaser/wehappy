@@ -1,0 +1,82 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    command: mysqld --character-set-server=utf8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root #设置root帐号密码
+    ports:
+      - 3306:3306
+    volumes:
+      - ../../data/mysql/data/db:/var/lib/mysql #数据文件挂载
+      - ../../data/mysql/data/conf:/etc/mysql/conf.d #配置文件挂载
+      - ../../data/mysql/log:/var/log/mysql #日志文件挂载
+  redis:
+    image: redis:5.0.9
+    container_name: redis
+    command: redis-server
+    volumes:
+      - ../../data/redis/data:/data #数据文件挂载
+    ports:
+      - 6379:6379
+  nacos:
+    container_name: nacos
+    image: nacos/nacos-server
+    ports:
+      - 8848:8848
+    volumes:
+      - ../../data/nacos/logs:/home/nacos/logs
+      - ../../data/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+    environment:
+      JVM_XMS: "256M"
+      JVM_XMX: "256M"
+      MODE: standalone
+    restart: always
+    depends_on:
+      - mysql
+#  nginx:
+#    image: nginx:1.10
+#    container_name: nginx
+#    volumes:
+#      - ../../data/nginx/nginx.conf:/etc/nginx/nginx.conf #配置文件挂载
+#      - ../../data/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
+#      - ../../data/nginx/log:/var/log/nginx #日志文件挂载
+#    ports:
+#      - 80:80
+#  rabbitmq:
+#    image: rabbitmq:3.7.15-management
+#    container_name: rabbitmq
+#    volumes:
+#      - ../../data/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
+#      - ../../data/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
+#    ports:
+#      - 5672:5672
+#      - 15672:15672
+#  elasticsearch:
+#    image: elasticsearch:7.6.2
+#    container_name: elasticsearch
+#    user: root
+#    environment:
+#      - "cluster.name=elasticsearch" #设置集群名称为elasticsearch
+#      - "discovery.type=single-node" #以单一节点模式启动
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" #设置使用jvm内存大小
+#    volumes:
+#      - ../../data/elasticsearch/plugins:/usr/share/elasticsearch/plugins #插件文件挂载
+#      - ../../data/elasticsearch/data:/usr/share/elasticsearch/data #数据文件挂载
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+#  kibana:
+#    image: kibana:7.6.2
+#    container_name: kibana
+#    links:
+#      - elasticsearch:es #可以用es这个域名访问elasticsearch服务
+#    depends_on:
+#      - elasticsearch #kibana在elasticsearch启动之后再启动
+#    environment:
+#      - "elasticsearch.hosts=http://es:9200" #设置访问elasticsearch的地址
+#    ports:
+#      - 5601:5601
+
