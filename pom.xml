@@ -11,6 +11,7 @@
         <module>common</module>
         <module>auth</module>
         <module>gateway</module>
+        <module>user</module>
     </modules>
     <packaging>pom</packaging>
     <description>We are all happy to chat!</description>
