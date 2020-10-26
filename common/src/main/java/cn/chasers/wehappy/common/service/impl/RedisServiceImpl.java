@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * redis操作实现类
- * @author zhangyuanhang
+ * @author lollipop
  */
 public class RedisServiceImpl implements IRedisService {
 

@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * Oauth2获取Token返回信息封装
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

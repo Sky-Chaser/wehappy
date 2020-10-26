@@ -2,7 +2,7 @@ package cn.chasers.wehappy.common.constant;
 
 /**
  * 权限相关常量定义
- * @author zhangyuanhang
+ * @author lollipop
  */
 public interface AuthConstant {
 

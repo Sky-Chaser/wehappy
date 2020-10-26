@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 用户管理业务类
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Service
 public class CustomerUserService implements UserDetailsService {

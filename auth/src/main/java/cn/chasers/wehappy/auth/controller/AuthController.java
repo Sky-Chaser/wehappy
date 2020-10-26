@@ -19,11 +19,11 @@ import java.util.Map;
 
 /**
  * 自定义Oauth2获取令牌接口
- * @author zhangyuanhang
+ * @author lollipop
  */
 @RestController
-@Api(value = "/oauth", tags = "认证中心登录认证")
 @RequestMapping("/oauth")
+@Api(value = "/oauth", tags = "认证中心登录认证")
 public class AuthController {
 
     private final TokenEndpoint tokenEndpoint;
@@ -42,8 +42,8 @@ public class AuthController {
             @ApiImplicitParam(name = "username", value = "登录用户名"),
             @ApiImplicitParam(name = "password", value = "登录密码")
     })
-    @PostMapping(value = "/token")
-    public CommonResult<Oauth2TokenDto> postAccessToken(@ApiIgnore Principal principal, @ApiIgnore @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+    @PostMapping("/authentication")
+    public CommonResult<Oauth2TokenDto> authentication(@ApiIgnore Principal principal, @ApiIgnore @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
         assert oAuth2AccessToken != null;
         Oauth2TokenDto oauth2TokenDto = Oauth2TokenDto.builder()

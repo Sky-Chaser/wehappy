@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * JWT内容增强器
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Component
 public class JwtTokenEnhancer implements TokenEnhancer {

@@ -12,7 +12,7 @@ import java.util.Collection;
 
 /**
  * 登录用户信息
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Data
 @NoArgsConstructor

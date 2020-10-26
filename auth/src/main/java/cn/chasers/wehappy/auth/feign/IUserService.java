@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 调用 `user-service` 服务方法的接口
- * @author zhangyuanhang
+ * @author lollipop
  */
 @FeignClient("user-service")
 public interface IUserService {

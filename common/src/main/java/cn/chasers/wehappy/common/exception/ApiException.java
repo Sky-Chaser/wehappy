@@ -4,7 +4,7 @@ import cn.chasers.wehappy.common.api.ResultCode;
 
 /**
  * 自定义API异常
- * @author zhangyuanhang
+ * @author lollipop
  */
 public class ApiException extends RuntimeException {
     private ResultCode resultCode;

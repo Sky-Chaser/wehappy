@@ -5,6 +5,12 @@ management:
     web:
       exposure:
         include: "*"
+spring:
+  cloud:
+    sentinel:
+      transport:
+        port: 7001 #跟控制台交流的端口，随意指定一个未使用的端口即可
+        dashboard: localhost:8858 # 指定控制台服务的地址
 ribbon:
   ConnectTimeout: 10000 #服务请求连接超时时间（毫秒）
   ReadTimeout: 10000 #服务请求处理超时时间（毫秒）

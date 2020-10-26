@@ -5,7 +5,7 @@ import cn.chasers.wehappy.common.api.ResultCode;
 
 /**
  * 断言处理类，用于抛出各种API异常
- * @author zhangyuanhang
+ * @author lollipop
  */
 public class Asserts {
     public static void fail(String message) {

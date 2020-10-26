@@ -7,7 +7,7 @@ import lombok.Data;
 
 /**
  * 通用返回对象
- * @author zhangyuanhang
+ * @author lollipop
  */
 @ApiModel(value = "返回结果")
 @Data

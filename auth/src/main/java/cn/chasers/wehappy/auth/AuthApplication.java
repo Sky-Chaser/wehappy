@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * `auth-service` 启动类
- * @author zhangyuanhang
+ * @author lollipop
  */
 @SpringBootApplication
 @EnableDiscoveryClient

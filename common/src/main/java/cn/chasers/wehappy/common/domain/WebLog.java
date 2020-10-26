@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * Controller层的日志封装类
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

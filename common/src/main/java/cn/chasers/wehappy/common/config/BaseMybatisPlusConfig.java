@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * @author zhangyuanhang
+ * @author lollipop
  */
 @EnableTransactionManagement
 @MapperScan("cn.chasers.wehappy.*.mapper")

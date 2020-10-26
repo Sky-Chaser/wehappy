@@ -21,7 +21,7 @@ import java.time.Duration;
 
 /**
  * Redis基础配置
- * @author zhangyuanhang
+ * @author lollipop
  */
 public abstract class BaseRedisConfig {
 

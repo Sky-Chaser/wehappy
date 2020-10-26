@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * 认证服务器配置
  *
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Configuration
 @EnableAuthorizationServer

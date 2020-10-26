@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Redis相关配置
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Configuration
 public class RedisConfig extends BaseRedisConfig {

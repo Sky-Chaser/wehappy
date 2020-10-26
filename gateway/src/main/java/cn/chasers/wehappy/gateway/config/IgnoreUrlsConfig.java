@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 网关白名单配置
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

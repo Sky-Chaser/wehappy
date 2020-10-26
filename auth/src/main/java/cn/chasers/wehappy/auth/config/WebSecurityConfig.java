@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * SpringSecurity配置
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Configuration
 @EnableWebSecurity

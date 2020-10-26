@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 
 /**
  * 自定义返回结果：没有权限访问时
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Component
 public class RestfulAccessDeniedHandler implements ServerAccessDeniedHandler {

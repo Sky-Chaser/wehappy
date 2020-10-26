@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 调用 `user-service` 服务方法的兜底类
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Service
 public class UserServiceImpl implements IUserService {

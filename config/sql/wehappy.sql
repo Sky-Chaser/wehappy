@@ -15,7 +15,9 @@ USE `user_db`;
 CREATE TABLE `user`
 (
     `id`           BIGINT PRIMARY KEY,
-    `username`     VARCHAR(50)  NOT NULL COMMENT '用户名',
+    `email`        VARCHAR(70)  NOT NULL COMMENT '邮箱地址',
+    `username`     VARCHAR(70)  NOT NULL COMMENT '用户名',
+    `password`     VARCHAR(100) NOT NULL COMMENT '密码',
     `sex`          TINYINT      NOT NULL DEFAULT 0 COMMENT '性别：0表示男性，1表示女性，2表示未知',
     `avatar`       VARCHAR(200) NOT NULL COMMENT '头像链接',
     `last_login`   DATETIME     NOT NULL COMMENT '上次登录时间',
@@ -23,17 +25,18 @@ CREATE TABLE `user`
     `gmt_modified` DATETIME     NOT NULL COMMENT '更新时间',
     `status`       TINYINT      NOT NULL DEFAULT 0 COMMENT '状态：0表示注册未激活，1表示正常，2表示被冻结',
     `number_like`  INT          NOT NULL DEFAULT 0 COMMENT '获赞个数',
+    UNIQUE `ux_email` (`email`),
     UNIQUE `ux_username` (`username`)
 ) COMMENT = '用户信息表';
 
 CREATE TABLE `account`
 (
     `id`           BIGINT PRIMARY KEY,
-    `user_id`      BIGINT       NOT NULL COMMENT '用户id',
-    `money`        DECIMAL      NOT NULL DEFAULT 0 COMMENT '账户余额',
-    `gmt_create`   DATETIME     NOT NULL COMMENT '创建时间',
-    `gmt_modified` DATETIME     NOT NULL COMMENT '更新时间',
-    `status`       TINYINT      NOT NULL DEFAULT 0 COMMENT '状态：0表示正常，1表示被冻结',
+    `user_id`      BIGINT   NOT NULL COMMENT '用户id',
+    `money`        DECIMAL  NOT NULL DEFAULT 0 COMMENT '账户余额',
+    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
+    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
+    `status`       TINYINT  NOT NULL DEFAULT 0 COMMENT '状态：0表示正常，1表示被冻结',
     UNIQUE `ux_user_id` (`user_id`)
 ) COMMENT = '用户账户表';
 

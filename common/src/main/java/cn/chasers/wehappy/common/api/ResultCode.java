@@ -2,7 +2,7 @@ package cn.chasers.wehappy.common.api;
 
 /**
  * 枚举了一些常用API操作码
- * @author zhangyuanhang
+ * @author lollipop
  */
 public enum ResultCode {
     //操作成功时的返回状态码

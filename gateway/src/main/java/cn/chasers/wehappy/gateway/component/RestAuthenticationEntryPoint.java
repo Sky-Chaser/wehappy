@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 
 /**
  * 自定义返回结果：没有登录或token过期时
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Component
 public class RestAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {

@@ -37,7 +37,7 @@ spring:
   cloud:
     sentinel:
       transport:
-        port: 8879 #跟控制台交流的端口，随意指定一个未使用的端口即可
+        port: 7003 #跟控制台交流的端口，随意指定一个未使用的端口即可
         dashboard: localhost:8858 # 指定控制台服务的地址
     stream:
       kafka:
@@ -72,3 +72,10 @@ management:
 ribbon:
   ConnectTimeout: 10000 #服务请求连接超时时间（毫秒）
   ReadTimeout: 10000 #服务请求处理超时时间（毫秒）
+
+bcrypt:
+  salt: yigiwodigiaogiao
+
+redis:
+  key:
+    registerCode: keyRegisterCode

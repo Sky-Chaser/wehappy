@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局处理Oauth2抛出的异常
- * @author zhangyuanhang
+ * @author lollipop
  */
 @RestControllerAdvice
 public class Oauth2ExceptionHandler {

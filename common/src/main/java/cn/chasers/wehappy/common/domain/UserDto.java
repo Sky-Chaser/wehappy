@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 登录用户信息
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

@@ -19,7 +19,7 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 /**
  * Swagger资源配置
  *
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Slf4j
 @Component

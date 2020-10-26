@@ -2,7 +2,7 @@ package cn.chasers.wehappy.auth.constant;
 
 /**
  * 消息常量
- * @author zhangyuanhang
+ * @author lollipop
  */
 public class MessageConstant {
 
