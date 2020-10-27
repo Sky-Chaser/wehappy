@@ -23,6 +23,8 @@ public class MessageConstant {
 
     public static final String ERROR_REGISTER = "注册失败!";
 
+    public static final String ERROR_ADD_FRIEND = "添加好友失败!";
+
     public static final String USER_NOT_EXIST = "用户不存在!";
 
 }

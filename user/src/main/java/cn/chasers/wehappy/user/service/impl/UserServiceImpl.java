@@ -95,12 +95,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public User getByUsername(String username) {
-        return userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
+        return userMapper.selectOne(lambdaQuery().eq(User::getUsername, username));
     }
 
     @Override
     public User getByEmail(String email) {
-        return userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getEmail, email));
+        return userMapper.selectOne(lambdaQuery().eq(User::getEmail, email));
     }
 
     @Override

@@ -19,11 +19,11 @@ import java.util.Map;
 @EnableBinding(Source.class)
 public class Producer {
 
-    private final Source source;
+    private final MqSource mqSource;
 
     @Autowired
-    public Producer(Source source) {
-        this.source = source;
+    public Producer(MqSource mqSource) {
+        this.mqSource = mqSource;
     }
 
     /**
@@ -32,8 +32,18 @@ public class Producer {
      * @param message 包含邮件内容
      */
     public void sendRegisterCodeEmail(Map<String, Object> message, long expire) {
-        source.output().send(MessageBuilder.withPayload(message).setExpirationDate(expire)
+        mqSource.registerEmailOutput().send(MessageBuilder.withPayload(message).setExpirationDate(expire)
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build());
+    }
+
+    /**
+     * 向kafka中存储要推送给客户端的消息
+     *
+     * @param message 包含消息详细内容
+     */
+    public void sendMessage(Map<String, Object> message) {
+        mqSource.messageOutput().send(MessageBuilder.withPayload(message).
+                setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build());
     }
 
 }

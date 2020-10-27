@@ -5,13 +5,19 @@ import cn.chasers.wehappy.user.constant.MessageConstant;
 import cn.chasers.wehappy.user.entity.Friend;
 import cn.chasers.wehappy.user.entity.User;
 import cn.chasers.wehappy.user.mapper.FriendMapper;
+import cn.chasers.wehappy.user.mq.Producer;
 import cn.chasers.wehappy.user.service.IFriendService;
 import cn.chasers.wehappy.user.service.IUserService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -26,14 +32,17 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
 
     private final FriendMapper friendMapper;
     private final IUserService userService;
+    private final Producer producer;
 
     @Autowired
-    public FriendServiceImpl(FriendMapper friendMapper, IUserService userService) {
+    public FriendServiceImpl(FriendMapper friendMapper, IUserService userService, Producer producer) {
         this.friendMapper = friendMapper;
         this.userService = userService;
+        this.producer = producer;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean addFriend(Long fromId, Long toId) {
         User to = userService.getById(fromId);
         if (to == null) {
@@ -48,18 +57,57 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
         friend2.setFromId(fromId);
         friend2.setToId(toId);
 
-        return saveBatch(Arrays.asList(friend1, friend2));
+        if (!saveBatch(Arrays.asList(friend1, friend2))) {
+            Asserts.fail(MessageConstant.ERROR_ADD_FRIEND);
+        }
+
+        Map<String, Object> map = Map.of("type", "addFriend", "userId", toId, "fromId", fromId, "dateTime", new Date(System.currentTimeMillis()));
+
+        producer.sendMessage(map);
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteFriend(Long fromId, Long toId) {
+        return friendMapper.delete(
+                new LambdaQueryWrapper<Friend>()
+                        .allEq(Map.of(Friend::getFromId, fromId, Friend::getToId, toId))
+                        .allEq(Map.of(Friend::getFromId, toId, Friend::getToId, fromId))) > 0;
     }
 
     @Override
     public boolean handleAddFriend(Long fromId, Long toId, Boolean agree) {
-        // TODO
-        return false;
+        if (agree) {
+            if (!lambdaUpdate().
+                    allEq(Map.of(Friend::getFromId, fromId, Friend::getToId, toId))
+                    .or()
+                    .allEq(Map.of(Friend::getFromId, toId, Friend::getToId, fromId))
+                    .update()
+            ) {
+                return false;
+            }
+
+            Map<String, Object> map = Map.of("type", "handleAddFriend", "userId", fromId, "fromId", toId, "result", true, "dateTime", new Date(System.currentTimeMillis()));
+            producer.sendMessage(map);
+            return true;
+        }
+
+        if (friendMapper.delete(
+                new LambdaQueryWrapper<Friend>()
+                        .allEq(Map.of(Friend::getFromId, fromId, Friend::getToId, toId))
+                        .allEq(Map.of(Friend::getFromId, toId, Friend::getToId, fromId))) == 0
+        ) {
+            return false;
+        }
+
+        Map<String, Object> map = Map.of("type", "handleAddFriend", "userId", fromId, "fromId", toId, "result", false, "dateTime", new Date(System.currentTimeMillis()));
+        producer.sendMessage(map);
+        return true;
     }
 
     @Override
-    public boolean list(Long userId) {
-        // TODO
-        return false;
+    public List<Friend> list(Long userId) {
+        return friendMapper.selectList(lambdaQuery().eq(Friend::getFromId, userId));
     }
 }
