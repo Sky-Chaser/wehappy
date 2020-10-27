@@ -44,17 +44,11 @@ spring:
         binder:
           # kafka集群
           brokers: localhost:9092
-          # kafka的zookeeper对应的地址
-          zkNodes: localhost:2181
       bindings:
-        register-email-input:
+        output: # 输出通道
           # 监听的topic
           destination: topic-register-email
-          # 消费者分组
-          group: group-register-email
-          cosumer:
-            # 接收原始消息
-            headerMode: raw
+          contentType: text/plain
 # mybatis日志
 mybatis-plus:
   configuration:

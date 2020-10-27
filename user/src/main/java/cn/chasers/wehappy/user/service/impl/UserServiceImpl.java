@@ -5,6 +5,7 @@ import cn.chasers.wehappy.common.service.IRedisService;
 import cn.chasers.wehappy.user.constant.MessageConstant;
 import cn.chasers.wehappy.user.entity.User;
 import cn.chasers.wehappy.user.mapper.UserMapper;
+import cn.chasers.wehappy.user.mq.Producer;
 import cn.chasers.wehappy.user.service.IUserService;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -32,6 +33,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     private final IRedisService redisService;
     private final UserMapper userMapper;
+    private final Producer producer;
 
     @Value("${bcrypt.salt}")
     private String salt;
@@ -46,9 +48,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private String defaultAvatar;
 
     @Autowired
-    public UserServiceImpl(IRedisService redisService, UserMapper userMapper) {
+    public UserServiceImpl(IRedisService redisService, UserMapper userMapper, Producer producer) {
         this.redisService = redisService;
         this.userMapper = userMapper;
+        this.producer = producer;
     }
 
     @Override
@@ -104,8 +107,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void sendRegisterEmailCode(String email) {
         // 生成验证码
         String code = RandomUtil.randomNumbers(6);
-        Map<String, Object> map = Map.of("email", email, "code", code, "expire", registerCodeExpire);
-        // TODO 向kafka中发送验证码
+        Map<String, Object> map = Map.of("email", email, "code", code);
+        producer.sendRegisterCodeEmail(map, registerCodeExpire);
         redisService.hSet(registerCodeKey, email, code, registerCodeExpire);
     }
 
