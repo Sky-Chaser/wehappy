@@ -24,10 +24,10 @@ public class Friend extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "用户id")
-    private Long userId;
+    private Long fromId;
 
     @ApiModelProperty(value = "好友id")
-    private Long friendId;
+    private Long toId;
 
     @ApiModelProperty(value = "状态：0表示已申请还未添加，1表示正常，2表示拉黑对方")
     private Integer status;

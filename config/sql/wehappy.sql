@@ -43,13 +43,14 @@ CREATE TABLE `account`
 CREATE TABLE `friend`
 (
     `id`           BIGINT PRIMARY KEY,
-    `user_id`      BIGINT   NOT NULL COMMENT '用户id',
-    `friend_id`    BIGINT   NOT NULL COMMENT '好友id',
+    `from_id`      BIGINT   NOT NULL COMMENT '用户id',
+    `to_id`        BIGINT   NOT NULL COMMENT '好友id',
     `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
     `status`       TINYINT  NOT NULL DEFAULT 0 COMMENT '状态：0表示已申请还未添加，1表示正常，2表示拉黑对方',
     `black`        TINYINT  NOT NULL DEFAULT 0 COMMENT '是否被对方拉黑：0表示未拉黑，1表示已拉黑',
-    KEY `ix_uid_status` (`user_id`, `status`)
+    KEY `ix_from_id_status` (`from_id`, `status`),
+    UNIQUE `ux_from_id_to_id` (`from_id`, `to_id`)
 ) COMMENT = '好友信息表';
 
 USE `message_db`;
@@ -77,12 +78,12 @@ CREATE TABLE `user_unread`
 CREATE TABLE `user_friend_unread`
 (
     `id`                   BIGINT PRIMARY KEY,
-    `user_id`              BIGINT   NOT NULL,
-    `friend_id`            BIGINT   NOT NULL,
+    `from_id`              BIGINT   NOT NULL,
+    `to_id`                BIGINT   NOT NULL,
     `message_unread_count` INT      NOT NULL DEFAULT 0 COMMENT '总未读消息数',
     `gmt_create`           DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified`         DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_user_id_gmt_modified` (`user_id`, `gmt_modified`)
+    KEY `ix_from_id_gmt_modified` (`from_id`, `gmt_modified`)
 ) COMMENT = '用户好友未读数表';
 
 CREATE TABLE `user_group_unread`
@@ -99,38 +100,47 @@ CREATE TABLE `user_group_unread`
 CREATE TABLE `conversation`
 (
     `id`              BIGINT PRIMARY KEY,
-    `send_user_id`    BIGINT   NOT NULL COMMENT '消息发送者id',
-    `receive_user_id` BIGINT   NOT NULL COMMENT '消息接收者id',
+    `from_id`         BIGINT   NOT NULL COMMENT '发送者id',
+    `to_id`           BIGINT   NOT NULL COMMENT '接收者id',
     `message_id`      BIGINT   NOT NULL COMMENT '消息id',
     `gmt_create`      DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified`    DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_send_user_id_gmt_modified` (`send_user_id`, `gmt_modified`)
+    KEY `ix_from_id_gmt_modified` (`from_id`, `gmt_modified`)
 ) COMMENT = '最近会话表';
 
 CREATE TABLE `message_index`
 (
     `id`              BIGINT PRIMARY KEY,
-    `send_user_id`    BIGINT   NOT NULL COMMENT '消息发送者id',
-    `receive_user_id` BIGINT   NOT NULL COMMENT '消息接收者id',
+    `from_id`         BIGINT   NOT NULL COMMENT '发送者id',
+    `to_id`           BIGINT   NOT NULL COMMENT '接收者id',
+    `from_to`         BIGINT   NOT NULL COMMENT '发送者id_接收者id',
     `message_id`      BIGINT   NOT NULL COMMENT '消息id',
     `gmt_create`      DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified`    DATETIME NOT NULL COMMENT '更新时间',
     `is_deleted`      TINYINT  NOT NULL DEFAULT 0 COMMENT '是否删除：0表示未删除，1表示已删除',
-    KEY `ix_user_id1_user_id2_gmt_create` (`send_user_id`, `receive_user_id`, `gmt_create`)
+    KEY `ix_from_to_gmt_create` (`from_to`, `gmt_create`)
 ) COMMENT = '消息索引表';
 
 CREATE TABLE `group_message_index`
 (
     `id`           BIGINT PRIMARY KEY,
     `group_id`     BIGINT   NOT NULL COMMENT '群聊id',
-    `user_id`      BIGINT   NOT NULL COMMENT '用户id，自己',
-    `sender_id`    BIGINT   NOT NULL DEFAULT 1 COMMENT '消息发送用户id',
+    `from_id`      BIGINT   NOT NULL DEFAULT 1 COMMENT '消息发送用户id',
     `message_id`   BIGINT   NOT NULL DEFAULT 1 COMMENT '消息id',
     `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_group_id_user_id_gmt_create` (`group_id`, `user_id`, `gmt_create`),
-    KEY `ix_group_id_sender_id_gmt_create` (`group_id`, `sender_id`, `gmt_create`)
+    KEY `ix_group_id_gmt_create` (`group_id`, `gmt_create`),
+    KEY `ix_group_id_from_id_gmt_create` (`group_id`, `from_id`, `gmt_create`)
 ) COMMENT = '群聊信息索引表';
+
+CREATE TABLE `user_message_delete`
+(
+    `id`           BIGINT PRIMARY KEY,
+    `message_id`   BIGINT   NOT NULL COMMENT '消息id',
+    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
+    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
+    KEY `ix_message_id` (`message_id`, `gmt_create`),
+) COMMENT = '消息删除记录表';
 
 USE group_db;
 

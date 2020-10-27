@@ -41,12 +41,12 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
         }
 
         Friend friend1 = new Friend();
-        friend1.setUserId(toId);
-        friend1.setFriendId(fromId);
+        friend1.setFromId(toId);
+        friend1.setToId(fromId);
 
         Friend friend2 = new Friend();
-        friend2.setUserId(fromId);
-        friend2.setFriendId(toId);
+        friend2.setFromId(fromId);
+        friend2.setToId(toId);
 
         return saveBatch(Arrays.asList(friend1, friend2));
     }

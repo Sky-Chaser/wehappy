@@ -2,14 +2,14 @@
 
 #### 环境搭建
 
-1. 安装 `jdk`
+1. 安装 `jdk11`
 2. 安装 `docker` 和 `docker-compose`
 3. 进入 `config/docker/env` 目录
-4. 执行命令：`docker-compose -f docker-compose-env.yaml mysql up -d`
+4. 执行命令：`docker-compose mysql up -d`
 5. 连接 `mysql`
 6. 执行 `config/sql` 下的数据库脚本
 7. 进入 `config/docker/env` 目录
-8. 执行命令：`docker-compose -f docker-compose-env.yaml up -d`
+8. 执行命令：`docker-compose up -d`
 
 #### 架构设计
 
