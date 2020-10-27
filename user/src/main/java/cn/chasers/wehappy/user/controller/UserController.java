@@ -1,18 +1,24 @@
 package cn.chasers.wehappy.user.controller;
 
 
+import cn.chasers.wehappy.common.api.CommonPage;
 import cn.chasers.wehappy.common.api.CommonResult;
-import cn.chasers.wehappy.user.dto.LoginParams;
+import cn.chasers.wehappy.user.constant.DtoConstant;
+import cn.chasers.wehappy.user.constant.MessageConstant;
+import cn.chasers.wehappy.user.dto.QueryParams;
 import cn.chasers.wehappy.user.dto.RegisterParams;
+import cn.chasers.wehappy.user.dto.SearchParams;
 import cn.chasers.wehappy.user.entity.User;
 import cn.chasers.wehappy.user.service.IUserService;
+import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import javax.validation.constraints.Email;
 
 /**
  * <p>
@@ -34,17 +40,50 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ApiOperation("登录成功返回token")
-    @PostMapping("/login")
+    @ApiOperation("发送注册所需验证码")
+    @PostMapping("/code")
+    public CommonResult<?> register(@Validated @RequestBody @Email @ApiParam(value = "邮箱地址", required = true) String email) {
+        userService.sendRegisterEmailCode(email);
+        return CommonResult.success(null);
+    }
+
+    @ApiOperation("用户注册")
+    @PostMapping("/register")
     public CommonResult<User> register(@Validated @RequestBody RegisterParams registerParams) {
         return CommonResult.success(userService.register(registerParams.getEmail(), registerParams.getUsername(), registerParams.getPassword(), registerParams.getCode()));
     }
 
+    @ApiOperation("检查用户名或邮箱地址是否已经被注册过")
+    @GetMapping("/check-exist/{type}/{data}")
+    public CommonResult<Boolean> checkExist(@Validated @PathVariable String type, @Validated @PathVariable String data) {
+        if (DtoConstant.PASSWORD.equals(type)) {
+            return CommonResult.success(userService.getByUsername(data) == null);
+        }
 
-    @ApiOperation("登录成功返回token")
-    @PostMapping("/login")
-    public CommonResult<Map<String, Object>> login(@Validated @RequestBody LoginParams loginParams) {
-        return CommonResult.success(userService.login(loginParams.getUsername(), loginParams.getPassword()));
+        if (DtoConstant.EMAIL.equals(type)) {
+            return CommonResult.success(userService.getByEmail(data) == null);
+        }
+
+        return CommonResult.failed(MessageConstant.ERROR_PARAMS);
+    }
+
+    @ApiOperation("根据邮箱地址模糊查询用户信息")
+    @GetMapping("/search")
+    public CommonPage<User> search(@Validated @RequestBody SearchParams searchParams) {
+        if (StrUtil.isEmpty(searchParams.getEmail())) {
+            return CommonPage.restPage(userService.getByUsernameLike(searchParams.getUsername(), searchParams.getCurrentPage(), searchParams.getSize()));
+        }
+
+        return CommonPage.restPage(userService.getByEmailLike(searchParams.getEmail(), searchParams.getCurrentPage(), searchParams.getSize()));
+    }
+
+    @ApiOperation("根据用户名或邮箱地址查询用户信息")
+    @GetMapping("/query")
+    public CommonResult<User> query(@Validated @RequestBody QueryParams queryParams) {
+        if (StrUtil.isEmpty(queryParams.getEmail())) {
+            return CommonResult.success(userService.getByUsername(queryParams.getUsername()));
+        }
+
+        return CommonResult.success(userService.getByEmail(queryParams.getEmail()));
     }
 }
-

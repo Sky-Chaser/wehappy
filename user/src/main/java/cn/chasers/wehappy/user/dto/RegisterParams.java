@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class RegisterParams {
-    @NotEmpty
+    @Email
     @ApiModelProperty(value = "邮箱地址", required = true)
     private String email;
 

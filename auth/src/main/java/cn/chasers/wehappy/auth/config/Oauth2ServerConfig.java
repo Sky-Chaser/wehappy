@@ -52,7 +52,7 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
 
     @Autowired
-    public Oauth2ServerConfig(PasswordEncoder passwordEncoder, @Qualifier("customerUserService") UserDetailsService userDetailsService, AuthenticationManager authenticationManager, TokenEnhancer jwtTokenEnhancer) {
+    public Oauth2ServerConfig(PasswordEncoder passwordEncoder, @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, AuthenticationManager authenticationManager, TokenEnhancer jwtTokenEnhancer) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;

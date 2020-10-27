@@ -15,4 +15,9 @@ public class UserServiceImpl implements IUserService {
     public CommonResult<UserDto> queryByEmail(String email) {
         return CommonResult.failed("user-service 暂不可用.....");
     }
+
+    @Override
+    public CommonResult<UserDto> queryByUsername(String username) {
+        return CommonResult.failed("user-service 暂不可用.....");
+    }
 }

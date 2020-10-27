@@ -21,18 +21,18 @@ import org.springframework.stereotype.Service;
  * @author lollipop
  */
 @Service
-public class CustomerUserService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final IUserService userService;
 
     @Autowired
-    public CustomerUserService(IUserService userService) {
+    public UserDetailsServiceImpl(IUserService userService) {
         this.userService = userService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        CommonResult<UserDto> result = userService.queryByEmail(username);
+        CommonResult<UserDto> result = userService.queryByUsername(username);
 
         if (result.getCode() != ResultCode.SUCCESS.getCode()) {
             throw new DisabledException(MessageConstant.USER_SERVICE_ERROR);
