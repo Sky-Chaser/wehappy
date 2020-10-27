@@ -2,6 +2,7 @@ package cn.chasers.wehappy.user.mapper;
 
 import cn.chasers.wehappy.user.entity.Friend;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author lollipop
  * @since 2020-10-26
  */
+@Repository
 public interface FriendMapper extends BaseMapper<Friend> {
 
 }

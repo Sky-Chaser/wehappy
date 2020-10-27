@@ -13,4 +13,30 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IFriendService extends IService<Friend> {
 
+    /**
+     * 根据用户id添加用户
+     *
+     * @param fromId 请求添加用户id
+     * @param toId   被请求添加用户id
+     * @return 返回添加成功或失败
+     */
+    boolean addFriend(Long fromId, Long toId);
+
+    /**
+     * 处理添加好友的请求
+     *
+     * @param fromId 请求添加用户id
+     * @param toId   被请求添加用户id
+     * @param agree  是否同意添加
+     * @return 返回处理结果
+     */
+    boolean handleAddFriend(Long fromId, Long toId, Boolean agree);
+
+    /**
+     * 获取好友列表
+     *
+     * @param userId 用户id
+     * @return 返回好友列表数据
+     */
+    boolean list(Long userId);
 }

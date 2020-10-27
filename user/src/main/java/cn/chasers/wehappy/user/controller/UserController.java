@@ -42,7 +42,7 @@ public class UserController {
 
     @ApiOperation("发送注册所需验证码")
     @PostMapping("/code")
-    public CommonResult<?> register(@Validated @RequestBody @Email @ApiParam(value = "邮箱地址", required = true) String email) {
+    public CommonResult<?> sendCode(@Validated @RequestBody @Email @ApiParam(value = "邮箱地址", required = true) String email) {
         userService.sendRegisterEmailCode(email);
         return CommonResult.success(null);
     }
@@ -67,7 +67,7 @@ public class UserController {
         return CommonResult.failed(MessageConstant.ERROR_PARAMS);
     }
 
-    @ApiOperation("根据邮箱地址模糊查询用户信息")
+    @ApiOperation("根据用户名或邮箱地址模糊查询用户信息")
     @GetMapping("/search")
     public CommonPage<User> search(@Validated @RequestBody SearchParams searchParams) {
         if (StrUtil.isEmpty(searchParams.getEmail())) {
