@@ -14,7 +14,7 @@ spring:
       bindings:
         # 输出通道
         register-email-input:
-          group: sms-service
+          group: sms
           # topic
           destination: register-email
           contentType: text/plain

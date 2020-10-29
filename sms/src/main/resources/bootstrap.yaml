@@ -2,4 +2,4 @@ spring:
   profiles:
     active: dev
   application:
-    name: sms-service
+    name: sms

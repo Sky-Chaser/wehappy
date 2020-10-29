@@ -29,7 +29,6 @@ import javax.validation.constraints.Email;
  * @since 2020-10-26
  */
 @RestController
-@RequestMapping("/user")
 @Api(value = "/user", tags = "用户模块")
 public class UserController {
 
@@ -55,8 +54,8 @@ public class UserController {
 
     @ApiOperation("检查用户名或邮箱地址是否已经被注册过")
     @GetMapping("/check-exist/{type}/{data}")
-    public CommonResult<Boolean> checkExist(@Validated @PathVariable String type, @Validated @PathVariable String data) {
-        if (DtoConstant.PASSWORD.equals(type)) {
+    public CommonResult<Boolean> checkExist(@Validated @PathVariable @ApiParam(value = "字段类型，username或email", required = true) String type, @ApiParam(value = "字段值", required = true)@Validated @PathVariable String data) {
+        if (DtoConstant.USERNAME.equals(type)) {
             return CommonResult.success(userService.getByUsername(data) == null);
         }
 

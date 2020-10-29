@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * 调用 `user-service` 服务方法的接口
+ * 调用 `user` 服务方法的接口
  * @author lollipop
  */
-@FeignClient("user-service")
+@FeignClient("user")
 public interface IUserService {
 
     /**

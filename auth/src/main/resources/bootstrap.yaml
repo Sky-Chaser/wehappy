@@ -2,5 +2,5 @@ spring:
   profiles:
     active: dev
   application:
-    name: auth-service
+    name: auth
 

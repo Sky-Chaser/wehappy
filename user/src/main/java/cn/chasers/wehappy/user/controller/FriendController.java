@@ -5,6 +5,7 @@ import cn.chasers.wehappy.common.api.CommonResult;
 import cn.chasers.wehappy.user.entity.Friend;
 import cn.chasers.wehappy.user.service.IFriendService;
 import cn.chasers.wehappy.user.service.IUserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/friend")
+@Api(value = "/user", tags = "好友模块")
 public class FriendController {
     private final IFriendService friendService;
     private final IUserService userService;

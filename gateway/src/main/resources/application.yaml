@@ -9,15 +9,15 @@ spring:
           lower-case-service-id: true #使用小写service-id
       routes: #配置路由路径
         - id: auth
-          uri: lb://auth-service
+          uri: lb://auth
           predicates:
-            - Path=/auth-service/**
+            - Path=/auth/**
           filters:
             - StripPrefix=1
         - id: user
-          uri: lb://user-service
+          uri: lb://user
           predicates:
-            - Path=/user-service/**
+            - Path=/user/**
           filters:
             - StripPrefix=1
     sentinel:
@@ -47,10 +47,10 @@ secure:
       - "/**/*.ico"
       - "/webjars/springfox-swagger-ui/**"
       - "/actuator/**"
-      - "/auth-service/oauth/token"
-      - "/user-service/register"
-      - "/user-service/code"
-      - "/user-service/check-exist/**"
+      - "/auth/oauth/token"
+      - "/user/register"
+      - "/user/code"
+      - "/user/check-exist/**"
 management: #开启SpringBoot Admin的监控
   endpoints:
     web:
