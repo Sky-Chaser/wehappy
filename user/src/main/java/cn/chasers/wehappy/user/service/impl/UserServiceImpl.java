@@ -41,7 +41,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Value("${redis.registerCode.key}")
     private String registerCodeKey;
 
-    @Value("${redis.key.registerCode.expire}")
+    @Value("${redis.registerCode.expire}")
     private long registerCodeExpire;
 
     @Value("${default.avatar}")
@@ -107,7 +107,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void sendRegisterEmailCode(String email) {
         // 生成验证码
         String code = RandomUtil.randomNumbers(6);
-        Map<String, Object> map = Map.of("email", email, "code", code);
+        Map<String, Object> map = Map.of("to", email, "code", code);
         producer.sendRegisterCodeEmail(map, registerCodeExpire);
         redisService.hSet(registerCodeKey, email, code, registerCodeExpire);
     }

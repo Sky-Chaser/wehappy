@@ -3,7 +3,6 @@ package cn.chasers.wehappy.user.mq;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.util.MimeTypeUtils;
@@ -16,7 +15,7 @@ import java.util.Map;
  * @author zhangyuanhang
  */
 @Slf4j
-@EnableBinding(Source.class)
+@EnableBinding(MqSource.class)
 public class Producer {
 
     private final MqSource mqSource;

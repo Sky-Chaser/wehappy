@@ -16,18 +16,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 用户管理业务类
+ *
  * @author lollipop
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final IUserService userService;
+    private final HttpServletRequest request;
 
     @Autowired
-    public UserDetailsServiceImpl(IUserService userService) {
+    public UserDetailsServiceImpl(IUserService userService, HttpServletRequest request) {
         this.userService = userService;
+        this.request = request;
     }
 
     @Override
@@ -44,8 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         // 暂时写死只有一种客户端
-        // TODO
-        userDto.setClientId("portal");
+        userDto.setClientId(request.getHeader("client_id"));
         SecurityUser securityUser = new SecurityUser(userDto);
 
         // 账户被禁用

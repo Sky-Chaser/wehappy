@@ -14,6 +14,12 @@ spring:
             - Path=/auth-service/**
           filters:
             - StripPrefix=1
+        - id: user
+          uri: lb://user-service
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - StripPrefix=1
     sentinel:
       transport:
         port: 7002 #跟控制台交流的端口，随意指定一个未使用的端口即可
