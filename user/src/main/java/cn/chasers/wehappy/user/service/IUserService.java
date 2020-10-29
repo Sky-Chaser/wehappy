@@ -67,4 +67,11 @@ public interface IUserService extends IService<User> {
      * @return 返回所有查询到的用户信息
      */
     IPage<User> getByEmailLike(String email, long currentPage, long size);
+
+    /**
+     * 获取当前请求用户信息
+     *
+     * @return 返回用户详细信息
+     */
+    User getCurrentUser();
 }

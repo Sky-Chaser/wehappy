@@ -84,9 +84,14 @@ bcrypt:
   salt: yigiwodigiaogiao
 
 redis:
+  database: userService
+  separator: ":"
   registerCode:
-    key: keyRegisterCode
+    key: 'user:register:code'
     expire: 300
+  userInfo:
+    key: 'user:info'
+    expire: 86400
 
 default:
   avatar: default.jpg
