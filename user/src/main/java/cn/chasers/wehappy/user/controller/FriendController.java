@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/friend")
-@Api(value = "/user", tags = "好友模块")
+@Api(value = "/friend", tags = "好友模块")
 public class FriendController {
     private final IFriendService friendService;
     private final IUserService userService;

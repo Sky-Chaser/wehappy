@@ -44,12 +44,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         UserDto userDto = result.getData();
+        System.out.println(userDto);
         if (userDto == null) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }
 
-        // 暂时写死只有一种客户端
-        userDto.setClientId(request.getHeader("client_id"));
         SecurityUser securityUser = new SecurityUser(userDto);
 
         // 账户被禁用

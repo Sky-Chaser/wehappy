@@ -43,7 +43,7 @@ public class AuthController {
             @ApiImplicitParam(name = "password", value = "登录密码")
     })
     @PostMapping("/authentication")
-    public CommonResult<Oauth2TokenDto> authentication(@ApiIgnore Principal principal, @ApiIgnore @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+    public CommonResult<Oauth2TokenDto> authentication(@ApiIgnore Principal principal, @ApiIgnore @RequestBody Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
         assert oAuth2AccessToken != null;
         Oauth2TokenDto oauth2TokenDto = Oauth2TokenDto.builder()

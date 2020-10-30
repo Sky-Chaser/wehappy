@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,9 +43,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private final UserMapper userMapper;
     private final Producer producer;
     private final HttpServletRequest request;
-
-    @Value("${bcrypt.salt}")
-    private String salt;
 
     @Value("${redis.separator}")
     private String redisKeySeparator;
@@ -99,7 +97,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = new User();
         user.setEmail(email);
         user.setUsername(username);
-        user.setPassword(BCrypt.hashpw(username, salt));
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
         user.setAvatar(defaultAvatar);
 
         if (!save(user)) {

@@ -47,7 +47,7 @@ secure:
       - "/**/*.ico"
       - "/webjars/springfox-swagger-ui/**"
       - "/actuator/**"
-      - "/auth/oauth/token"
+      - "/auth/oauth/authentication"
       - "/user/register"
       - "/user/code"
       - "/user/check-exist/**"

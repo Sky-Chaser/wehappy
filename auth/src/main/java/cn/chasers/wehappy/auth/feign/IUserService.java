@@ -19,7 +19,7 @@ public interface IUserService {
      * @param email 用户注册时的邮箱
      * @return 返回 CommonResult<UserDto> 类型结果，包含用户的详细信息
      */
-    @GetMapping("/user")
+    @GetMapping("/query")
     CommonResult<UserDto> queryByEmail(@RequestParam String email);
 
     /**
@@ -28,6 +28,6 @@ public interface IUserService {
      * @param username 用户名
      * @return 返回 CommonResult<UserDto> 类型结果，包含用户的详细信息
      */
-    @GetMapping("/user")
+    @GetMapping("/query")
     CommonResult<UserDto> queryByUsername(@RequestParam String username);
 }

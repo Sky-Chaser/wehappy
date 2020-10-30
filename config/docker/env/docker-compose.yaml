@@ -4,7 +4,7 @@ services:
     image: mysql:5.7
     container_name: mysql
     command: mysqld --character-set-server=utf8
-    restart: unless-stopped
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root #设置root帐号密码
     ports:
@@ -16,7 +16,7 @@ services:
   redis:
     image: redis:5.0.9
     container_name: redis
-    restart: unless-stopped
+    restart: always
     command: redis-server
     volumes:
       - ../../../data/redis/data:/data #数据文件挂载
@@ -55,6 +55,7 @@ services:
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    restart: always
     depends_on:
       - zookeeper
   kafka-manager:
@@ -63,6 +64,7 @@ services:
       ZK_HOSTS: 172.17.0.1 # 宿主机ip
     ports:
       - 9000:9000
+    restart: always
 #  nginx:
 #    image: nginx:1.10
 #    container_name: nginx

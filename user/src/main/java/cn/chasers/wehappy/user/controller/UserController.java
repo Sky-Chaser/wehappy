@@ -68,7 +68,7 @@ public class UserController {
 
     @ApiOperation("根据用户名或邮箱地址模糊查询用户信息")
     @GetMapping("/search")
-    public CommonPage<User> search(@Validated @RequestBody SearchParams searchParams) {
+    public CommonPage<User> search(@Validated SearchParams searchParams) {
         if (StrUtil.isEmpty(searchParams.getEmail())) {
             return CommonPage.restPage(userService.getByUsernameLike(searchParams.getUsername(), searchParams.getCurrentPage(), searchParams.getSize()));
         }
@@ -78,7 +78,7 @@ public class UserController {
 
     @ApiOperation("根据用户名或邮箱地址查询用户信息")
     @GetMapping("/query")
-    public CommonResult<User> query(@Validated @RequestBody QueryParams queryParams) {
+    public CommonResult<User> query(@Validated QueryParams queryParams) {
         if (StrUtil.isEmpty(queryParams.getEmail())) {
             return CommonResult.success(userService.getByUsername(queryParams.getUsername()));
         }

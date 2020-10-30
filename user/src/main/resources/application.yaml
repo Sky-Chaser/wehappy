@@ -80,9 +80,6 @@ ribbon:
   # 服务请求处理超时时间（毫秒）
   ReadTimeout: 10000
 
-bcrypt:
-  salt: yigiwodigiaogiao
-
 redis:
   database: userService
   separator: ":"
