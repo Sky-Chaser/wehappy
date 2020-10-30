@@ -84,7 +84,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             Asserts.fail(MessageConstant.EMPTY_CODE);
         }
 
-        if ((!redisService.hHasKey(redisDatabase + redisKeySeparator + registerCodeKey, email) || !code.equals(redisService.hGet(redisDatabase + redisKeySeparator + registerCodeKey, email)))) {
+        if ((!redisService.hHasKey(getRedisEmailCodeKey(), email) || !code.equals(redisService.hGet(getRedisEmailCodeKey(), email)))) {
             Asserts.fail(MessageConstant.ERROR_CODE);
         }
 
@@ -125,7 +125,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String code = RandomUtil.randomNumbers(6);
         Map<String, Object> map = Map.of("to", email, "code", code);
         producer.sendRegisterCodeEmail(map, registerCodeExpire);
-        redisService.hSet(redisDatabase + redisKeySeparator + registerCodeKey, email, code, registerCodeExpire);
+        redisService.hSet(getRedisEmailCodeKey(), email, code, registerCodeExpire);
     }
 
     @Override
@@ -156,5 +156,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user = getById(userDto.getId());
         userCacheService.setUser(user);
         return user;
+    }
+
+    private String getRedisEmailCodeKey() {
+        return redisDatabase + redisKeySeparator + registerCodeKey;
     }
 }

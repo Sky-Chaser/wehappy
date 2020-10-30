@@ -2,13 +2,13 @@ DROP DATABASE IF EXISTS `user_db`;
 DROP DATABASE IF EXISTS `message_db`;
 DROP DATABASE IF EXISTS `group_db`;
 DROP DATABASE IF EXISTS `media_db`;
-DROP DATABASE IF EXISTS `red_envelop_db`;
+DROP DATABASE IF EXISTS `account_db`;
 
 CREATE DATABASE `user_db` CHARACTER SET utf8;
 CREATE DATABASE `message_db` CHARACTER SET utf8;
 CREATE DATABASE `group_db` CHARACTER SET utf8;
 CREATE DATABASE `media_db` CHARACTER SET utf8;
-CREATE DATABASE `red_envelop_db` CHARACTER SET utf8;
+CREATE DATABASE `account_db` CHARACTER SET utf8;
 
 USE `user_db`;
 
@@ -28,17 +28,6 @@ CREATE TABLE `user`
     UNIQUE `ux_email` (`email`),
     UNIQUE `ux_username` (`username`)
 ) COMMENT = '用户信息表';
-
-CREATE TABLE `account`
-(
-    `id`           BIGINT PRIMARY KEY,
-    `user_id`      BIGINT   NOT NULL COMMENT '用户id',
-    `money`        DECIMAL  NOT NULL DEFAULT 0 COMMENT '账户余额',
-    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    `status`       TINYINT  NOT NULL DEFAULT 0 COMMENT '状态：0表示正常，1表示被冻结',
-    UNIQUE `ux_user_id` (`user_id`)
-) COMMENT = '用户账户表';
 
 CREATE TABLE `friend`
 (
@@ -144,7 +133,7 @@ CREATE TABLE `user_message_delete`
     KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '消息删除记录表';
 
-USE group_db;
+USE `group_db`;
 
 CREATE TABLE `group`
 (
@@ -184,7 +173,7 @@ CREATE TABLE `group_admin`
     KEY `ix_group_id` (`group_id`)
 ) COMMENT = '群聊用户表';
 
-USE media_db;
+USE `media_db`;
 
 CREATE TABLE `image`
 (
@@ -235,7 +224,18 @@ CREATE TABLE `call`
     KEY `ix_gmt_modified` (`gmt_modified`)
 ) COMMENT = '通话信息表';
 
-USE red_envelop_db;
+USE `account_db`;
+
+CREATE TABLE `account`
+(
+    `id`           BIGINT PRIMARY KEY,
+    `user_id`      BIGINT   NOT NULL COMMENT '用户id',
+    `money`        DECIMAL  NOT NULL DEFAULT 0 COMMENT '账户余额',
+    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
+    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
+    `status`       TINYINT  NOT NULL DEFAULT 0 COMMENT '状态：0表示正常，1表示被冻结',
+    UNIQUE `ux_user_id` (`user_id`)
+) COMMENT = '账户表';
 
 CREATE TABLE `big_red_envelope`
 (

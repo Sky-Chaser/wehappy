@@ -1,7 +1,8 @@
-### wehappy 是一个即时通信系统
+## wehappy 是一个利用 `Spring Cloud` 微服务框架搭建的即时通信系统
 
-#### 环境搭建
+### 环境搭建
 
+#### `linux & mac`
 1. 安装 `jdk11`
 2. 安装 `docker` 和 `docker-compose`
 3. 进入 `config/docker/env` 目录
@@ -13,8 +14,7 @@
 
 #### 架构设计
 
-TODO
-
+![image-20201021005206055](doc/image/image-20201021005206055.png)
 
 #### 详细功能：
 
