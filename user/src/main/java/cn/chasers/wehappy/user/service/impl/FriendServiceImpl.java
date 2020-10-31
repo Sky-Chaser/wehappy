@@ -108,6 +108,6 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
 
     @Override
     public List<Friend> list(Long userId) {
-        return friendMapper.selectList(lambdaQuery().eq(Friend::getFromId, userId));
+        return lambdaQuery().eq(Friend::getFromId, userId).list();
     }
 }

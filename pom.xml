@@ -13,6 +13,7 @@
         <module>gateway</module>
         <module>user</module>
         <module>sms</module>
+        <module>group</module>
     </modules>
     <packaging>pom</packaging>
     <description>We are all happy to chat!</description>
