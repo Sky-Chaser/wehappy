@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 // swagger2
-                .antMatchers("/v2/api-docs", "/oauth/authentication").permitAll()
+                .antMatchers("/v2/api-docs").permitAll()
                 .anyRequest().authenticated();
     }
 
