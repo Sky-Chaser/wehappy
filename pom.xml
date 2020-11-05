@@ -14,6 +14,7 @@
         <module>user</module>
         <module>sms</module>
         <module>group</module>
+        <module>chat</module>
     </modules>
     <packaging>pom</packaging>
     <description>We are all happy to chat!</description>
@@ -29,7 +30,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skipTests>true</skipTests>
-        <!--        <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>-->
         <java.version>11</java.version>
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
@@ -44,6 +44,8 @@
         <admin-starter-server.version>2.3.0</admin-starter-server.version>
         <starter-stream-kafka.version>3.0.8.RELEASE</starter-stream-kafka.version>
         <starter-data-redis.version>2.3.4.RELEASE</starter-data-redis.version>
+        <netty.version>4.1.53.Final</netty.version>
+        <protobuf.version>3.13.0</protobuf.version>
     </properties>
 
     <dependencies>
@@ -174,6 +176,18 @@
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-server</artifactId>
                 <version>${admin-starter-server.version}</version>
+            </dependency>
+            <!-- netty -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <!--protobuf -->
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

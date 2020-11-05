@@ -1,4 +1,4 @@
-package cn.chasers.wehappy.user.mq;
+package cn.chasers.wehappy.chat.mq;
 
 import cn.chasers.wehappy.common.msg.ProtoMsg;
 import lombok.extern.slf4j.Slf4j;
@@ -8,10 +8,9 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.util.MimeTypeUtils;
 
-import java.util.Map;
 
 /**
- * Kafka生产者
+ * Kafka 生产者
  *
  * @author zhangyuanhang
  */
@@ -24,16 +23,6 @@ public class Producer {
     @Autowired
     public Producer(MqSource mqSource) {
         this.mqSource = mqSource;
-    }
-
-    /**
-     * 向kafka中存储发送注册验证码邮件的消息
-     *
-     * @param message 包含邮件内容
-     */
-    public void sendRegisterCodeEmail(Map<String, Object> message, long expire) {
-        mqSource.registerEmailOutput().send(MessageBuilder.withPayload(message).setExpirationDate(expire)
-                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build());
     }
 
     /**

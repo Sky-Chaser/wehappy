@@ -1,6 +1,8 @@
 package cn.chasers.wehappy.user.service.impl;
 
+import cn.chasers.wehappy.common.config.SnowflakeConfig;
 import cn.chasers.wehappy.common.exception.Asserts;
+import cn.chasers.wehappy.common.msg.ProtoMsg;
 import cn.chasers.wehappy.user.constant.MessageConstant;
 import cn.chasers.wehappy.user.entity.Friend;
 import cn.chasers.wehappy.user.entity.User;
@@ -8,6 +10,7 @@ import cn.chasers.wehappy.user.mapper.FriendMapper;
 import cn.chasers.wehappy.user.mq.Producer;
 import cn.chasers.wehappy.user.service.IFriendService;
 import cn.chasers.wehappy.user.service.IUserService;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +36,14 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
     private final FriendMapper friendMapper;
     private final IUserService userService;
     private final Producer producer;
+    private final SnowflakeConfig snowflakeConfig;
 
     @Autowired
-    public FriendServiceImpl(FriendMapper friendMapper, IUserService userService, Producer producer) {
+    public FriendServiceImpl(FriendMapper friendMapper, IUserService userService, Producer producer, SnowflakeConfig snowflakeConfig) {
         this.friendMapper = friendMapper;
         this.userService = userService;
         this.producer = producer;
+        this.snowflakeConfig = snowflakeConfig;
     }
 
     @Override
@@ -62,8 +67,7 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
         }
 
         Map<String, Object> map = Map.of("type", "addFriend", "userId", toId, "fromId", fromId, "dateTime", new Date(System.currentTimeMillis()));
-
-        producer.sendMessage(map);
+        pushMessage(map, toId);
 
         return true;
     }
@@ -89,7 +93,8 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
             }
 
             Map<String, Object> map = Map.of("type", "handleAddFriend", "userId", fromId, "fromId", toId, "result", true, "dateTime", new Date(System.currentTimeMillis()));
-            producer.sendMessage(map);
+            pushMessage(map, toId);
+
             return true;
         }
 
@@ -102,12 +107,31 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
         }
 
         Map<String, Object> map = Map.of("type", "handleAddFriend", "userId", fromId, "fromId", toId, "result", false, "dateTime", new Date(System.currentTimeMillis()));
-        producer.sendMessage(map);
+        pushMessage(map, toId);
         return true;
     }
 
     @Override
     public List<Friend> list(Long userId) {
         return lambdaQuery().eq(Friend::getFromId, userId).list();
+    }
+
+    private void pushMessage(Map<String, Object> map, long toId) {
+        ProtoMsg.PushMessage pushMessage =
+                ProtoMsg.PushMessage.newBuilder()
+                        .setContentType(ProtoMsg.ContentType.TEXT)
+                        .setTime(System.currentTimeMillis())
+                        .setContent(new JSONObject(map).toJSONString())
+                        .build();
+
+        ProtoMsg.Message message =
+                ProtoMsg.Message.newBuilder()
+                        .setMessageType(ProtoMsg.MessageType.PUSH_MESSAGE)
+                        .setTo(toId)
+                        .setPushMessage(pushMessage)
+                        .setSequence(snowflakeConfig.snowflakeId())
+                        .build();
+
+        producer.sendMessage(message);
     }
 }

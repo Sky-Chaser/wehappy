@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+// 加快解析
+option optimize_for = SPEED;
+option java_package = "cn.chasers.wehappy.common.msg";
+option java_outer_classname = "ProtoMsg";
+
+// 消息类型
+enum MessageType {
+  // 心跳消息，客户端发送和服务端响应
+  HEART_BRAT_MESSAGE = 0;
+  // 私聊消息，客户端请求和服务端转发
+  SINGLE_MESSAGE = 1;
+  // 群聊消息，客户端请求和服务端转发
+  GROUP_MESSAGE = 2;
+  // 响应消息，服务端响应
+  RESPONSE_MESSAGE = 3;
+  // 推送消息，服务端发送
+  PUSH_MESSAGE = 4;
+}
+
+// 聊天消息类型
+enum ContentType {
+  // 文本消息
+  TEXT = 0;
+  // 系统消息
+  SYSTEM_MSG = 1;
+  // 图片消息
+  IMAGE = 2;
+  // 语音消息
+  VOICE = 3;
+  // 视频消息
+  VIDEO = 4;
+  // 语音通话
+  VOICE_CALL = 5;
+  // 视频通话
+  VIDEO_CALL = 6;
+  // 私聊红包
+  SINGLE_RED_ENVELOPE = 7;
+  // 群聊普通红包
+  FAIR_RED_ENVELOPE = 8;
+  // 群聊运气红包
+  UNFAIR_RED_ENVELOPE = 9;
+}
+
+// 聊天消息
+message ChatMessage {
+  // 消息id
+  string id = 1;
+  // 发送者id
+  int64 from = 2;
+  // 群聊表示群Id，私聊表示用户Id
+  int64 to = 3;
+  // 时间戳
+  uint64 time = 4;
+  // 消息类型
+  ContentType contentType = 5;
+  // 文本消息表示内容，图片视频消息表示链接
+  string content = 6;
+}
+
+// 响应消息
+message ResponseMessage {
+  // 消息id
+  string id = 1;
+  // 发送成功或失败
+  bool result = 2;
+  // 错误码
+  uint32 code = 3;
+  // 错误描述
+  string info = 4;
+  // 错误描述是否提示给用户
+  bool expose = 5;
+}
+
+// 推送消息
+message PushMessage {
+  // 时间戳
+  uint64 time = 1;
+  // 消息类型
+  ContentType contentType = 2;
+  // 文本消息表示内容，图片视频消息表示链接
+  string content = 3;
+}
+
+// 外层消息
+message Message {
+  // 消息类型
+  MessageType messageType = 1;
+  // 推送用户的Id
+  int64 to = 2;
+  // 序列号
+  int64 sequence = 3;
+  // 聊天消息
+  ChatMessage chatMessage = 4;
+  // 响应消息
+  ResponseMessage responseMessage = 5;
+  // 推送消息
+  PushMessage pushMessage = 6;
+}

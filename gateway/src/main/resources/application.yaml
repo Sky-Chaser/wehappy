@@ -20,6 +20,24 @@ spring:
             - Path=/user/**
           filters:
             - StripPrefix=1
+        - id: group
+          uri: lb://group
+          predicates:
+            - Path=/group/**
+          filters:
+            - StripPrefix=1
+        - id: account
+          uri: lb://account
+          predicates:
+            - Path=/account/**
+          filters:
+            - StripPrefix=1
+        - id: chat
+          uri: lb:ws://chat
+          predicates:
+            - Path=/chat/**
+          filters:
+            - StripPrefix=1
     sentinel:
       transport:
         port: 7002 #跟控制台交流的端口，随意指定一个未使用的端口即可
