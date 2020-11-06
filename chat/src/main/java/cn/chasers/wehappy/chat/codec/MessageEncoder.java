@@ -28,7 +28,7 @@ public class MessageEncoder extends MessageToMessageEncoder<ProtoMsg.Message> {
         // 读取消息的长度
         int len = bytes.length;
 
-        ByteBuf buf = Unpooled.buffer(bytes.length + Short.BYTES);
+        ByteBuf buf = Unpooled.buffer(bytes.length + Integer.BYTES);
 
         // 写入消息头,即消息长度
         buf.writeInt(len);

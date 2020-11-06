@@ -6,7 +6,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Component;
 
 /**
- * 自定义的output通道，对应 kafka中的topic
+ * 自定义的output通道，对应 kafka 中的 topic
  *
  * @author lollipop
  */

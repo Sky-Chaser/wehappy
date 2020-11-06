@@ -4,7 +4,6 @@ import cn.chasers.wehappy.common.msg.ProtoMsg;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,18 +19,18 @@ import java.util.List;
 public class MessageDecoder extends MessageToMessageDecoder<WebSocketFrame> {
     @Override
     protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> out) throws Exception {
-        ByteBuf in = ((BinaryWebSocketFrame) frame).content();
+        ByteBuf in = frame.content();
         // 标记一下当前的读指针 readIndex 的位置
         in.markReaderIndex();
 
         // 判断包头的长度
-        if (in.readableBytes() < Short.BYTES) {
+        if (in.readableBytes() < Integer.BYTES) {
             // 长度不够
             return;
         }
 
         // 读取传送过来的的消息体的长度
-        int len = in.readShort();
+        int len = in.readInt();
 
         // 判断消息体的长度
         if (in.readableBytes() < len) {

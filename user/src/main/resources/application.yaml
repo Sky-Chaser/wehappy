@@ -58,7 +58,7 @@ spring:
         message-output:
           # topic
           destination: message
-          contentType: text/plain
+          contentType: application/octet-stream
 
 # mybatis日志
 mybatis-plus:

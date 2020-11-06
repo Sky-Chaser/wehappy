@@ -12,7 +12,7 @@ spring:
           # kafka集群
           brokers: localhost:9092
       bindings:
-        # 输出通道
+        # 输入通道
         register-email-input:
           group: sms
           # topic

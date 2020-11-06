@@ -42,6 +42,17 @@ spring:
       transport:
         port: 7002 #跟控制台交流的端口，随意指定一个未使用的端口即可
         dashboard: localhost:8858 # 指定控制台服务的地址
+    stream:
+      kafka:
+        binder:
+          # kafka集群
+          brokers: localhost:9092
+      bindings:
+        # 输入通道
+        message-input:
+          # topic
+          destination: message
+          contentType: application/octet-stream
   security:
     oauth2:
       resourceserver:

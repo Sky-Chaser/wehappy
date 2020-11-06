@@ -14,7 +14,7 @@ spring:
         message-output:
           # topic
           destination: message
-          contentType: text/plain
+          contentType: application/octet-stream
   redis:
     # Redis服务器地址
     host: localhost
