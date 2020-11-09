@@ -48,7 +48,7 @@ public class ChatServer {
                     // 3 设置监听端口
                     .localAddress(new InetSocketAddress(nettyConfig.getPort()))
                     // 4 设置通道选项
-                    .option(ChannelOption.SO_KEEPALIVE, true)
+//                    .option(ChannelOption.SO_KEEPALIVE, true)
                     .option(ChannelOption.SO_BACKLOG, 1024)
                     .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
                     // 5 装配流水线

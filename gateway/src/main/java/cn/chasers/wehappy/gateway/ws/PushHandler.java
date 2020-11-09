@@ -3,6 +3,7 @@ package cn.chasers.wehappy.gateway.ws;
 import cn.chasers.wehappy.common.msg.ProtoMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.socket.HandshakeInfo;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -28,9 +29,20 @@ public class PushHandler implements WebSocketHandler {
     public Mono<Void> handle(WebSocketSession session) {
         HandshakeInfo handshakeInfo = session.getHandshakeInfo();
         InetSocketAddress remoteAddress = handshakeInfo.getRemoteAddress();
-        String token = handshakeInfo.getUri().getAuthority();
 
-        // TODO 解析token
+        String token = null;
+
+        try {
+            token = handshakeInfo.getUri().getQuery().split("=")[1];
+            log.info("token = {}", token);
+        } catch (Exception e) {
+            return Mono.empty();
+        }
+
+        if (StringUtils.isEmpty(token)) {
+            return Mono.empty();
+        }
+
         long userId = 0;
 
         // 出站
@@ -42,7 +54,8 @@ public class PushHandler implements WebSocketHandler {
                     log.info("new websocket session：{}, ip：{}", session.getId(), Objects.requireNonNull(remoteAddress).getAddress());
                 })
                 .doOnNext(msg -> {
-                    String message = msg.getPayloadAsText();
+                    String message= msg.getPayloadAsText();
+                    log.info("message: {}", message);
                     // TODO
                 })
                 .doOnComplete(() -> {

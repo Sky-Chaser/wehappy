@@ -19,6 +19,7 @@ import java.util.Map;
  */
 @Configuration
 public class WebSocketConfiguration {
+
     @Bean
     public HandlerMapping webSocketMapping(PushHandler pushHandler) {
 

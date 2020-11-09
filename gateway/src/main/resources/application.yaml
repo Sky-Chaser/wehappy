@@ -38,6 +38,12 @@ spring:
             - Path=/chat/**
           filters:
             - StripPrefix=1
+        - id: gateway
+          uri: lb:ws://gateway
+          predicates:
+            - Path=/gateway/**
+          filters:
+            - StripPrefix=1
     sentinel:
       transport:
         port: 7002 #跟控制台交流的端口，随意指定一个未使用的端口即可
@@ -50,6 +56,7 @@ spring:
       bindings:
         # 输入通道
         message-input:
+          group: gateway
           # topic
           destination: message
           contentType: application/octet-stream
@@ -80,6 +87,8 @@ secure:
       - "/user/register"
       - "/user/code"
       - "/user/check-exist/**"
+      - "/receive"
+      - "/gateway/receive"
 management: #开启SpringBoot Admin的监控
   endpoints:
     web:
@@ -91,3 +100,5 @@ management: #开启SpringBoot Admin的监控
 ribbon:
   ConnectTimeout: 10000 #服务请求连接超时时间（毫秒）
   ReadTimeout: 10000 #服务请求处理超时时间（毫秒）
+logging:
+  level: log

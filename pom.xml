@@ -183,6 +183,11 @@
                 <artifactId>netty-all</artifactId>
                 <version>${netty.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport-native-epoll</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
             <!--protobuf -->
             <dependency>
                 <groupId>com.google.protobuf</groupId>
