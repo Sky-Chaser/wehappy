@@ -38,3 +38,5 @@ build/
 /data/nacos/logs
 /data/redis
 /data/elasticsearch
+/config/docker/env/docker-compose.yaml
+/data/logstash/logstash.conf
