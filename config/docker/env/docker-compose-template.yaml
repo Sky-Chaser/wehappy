@@ -58,14 +58,6 @@ services:
     restart: always
     depends_on:
       - zookeeper
-  kafka-manager:
-    image: sheepkiller/kafka-manager
-    container_name: kafka_manager
-    environment:
-      ZK_HOSTS: ${HOST_IP} # 修改为自己宿主机ip
-    ports:
-      - 9000:9000
-    restart: always
   elasticsearch:
     image: elasticsearch:7.9.3
     container_name: elasticsearch
@@ -96,6 +88,14 @@ services:
     restart: always
     ports:
       - 5601:5601
+#  kafka-manager:
+#    image: sheepkiller/kafka-manager
+#    container_name: kafka_manager
+#    environment:
+#      ZK_HOSTS: ${HOST_IP} # 修改为自己宿主机ip
+#    ports:
+#      - 9000:9000
+#    restart: always
 #  nginx:
 #    image: nginx:1.10
 #    container_name: nginx
