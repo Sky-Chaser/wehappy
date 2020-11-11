@@ -31,7 +31,7 @@ CREATE TABLE `user`
 
 CREATE TABLE `friend`
 (
-    `id`           BIGINT PRIMARY KEY,
+    `id`           BIGINT   PRIMARY KEY,
     `from_id`      BIGINT   NOT NULL COMMENT '用户id',
     `to_id`        BIGINT   NOT NULL COMMENT '好友id',
     `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
@@ -46,7 +46,7 @@ USE `message_db`;
 
 CREATE TABLE `message`
 (
-    `id`           BIGINT PRIMARY KEY,
+    `id`           BIGINT   PRIMARY KEY,
     `type`         TINYINT  NOT NULL DEFAULT 0 COMMENT '消息类型：0表示文本消息，1表示系统消息，2表示图片，3表示语音，4表示视频，5表示语音通话，6表示视频通话，7表示私聊红包，8表示群聊普通红包，9表示群聊运气红包',
     `content`      text     NOT NULL COMMENT '消息内容',
     `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
@@ -171,7 +171,7 @@ CREATE TABLE `group_admin`
     `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
     KEY `ix_user_id` (`user_id`),
     KEY `ix_group_id` (`group_id`)
-) COMMENT = '群聊用户表';
+) COMMENT = '群聊管理员表';
 
 USE `media_db`;
 
@@ -247,7 +247,7 @@ CREATE TABLE `big_red_envelope`
     `type`         TINYINT DEFAULT 6 NOT NULL COMMENT '类型：7表示私聊红包，8表示普通红包，9表示运气红包',
     `gmt_create`   DATETIME          NOT NULL COMMENT '创建时间',
     `gmt_modified` DATETIME          NOT NULL COMMENT '更新时间',
-    KEY `ix_gmt_modified` (`gmt_modified`)
+    KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '大红包信息表';
 
 CREATE TABLE `small_red_envelope`
