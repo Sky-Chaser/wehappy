@@ -58,36 +58,36 @@ services:
     restart: always
     depends_on:
       - zookeeper
-  elasticsearch:
-    image: elasticsearch:7.9.3
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms200m -Xmx200m"
-      - "TAKE_FILE_OWNERSHIP=true"
-    volumes:
-      - ../../../data/elasticsearch/data:/usr/share/elasticsearch/data
-    restart: always
-    ports:
-      - 9200:9200
-      - 9300:9300
-  logstash:
-    image: logstash:7.9.3
-    container_name: logstash
-    restart: always
-    volumes:
-      - ../../../data/logstash/logstash-template.conf:/usr/share/logstash/pipeline/logstash-template.conf
-    depends_on:
-      - elasticsearch
-      - kafka
-  kibana:
-    image: kibana:7.9.3
-    container_name: kibana
-    depends_on:
-      - elasticsearch
-    restart: always
-    ports:
-      - 5601:5601
+#  elasticsearch:
+#    image: elasticsearch:7.9.3
+#    container_name: elasticsearch
+#    environment:
+#      - discovery.type=single-node
+#      - "ES_JAVA_OPTS=-Xms200m -Xmx200m"
+#      - "TAKE_FILE_OWNERSHIP=true"
+#    volumes:
+#      - ../../../data/elasticsearch/data:/usr/share/elasticsearch/data
+#    restart: always
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+#  logstash:
+#    image: logstash:7.9.3
+#    container_name: logstash
+#    restart: always
+#    volumes:
+#      - ../../../data/logstash/logstash-template.conf:/usr/share/logstash/pipeline/logstash-template.conf
+#    depends_on:
+#      - elasticsearch
+#      - kafka
+#  kibana:
+#    image: kibana:7.9.3
+#    container_name: kibana
+#    depends_on:
+#      - elasticsearch
+#    restart: always
+#    ports:
+#      - 5601:5601
 #  kafka-manager:
 #    image: sheepkiller/kafka-manager
 #    container_name: kafka_manager

@@ -8,7 +8,7 @@ touch ./docker/env/docker-compose.yaml
 touch ../data/logstash/logstash.conf
 
 envsubst < ./docker/env/docker-compose-template.yaml > ./docker/env/docker-compose.yaml
-envsubst < ../data/logstash/logstash-template.conf > ../data/logstash/logstash.conf
+#envsubst < ../data/logstash/logstash-template.conf > ../data/logstash/logstash.conf
 
 cd ./docker/env/
 
