@@ -35,9 +35,9 @@ public class AuthController {
 
     @ApiOperation("Oauth2获取token")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "grant_type", value = "授权模式", required = true),
-            @ApiImplicitParam(name = "client_id", value = "Oauth2客户端ID", required = true),
-            @ApiImplicitParam(name = "client_secret", value = "Oauth2客户端秘钥", required = true),
+            @ApiImplicitParam(name = "grant_type", value = "授权模式，你写password就可以了", required = true),
+            @ApiImplicitParam(name = "client_id", value = "Oauth2客户端ID，你写potral就可以了", required = true),
+            @ApiImplicitParam(name = "client_secret", value = "Oauth2客户端秘钥，你写wehappy就可以了", required = true),
             @ApiImplicitParam(name = "refresh_token", value = "刷新token"),
             @ApiImplicitParam(name = "username", value = "登录用户名"),
             @ApiImplicitParam(name = "password", value = "登录密码")

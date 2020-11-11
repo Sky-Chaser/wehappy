@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class MailServiceImpl implements IMailService {
     private final JavaMailSender mailSender;
 
+    private final String QUOTATION = "\"";
+
     @Value("${spring.mail.username}")
     private String from;
 
@@ -36,6 +38,10 @@ public class MailServiceImpl implements IMailService {
 
     @Override
     public void sendRegisterCode(String to, String code) {
+        if (to.contains(QUOTATION)) {
+            to = to.substring(1, to.length() - 1);
+        }
+
         sendSimpleMail(to, "wehappy 注册验证码", code);
     }
 }

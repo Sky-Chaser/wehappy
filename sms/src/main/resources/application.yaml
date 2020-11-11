@@ -19,9 +19,9 @@ spring:
           destination: register-email
           contentType: text/plain
   mail:
-    host: smtp.qq.com
-    username: nhuy@qq.com
-    password: fjcyqogdmjvfjhii
+    host: smtp.163.com
+    username: wehappy996@163.com
+    password: JTDRGVOAJLXMYKTO
     default-encoding: UTF-8
     properties:
       mail:
@@ -32,7 +32,6 @@ spring:
             require: true
           ssl:
             enable: true
-
 #          consumer:
 #            partitioned: true
 #      instance-count: 1

@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * Controller层的日志封装类
+ *
  * @author lollipop
  */
 @Data

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Redis相关配置
+ *
  * @author lollipop
  */
 @Configuration

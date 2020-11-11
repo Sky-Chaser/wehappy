@@ -21,6 +21,7 @@ import java.time.Duration;
 
 /**
  * Redis基础配置
+ *
  * @author lollipop
  */
 public abstract class BaseRedisConfig {

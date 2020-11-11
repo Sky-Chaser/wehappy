@@ -11,7 +11,7 @@ import org.springframework.util.MimeTypeUtils;
 import java.util.Map;
 
 /**
- * Kafka生产者
+ * Kafka 生产者
  *
  * @author zhangyuanhang
  */

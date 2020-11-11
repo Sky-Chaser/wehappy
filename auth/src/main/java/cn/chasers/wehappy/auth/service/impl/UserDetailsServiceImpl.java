@@ -6,6 +6,7 @@ import cn.chasers.wehappy.auth.domain.SecurityUser;
 import cn.chasers.wehappy.common.api.CommonResult;
 import cn.chasers.wehappy.common.api.ResultCode;
 import cn.chasers.wehappy.common.domain.UserDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author lollipop
  */
 @Service
+@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final IUserService userService;
@@ -44,7 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         UserDto userDto = result.getData();
-        System.out.println(userDto);
+        log.info("userDto: {}", userDto);
         if (userDto == null) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }
