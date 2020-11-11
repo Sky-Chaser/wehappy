@@ -1,8 +1,8 @@
 server:
-  port: 8004
+  port: 8006
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/group_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/media_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
     druid:
@@ -41,19 +41,19 @@ spring:
   cloud:
     sentinel:
       transport:
-        port: 7005 #跟控制台交流的端口，随意指定一个未使用的端口即可
+        port: 7007 #跟控制台交流的端口，随意指定一个未使用的端口即可
         dashboard: localhost:8858 # 指定控制台服务的地址
     stream:
       kafka:
         binder:
           # kafka集群
           brokers: localhost:9092
-#      bindings:
-#        # 输出通道
-#        message-output:
-#          # topic
-#          destination: message
-#          contentType: application/octet-stream
+      bindings:
+        # 输出通道
+        message-output:
+          # topic
+          destination: message
+          contentType: application/octet-stream
 
 # mybatis日志
 mybatis-plus:

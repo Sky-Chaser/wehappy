@@ -32,6 +32,12 @@ spring:
             - Path=/account/**
           filters:
             - StripPrefix=1
+        - id: media
+          uri: lb://media
+          predicates:
+            - Path=/media/**
+          filters:
+            - StripPrefix=1
         - id: chat
           uri: lb:ws://chat
           predicates:

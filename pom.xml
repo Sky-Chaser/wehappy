@@ -15,6 +15,7 @@
         <module>sms</module>
         <module>group</module>
         <module>chat</module>
+        <module>media</module>
     </modules>
     <packaging>pom</packaging>
     <description>We are all happy to chat!</description>
