@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 /**
  * 雪花算法生成分布式id的配置类
  *
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Component
 @Slf4j

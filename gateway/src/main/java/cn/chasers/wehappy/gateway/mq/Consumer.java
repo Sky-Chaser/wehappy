@@ -9,7 +9,7 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 /**
  * Kafka消费者
  *
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Slf4j
 @EnableBinding(MqSink.class)

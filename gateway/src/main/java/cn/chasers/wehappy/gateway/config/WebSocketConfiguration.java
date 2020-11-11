@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * websocket 配置类
  *
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Configuration
 public class WebSocketConfiguration {

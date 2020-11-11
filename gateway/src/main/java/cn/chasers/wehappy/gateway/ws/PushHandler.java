@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 消息推送 Handler
  *
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Slf4j
 @Component

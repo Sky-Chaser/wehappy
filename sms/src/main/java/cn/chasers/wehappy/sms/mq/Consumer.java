@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Kafka消费者
  *
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Slf4j
 @EnableBinding(MqSink.class)

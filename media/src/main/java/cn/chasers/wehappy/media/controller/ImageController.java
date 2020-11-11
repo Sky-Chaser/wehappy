@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-11-12
  */
 @RestController
-@RequestMapping("/media/image")
+@RequestMapping("/image")
 public class ImageController {
 
 }

@@ -12,7 +12,7 @@ import org.springframework.util.MimeTypeUtils;
 /**
  * Kafka 生产者
  *
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Slf4j
 @EnableBinding(MqSource.class)

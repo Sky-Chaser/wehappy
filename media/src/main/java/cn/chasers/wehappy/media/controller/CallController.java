@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-11-12
  */
 @RestController
-@RequestMapping("/media/call")
+@RequestMapping("/call")
 public class CallController {
 
 }

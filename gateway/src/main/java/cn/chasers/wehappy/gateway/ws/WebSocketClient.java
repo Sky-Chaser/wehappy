@@ -17,7 +17,7 @@ import java.io.Serializable;
 /**
  * 存储 websocket 客户端信息（类似句柄）
  *
- * @author zhangyuanhang
+ * @author lollipop
  */
 @Slf4j
 @Data

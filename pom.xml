@@ -16,6 +16,7 @@
         <module>group</module>
         <module>chat</module>
         <module>media</module>
+        <module>account</module>
     </modules>
     <packaging>pom</packaging>
     <description>We are all happy to chat!</description>

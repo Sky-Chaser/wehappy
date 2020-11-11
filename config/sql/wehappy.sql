@@ -185,7 +185,7 @@ CREATE TABLE `image`
     `gmt_create`    DATETIME     NOT NULL COMMENT '创建时间',
     `gmt_modified`  DATETIME     NOT NULL COMMENT '更新时间',
     UNIQUE `ux_md5` (`md5`),
-    KEY `ix_gmt_modified` (`gmt_modified`)
+    KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '图片信息表';
 
 CREATE TABLE `video`
@@ -199,7 +199,7 @@ CREATE TABLE `video`
     `gmt_create`    DATETIME     NOT NULL COMMENT '创建时间',
     `gmt_modified`  DATETIME     NOT NULL COMMENT '更新时间',
     UNIQUE `ux_md5` (`md5`),
-    KEY `ix_gmt_modified` (`gmt_modified`)
+    KEY `ix_gmt_create` (`gmt_modified`)
 ) COMMENT = '视频信息表';
 
 CREATE TABLE `voice`
@@ -212,7 +212,7 @@ CREATE TABLE `voice`
     `gmt_create`   DATETIME     NOT NULL COMMENT '创建时间',
     `gmt_modified` DATETIME     NOT NULL COMMENT '更新时间',
     UNIQUE `ux_md5` (`md5`),
-    KEY `ix_gmt_modified` (`gmt_modified`)
+    KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '语音信息表';
 
 CREATE TABLE `call`
@@ -221,7 +221,7 @@ CREATE TABLE `call`
     `time`         INT      NOT NULL COMMENT '时长',
     `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_gmt_modified` (`gmt_modified`)
+    KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '通话信息表';
 
 USE `account_db`;
