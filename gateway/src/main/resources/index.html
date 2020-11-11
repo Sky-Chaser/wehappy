@@ -10,7 +10,7 @@
     //判断当前浏览器是否支持websocket
     if (window.WebSocket) {
         //  go on
-        socket = new WebSocket("ws://localhost:9001/receive?token=");
+        socket = new WebSocket("ws://localhost:9001/receive?token=wodiaonimade");
         // 收到服务器端回送的消息
         socket.onmessage = function (ev) {
             const rt = document.getElementById("responseText");

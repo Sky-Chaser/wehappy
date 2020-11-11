@@ -33,7 +33,7 @@ public class SnowflakeConfig {
         workerId = NetUtil.ipv4ToLong(NetUtil.getLocalhostStr()) & (1 << 5 - 1);
         datacenterId = 1 & (1 << 5 - 1);
         snowflake = IdUtil.createSnowflake(workerId, datacenterId);
-        log.info("当前机器的workId:{}", workerId);
+        log.info("Current machine workId:{}", workerId);
     }
 
     public synchronized long snowflakeId() {

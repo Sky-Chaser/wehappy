@@ -1,3 +1,5 @@
+server:
+  port: 8005
 spring:
   cloud:
     sentinel:
@@ -51,7 +53,6 @@ netty:
   businessCorePoolSize: 200
   businessMaxPoolSize: 300
   businessMaxKeepAliveTime: 30
-  port: 8005
 
 redis:
   database: chatService

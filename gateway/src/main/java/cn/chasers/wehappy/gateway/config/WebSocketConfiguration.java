@@ -23,8 +23,8 @@ public class WebSocketConfiguration {
     @Bean
     public HandlerMapping webSocketMapping(PushHandler pushHandler) {
 
-        // 使用 map 指定 WebSocket 协议的路由，路由为 ws://localhost:8080/receive
-        Map<String, WebSocketHandler> map = new HashMap<>(1);
+        // 使用 map 指定 WebSocket 协议的路由，路由为 ws://localhost:9001/receive
+        Map<String, WebSocketHandler> map = new HashMap<>(2);
         map.put("/receive", pushHandler);
 
         // SimpleUrlHandlerMapping 指定了 WebSocket 的路由配置

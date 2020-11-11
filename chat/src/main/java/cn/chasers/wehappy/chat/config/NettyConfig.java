@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "netty")
 public class NettyConfig {
-    private int port;
     private int bossThreadNum;
     private int workerThreadNum;
     private int businessCorePoolSize;

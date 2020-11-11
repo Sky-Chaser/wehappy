@@ -11,6 +11,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
@@ -25,14 +26,14 @@ import java.net.InetSocketAddress;
 @Component
 public class ChatServer {
 
-    private final NettyConfig nettyConfig;
-
     private final EventLoopGroup bossGroup;
     private final EventLoopGroup workerGroup;
 
+    @Value("${server.port}")
+    private int port;
+
     @Autowired
     public ChatServer(NettyConfig nettyConfig) {
-        this.nettyConfig = nettyConfig;
         bossGroup = new NioEventLoopGroup(nettyConfig.getBossThreadNum());
         workerGroup = new NioEventLoopGroup(nettyConfig.getWorkerThreadNum());
     }
@@ -46,7 +47,7 @@ public class ChatServer {
                     // 2 设置nio类型的channel
                     .channel(NioServerSocketChannel.class)
                     // 3 设置监听端口
-                    .localAddress(new InetSocketAddress(nettyConfig.getPort()))
+                    .localAddress(new InetSocketAddress(port))
                     // 4 设置通道选项
 //                    .option(ChannelOption.SO_KEEPALIVE, true)
                     .option(ChannelOption.SO_BACKLOG, 1024)
