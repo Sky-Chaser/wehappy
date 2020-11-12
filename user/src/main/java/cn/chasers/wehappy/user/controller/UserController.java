@@ -3,6 +3,7 @@ package cn.chasers.wehappy.user.controller;
 
 import cn.chasers.wehappy.common.api.CommonPage;
 import cn.chasers.wehappy.common.api.CommonResult;
+import cn.chasers.wehappy.common.domain.UserDto;
 import cn.chasers.wehappy.user.constant.DtoConstant;
 import cn.chasers.wehappy.user.constant.MessageConstant;
 import cn.chasers.wehappy.user.dto.QueryParams;
@@ -84,5 +85,15 @@ public class UserController {
         }
 
         return CommonResult.success(userService.getByEmail(queryParams.getEmail()));
+    }
+
+    @ApiOperation("根据用户ID查询用户信息")
+    @GetMapping("/{id}")
+    public CommonResult<UserDto> query(@Validated @ApiParam("用户ID") @PathVariable Long id) {
+        User user = userService.getById(id);
+        if (user == null) {
+            return CommonResult.success(null);
+        }
+        return CommonResult.success(UserDto.builder().id(user.getId()).username(user.getUsername()).build());
     }
 }

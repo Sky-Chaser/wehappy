@@ -1,5 +1,6 @@
 package cn.chasers.wehappy.common.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
+@Builder
 public class UserDto {
     private Long id;
     private String username;
