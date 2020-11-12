@@ -13,7 +13,6 @@ import cn.chasers.wehappy.user.service.IUserCacheService;
 import cn.chasers.wehappy.user.service.IUserService;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

@@ -1,9 +1,7 @@
 package cn.chasers.wehappy.group.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
 import cn.chasers.wehappy.common.entity.BaseEntity;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -42,5 +40,7 @@ public class GroupUser extends BaseEntity {
     @TableField("status")
     private Integer status;
 
-
+    @ApiModelProperty(value = "用户类型：0表示普通群员，1表示管理员，2表示群主")
+    @TableField("type")
+    private Integer type;
 }

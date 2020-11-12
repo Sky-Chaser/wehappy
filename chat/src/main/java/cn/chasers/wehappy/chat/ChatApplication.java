@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @author lollipop
  * @date 2020/11/4
  */
-@SpringBootApplication(scanBasePackages = "cn.chasers.wehappy")
+@SpringBootApplication
 public class ChatApplication implements CommandLineRunner {
 
     private final ExecutorService executor;
