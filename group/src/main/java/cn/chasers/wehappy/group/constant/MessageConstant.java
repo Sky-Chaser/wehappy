@@ -15,5 +15,8 @@ public class MessageConstant {
 
     public static final String ERROR_SYS = "系统错误";
 
+    public static final String IS_NOT_ADMIN = "该用户不是群主";
+
+    public static final String IS_NOT_MEMBER = "该用户不是群成员";
 
 }

@@ -1,10 +1,8 @@
 package cn.chasers.wehappy.group.service;
 
-import cn.chasers.wehappy.group.dto.GroupDto;
+import cn.chasers.wehappy.group.dto.UpdateGroupParams;
 import cn.chasers.wehappy.group.entity.Group;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
 
 /**
  * <p>
@@ -31,10 +29,10 @@ public interface IGroupService extends IService<Group> {
 
     /**
      * 修改群组信息
-     * @param groupDto  需要修改的具体信息
+     * @param updateGroupParams  需要修改的具体信息
      * @return          返回是否修改成功
      */
-    boolean update(GroupDto groupDto);
+    boolean update(UpdateGroupParams updateGroupParams);
 
     /**
      * 转让群组

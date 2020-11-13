@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class GroupDto {
+public class UpdateGroupParams {
     private Long id;
     private String name;
     private String avatar;
