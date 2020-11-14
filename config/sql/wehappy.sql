@@ -20,7 +20,6 @@ CREATE TABLE `user`
     `password`     VARCHAR(100) NOT NULL COMMENT '密码',
     `sex`          TINYINT      NOT NULL DEFAULT 0 COMMENT '性别：0表示男性，1表示女性，2表示未知',
     `avatar`       VARCHAR(200) NOT NULL COMMENT '头像链接',
-    `last_login`   DATETIME     COMMENT '上次登录时间',
     `gmt_create`   DATETIME     NOT NULL COMMENT '创建时间',
     `gmt_modified` DATETIME     NOT NULL COMMENT '更新时间',
     `status`       TINYINT      NOT NULL DEFAULT 1 COMMENT '状态：1表示正常，2表示被冻结',
@@ -155,7 +154,7 @@ CREATE TABLE `group_user`
     `group_id`        BIGINT   NOT NULL COMMENT '群聊id',
     `user_id`         BIGINT   NOT NULL COMMENT '用户id',
     `invited_user_id` BIGINT   NOT NULL COMMENT '邀请用户id',
-    `status`          TINYINT  NOT NULL DEFAULT 0 COMMENT '状态：0表示正常，1表示管理员邀请还未同意进群，2表示用户申请加群还未通过',
+    `status`          TINYINT  NOT NULL DEFAULT 0 COMMENT '状态：0表示正常，1表示管理员邀请还未同意进群，2表示用户申请加群还未通过,3表示被禁言',
     `gmt_create`      DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified`    DATETIME NOT NULL COMMENT '更新时间',
     KEY `ix_user_id` (`user_id`),
@@ -260,3 +259,5 @@ CREATE TABLE `small_red_envelope`
     `gmt_modified`        DATETIME         NOT NULL COMMENT '更新时间',
     UNIQUE `ux_big_red_envelope_id_user_id` (`big_red_envelope_id`, `user_id`)
 ) COMMENT = '小红包信息表';
+
+INSERT INTO `user_db`.`user` (`id`, `email`, `username`, `password`, `sex`, `avatar`, `gmt_create`, `gmt_modified`, `status`, `number_like`) VALUES (1327499604039708673, '1093275610@163.com', 'lollipop', '$2a$10$vFmR4Xiv7tK4HkuYrkjwCeE1TjH7I06EBGlFCYlOwhFmVrDNwKXWq', 0, 'default.jpg', '2020-11-14 14:32:24', '2020-11-14 14:32:24', 1, 0);

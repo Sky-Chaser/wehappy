@@ -1,6 +1,5 @@
 package cn.chasers.wehappy.chat.handler.dispatcher;
 
-import cn.chasers.wehappy.chat.config.NettyConfig;
 import cn.chasers.wehappy.common.msg.ProtoMsg;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -27,12 +26,12 @@ public class DispatcherHandler extends SimpleChannelInboundHandler<ProtoMsg.Mess
     private final ExecutorService executor;
 
     @Autowired
-    public DispatcherHandler(MessageHandlerContainer messageHandlerContainer, NettyConfig nettyConfig) {
+    public DispatcherHandler(MessageHandlerContainer messageHandlerContainer) {
         this.messageHandlerContainer = messageHandlerContainer;
         executor = new ThreadPoolExecutor(
-                nettyConfig.getBusinessCorePoolSize(),
-                nettyConfig.getBusinessMaxPoolSize(),
-                nettyConfig.getBusinessMaxKeepAliveTime(),
+                200,
+                200,
+                30,
                 TimeUnit.SECONDS,
                 new LinkedBlockingQueue<>(),
                 new ThreadPoolExecutor.AbortPolicy()

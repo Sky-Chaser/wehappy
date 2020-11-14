@@ -1,9 +1,13 @@
 package cn.chasers.wehappy.gateway.ws;
 
+import cn.chasers.wehappy.common.constant.AuthConstant;
+import cn.chasers.wehappy.common.domain.UserDto;
 import cn.chasers.wehappy.common.msg.ProtoMsg;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.nimbusds.jose.JWSObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.socket.HandshakeInfo;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -11,6 +15,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,24 +33,36 @@ public class PushHandler implements WebSocketHandler {
     public static ConcurrentHashMap<Long, WebSocketClient> clients = new ConcurrentHashMap<>();
 
     @Override
+    public List<String> getSubProtocols() {
+        return Collections.singletonList(AuthConstant.JWT_TOKEN_PREFIX);
+    }
+
+    @Override
     public Mono<Void> handle(WebSocketSession session) {
         HandshakeInfo handshakeInfo = session.getHandshakeInfo();
         InetSocketAddress remoteAddress = handshakeInfo.getRemoteAddress();
 
-        String token = null;
+        String token;
+        UserDto userDto = null;
 
         try {
-            token = handshakeInfo.getUri().getQuery().split("=")[1];
-            log.info("token = {}", token);
+            token = handshakeInfo.getHeaders().get("Sec-WebSocket-Protocol").get(1);
+            if (StrUtil.isEmpty(token)) {
+                return Mono.empty();
+            }
+
+            // 从token中解析用户信息并设置到Header中去
+            userDto = JSONUtil.toBean(JWSObject.parse(token).getPayload().toString(), UserDto.class);
         } catch (Exception e) {
+            log.error("parse token error {0}", e);
             return Mono.empty();
         }
 
-        if (StringUtils.isEmpty(token)) {
+        if (userDto == null) {
             return Mono.empty();
         }
 
-        long userId = 0;
+        final long userId = userDto.getId();
 
         // 出站
         Mono<Void> output = session.send(Flux.create(sink -> handleClient(userId, new WebSocketClient(sink, session))));
@@ -54,9 +73,8 @@ public class PushHandler implements WebSocketHandler {
                     log.info("new websocket session：{}, ip：{}", session.getId(), Objects.requireNonNull(remoteAddress).getAddress());
                 })
                 .doOnNext(msg -> {
-                    String message= msg.getPayloadAsText();
+                    String message = msg.getPayloadAsText();
                     log.info("message: {}", message);
-                    // TODO
                 })
                 .doOnComplete(() -> {
                     log.info("关闭连接：{}", session.getId());
@@ -77,6 +95,22 @@ public class PushHandler implements WebSocketHandler {
     private void handleClient(long userId, WebSocketClient client) {
         clients.put(userId, client);
         log.info("用户：{}，上线!", userId);
+
+        ProtoMsg.PushMessage pushMessage =
+                ProtoMsg.PushMessage.newBuilder()
+                        .setContentType(ProtoMsg.ContentType.TEXT)
+                        .setTime(System.currentTimeMillis())
+                        .setContent("你好我好大家好")
+                        .build();
+
+        ProtoMsg.Message message =
+                ProtoMsg.Message.newBuilder()
+                        .setMessageType(ProtoMsg.MessageType.PUSH_MESSAGE)
+                        .setTo(userId)
+                        .setPushMessage(pushMessage)
+                        .setSequence(489257)
+                        .build();
+        sendTo(message);
     }
 
     /**
