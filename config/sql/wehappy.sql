@@ -155,22 +155,12 @@ CREATE TABLE `group_user`
     `user_id`         BIGINT   NOT NULL COMMENT '用户id',
     `invited_user_id` BIGINT   NOT NULL COMMENT '邀请用户id',
     `status`          TINYINT  NOT NULL DEFAULT 0 COMMENT '状态：0表示正常，1表示管理员邀请还未同意进群，2表示用户申请加群还未通过,3表示被禁言',
+    `type`            TINYINT  NOT NULL COMMENT '用户类型：0表示普通群员，1表示管理员，2表示群主',
     `gmt_create`      DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified`    DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_user_id` (`user_id`),
+    KEY `ix_user_id_type` (`user_id`, `type`),
     KEY `ix_group_id` (`group_id`)
 ) COMMENT = '群聊用户表';
-
-CREATE TABLE `group_admin`
-(
-    `id`           BIGINT PRIMARY KEY,
-    `group_id`     BIGINT   NOT NULL COMMENT '群聊id',
-    `user_id`      BIGINT   NOT NULL COMMENT '用户id',
-    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_user_id` (`user_id`),
-    KEY `ix_group_id` (`group_id`)
-) COMMENT = '群聊管理员表';
 
 USE `media_db`;
 

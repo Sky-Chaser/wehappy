@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="./chatmessage.js"></script>
+<script src="./contenttype.js"></script>
+<script src="./message.js"></script>
+<script src="./messagetype.js"></script>
+<script src="./pushmessage.js"></script>
+<script src="./responsemessage.js"></script>
+<script>
+    let socket;
+    //判断当前浏览器是否支持websocket
+    if (window.WebSocket) {
+        //  go on
+        socket = new WebSocket("ws://localhost:9001/receive?token=Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMyNjc1MTI2ODE1MzM2MDM4NiwiZXhwIjoxNjA1MjQzNTg5LCJ1c2VyX25hbWUiOiJsb2xsaXBvcCIsImp0aSI6IjQyZjhlNzIwLTM4NTMtNDVhZS04MmRiLTMwYjYzYWRmMzc5YyIsImNsaWVudF9pZCI6InBvcnRhbCIsInNjb3BlIjpbImFsbCJdfQ.qs9NXcBu_6buDHq82mOWbAfT_Uu-NB_oisV-UVCA1xU9iSxGua_h08O0wMGtpATpOqGBApu7T9MxTTz74aVN7M53gk-5XuEvnoDumXqn9a-3CcHlcvB144K8usyuy3B7N00nD37NfzXgdTJsKxVRBHvN9PTWZitSJgZV-51YF7uaZ41I2DaFHbvgZX7bpa3IzjBHHHblA4m-vAvDEVdhsgqS_pt_iQcnY_UssPM9RHWakS1ZSe-aEQHpojUZxmdnbQ4r-LmMYAmT7dFMxFAhzbCybGyrFVoykoLjPJ_mj5RVA1466lr7uy9MgD6Gov9fbxemp-aNdzJHsGLB_U1BSQ");
+        // 收到服务器端回送的消息
+        socket.onmessage = function (ev) {
+            const rt = document.getElementById("responseText");
+            console.log(ev.data)
+            // proto.Message.deserializeBinary(ev.data)
+
+            rt.value = rt.value + "\n" + ev.data;
+        }
+
+        // 相当于连接开启(感知到连接开启)
+        socket.onopen = function (ev) {
+            const rt = document.getElementById("responseText");
+            rt.value = "连接开启了.."
+        }
+
+        // 相当于连接关闭(感知到连接关闭)
+        socket.onclose = function (ev) {
+            const rt = document.getElementById("responseText");
+            rt.value = rt.value + "\n" + "连接关闭了.."
+        }
+    } else {
+        alert("当前浏览器不支持websocket")
+    }
+
+    //发送消息到服务器
+    function send(message) {
+        if (!socket) { //先判断socket是否创建好
+            return;
+        }
+        if (socket.readyState === WebSocket.OPEN) {
+            //通过socket 发送消息
+            socket.send(message)
+        } else {
+            alert("连接没有开启");
+        }
+    }
+</script>
+<form onsubmit="return false">
+    <textarea name="message" style="height: 300px; width: 300px"></textarea>
+    <input type="button" value="发送消息" onclick="send(this.form.message.value)">
+    <textarea id="responseText" style="height: 300px; width: 300px"></textarea>
+    <input type="button" value="清空内容" onclick="document.getElementById('responseText').value=''">
+</form>
+</body>
+</html>

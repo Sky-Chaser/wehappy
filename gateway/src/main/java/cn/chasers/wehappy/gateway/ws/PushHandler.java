@@ -15,7 +15,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class PushHandler implements WebSocketHandler {
 
-    public static ConcurrentHashMap<Long, WebSocketClient> clients = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<Long, WebSocketClient> clients = new ConcurrentHashMap<>(200);
 
     @Override
     public List<String> getSubProtocols() {
@@ -69,19 +68,24 @@ public class PushHandler implements WebSocketHandler {
 
         // 入站
         Mono<Void> input = session.receive()
+                // 建立连接时触发
                 .doOnSubscribe(conn -> {
-                    log.info("new websocket session：{}, ip：{}", session.getId(), Objects.requireNonNull(remoteAddress).getAddress());
+                    log.info("new websocket session: {}, ip: {}", session.getId(), Objects.requireNonNull(remoteAddress).getAddress());
                 })
+                // 客户端发送消息时触发
                 .doOnNext(msg -> {
                     String message = msg.getPayloadAsText();
                     log.info("message: {}", message);
                 })
+                // 连接结束时触发
                 .doOnComplete(() -> {
-                    log.info("关闭连接：{}", session.getId());
+                    log.info("websocket session completed: {}", session.getId());
                     removeUser(userId);
                     session.close().toProcessor().then();
-                }).doOnCancel(() -> {
-                    log.info("关闭连接：{}", session.getId());
+                })
+                // 连接关闭时触发
+                .doOnCancel(() -> {
+                    log.info("websocket session closed: {}", session.getId());
                 }).then();
 
         return Mono.zip(input, output).then();

@@ -48,12 +48,12 @@ spring:
         binder:
           # kafka集群
           brokers: localhost:9092
-#      bindings:
-#        # 输出通道
-#        message-output:
-#          # topic
-#          destination: message
-#          contentType: application/octet-stream
+      bindings:
+        # 输出通道
+        message-output:
+          # topic
+          destination: message
+          contentType: application/octet-stream
 
 # mybatis日志
 mybatis-plus:
@@ -84,3 +84,7 @@ ribbon:
 #  userInfo:
 #    key: 'user:info'
 #    expire: 86400
+
+# 自定义常量
+default:
+  avatar: default.jpg
