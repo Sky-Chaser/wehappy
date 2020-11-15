@@ -39,9 +39,6 @@ public class User extends BaseEntity {
     @ApiModelProperty(value = "头像链接")
     private String avatar;
 
-    @ApiModelProperty(value = "上次登录时间")
-    private LocalDateTime lastLogin;
-
     @ApiModelProperty(value = "状态：0表示注册未激活，1表示正常，2表示被冻结")
     private Integer status;
 

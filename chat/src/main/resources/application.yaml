@@ -47,13 +47,6 @@ management:
     health:
       show-details: always
 
-netty:
-  bossThreadNum: 0
-  workerThreadNum: 0
-  businessCorePoolSize: 200
-  businessMaxPoolSize: 300
-  businessMaxKeepAliveTime: 30
-
 redis:
   database: chatService
   separator: ":"

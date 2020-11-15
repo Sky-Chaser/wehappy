@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="js/proto/ProtoMsg.js"></script>
+    <script type="text/javascript" src="js/ws/WehappyWebSocket.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+</script>
+<form onsubmit="return false">
+    <div>
+        <textarea name="message" style="height: 500px; width: 800px"></textarea>
+        <input type="button" value="发送消息" onclick="send(this.form.message.value)">
+    </div>
+
+    <div>
+        <textarea id="responseText" style="height: 500px; width: 800px"></textarea>
+        <input type="button" value="清空内容" onclick="document.getElementById('responseText').value=''">
+    </div>
+</form>
+</body>
+</html>

@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author liamcoder
  * @date 2020/11/12 12:40 上午
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.chasers.wehappy")
 @EnableDiscoveryClient
 @EnableFeignClients
 public class GroupApplication {

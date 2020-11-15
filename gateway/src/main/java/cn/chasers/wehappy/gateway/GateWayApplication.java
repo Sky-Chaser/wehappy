@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * @author lollipop
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.chasers.wehappy")
 @EnableDiscoveryClient
 public class GateWayApplication {
     public static void main(String[] args) {

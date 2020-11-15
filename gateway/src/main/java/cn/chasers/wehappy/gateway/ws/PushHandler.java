@@ -5,10 +5,8 @@ import cn.chasers.wehappy.common.domain.UserDto;
 import cn.chasers.wehappy.common.msg.ProtoMsg;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.nimbusds.jose.JWSObject;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.HandshakeInfo;
 import org.springframework.web.reactive.socket.WebSocketHandler;
@@ -17,6 +15,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -32,25 +32,28 @@ public class PushHandler implements WebSocketHandler {
     public static ConcurrentHashMap<Long, WebSocketClient> clients = new ConcurrentHashMap<>(200);
 
     @Override
+    public List<String> getSubProtocols() {
+        return Collections.singletonList(AuthConstant.JWT_TOKEN_PREFIX);
+    }
+
+    @Override
     public Mono<Void> handle(WebSocketSession session) {
         HandshakeInfo handshakeInfo = session.getHandshakeInfo();
         InetSocketAddress remoteAddress = handshakeInfo.getRemoteAddress();
 
         String token;
-        UserDto userDto;
+        UserDto userDto = null;
 
         try {
-            token = handshakeInfo.getUri().getQuery().split("=")[1];
+            token = handshakeInfo.getHeaders().get("Sec-WebSocket-Protocol").get(1);
             if (StrUtil.isEmpty(token)) {
                 return Mono.empty();
             }
+
             // 从token中解析用户信息并设置到Header中去
-            String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
-            JWSObject jwsObject = JWSObject.parse(realToken);
-            String userStr = jwsObject.getPayload().toString();
-            userDto = JSONUtil.toBean(userStr, UserDto.class);
-            log.info("PushHandler.handle() userDto:{}", userDto);
+            userDto = JSONUtil.toBean(JWSObject.parse(token).getPayload().toString(), UserDto.class);
         } catch (Exception e) {
+            log.error("parse token error {0}", e);
             return Mono.empty();
         }
 
@@ -58,8 +61,10 @@ public class PushHandler implements WebSocketHandler {
             return Mono.empty();
         }
 
+        final long userId = userDto.getId();
+
         // 出站
-        Mono<Void> output = session.send(Flux.create(sink -> handleClient(userDto.getId(), new WebSocketClient(sink, session))));
+        Mono<Void> output = session.send(Flux.create(sink -> handleClient(userId, new WebSocketClient(sink, session))));
 
         // 入站
         Mono<Void> input = session.receive()
@@ -71,27 +76,11 @@ public class PushHandler implements WebSocketHandler {
                 .doOnNext(msg -> {
                     String message = msg.getPayloadAsText();
                     log.info("message: {}", message);
-                    ProtoMsg.PushMessage pushMessage =
-                            ProtoMsg.PushMessage.newBuilder()
-                                    .setContentType(ProtoMsg.ContentType.TEXT)
-                                    .setTime(System.currentTimeMillis())
-                                    .setContent("hahahaha")
-                                    .build();
-
-                    ProtoMsg.Message m =
-                            ProtoMsg.Message.newBuilder()
-                                    .setMessageType(ProtoMsg.MessageType.PUSH_MESSAGE)
-                                    .setTo(userDto.getId())
-                                    .setPushMessage(pushMessage)
-                                    .setSequence(2222)
-                                    .build();
-
-                    sendTo(m);
                 })
                 // 连接结束时触发
                 .doOnComplete(() -> {
                     log.info("websocket session completed: {}", session.getId());
-                    removeUser(userDto.getId());
+                    removeUser(userId);
                     session.close().toProcessor().then();
                 })
                 // 连接关闭时触发
@@ -110,6 +99,22 @@ public class PushHandler implements WebSocketHandler {
     private void handleClient(long userId, WebSocketClient client) {
         clients.put(userId, client);
         log.info("用户：{}，上线!", userId);
+
+        ProtoMsg.PushMessage pushMessage =
+                ProtoMsg.PushMessage.newBuilder()
+                        .setContentType(ProtoMsg.ContentType.TEXT)
+                        .setTime(System.currentTimeMillis())
+                        .setContent("你好我好大家好")
+                        .build();
+
+        ProtoMsg.Message message =
+                ProtoMsg.Message.newBuilder()
+                        .setMessageType(ProtoMsg.MessageType.PUSH_MESSAGE)
+                        .setTo(userId)
+                        .setPushMessage(pushMessage)
+                        .setSequence(489257)
+                        .build();
+        sendTo(message);
     }
 
     /**

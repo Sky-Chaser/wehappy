@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author lollipop
  * @date 2020/11/12
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.chasers.wehappy")
 public class AccountApplication {
     public static void main(String[] args) {
         SpringApplication.run(AccountApplication.class, args);

@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * `auth` 服务启动类
  * @author lollipop
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "cn.chasers.wehappy")
 @EnableDiscoveryClient
 @EnableFeignClients
 public class AuthApplication {
