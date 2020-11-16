@@ -34,7 +34,6 @@ public class GroupChatHandler implements MessageHandler {
     public void execute(ProtoMsg.Message msg, WebSocketClient client) {
         log.info("GroupChatHandler [execute] {}", msg);
         ProtoMsg.ResponseMessage response = ProtoMsg.ResponseMessage.newBuilder()
-                .setId(msg.getChatMessage().getId())
                 .setResult(true)
                 .setExpose(false)
                 .build();
@@ -43,6 +42,7 @@ public class GroupChatHandler implements MessageHandler {
 
         ProtoMsg.Message replyMessage =
                 ProtoMsg.Message.newBuilder()
+                        .setId(msg.getId())
                         .setTo(msg.getChatMessage().getFrom())
                         .setMessageType(ProtoMsg.MessageType.RESPONSE_MESSAGE)
                         .setSequence(sequence)

@@ -8,6 +8,7 @@ import cn.chasers.wehappy.common.msg.ProtoMsg;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.nimbusds.jose.JWSObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -19,7 +20,6 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
@@ -54,27 +54,28 @@ public class ChatHandler implements WebSocketHandler {
 
     @Override
     public List<String> getSubProtocols() {
-        return Collections.singletonList(AuthConstant.JWT_TOKEN_PREFIX);
+        return Collections.singletonList(AuthConstant.JWT_TOKEN_PREFIX.trim());
     }
 
     @Override
     public Mono<Void> handle(WebSocketSession session) {
         HandshakeInfo handshakeInfo = session.getHandshakeInfo();
-        InetSocketAddress remoteAddress = handshakeInfo.getRemoteAddress();
 
         String token;
         UserDto userDto = null;
 
         try {
-            token = handshakeInfo.getHeaders().get("Sec-WebSocket-Protocol").get(1);
+            token = handshakeInfo.getHeaders().getFirst("Sec-WebSocket-Protocol");
             if (StrUtil.isEmpty(token)) {
                 return Mono.empty();
             }
 
-            // 从token中解析用户信息并设置到Header中去
-            userDto = JSONUtil.parse(token).toBean(UserDto.class);
+            String realToken = token.replace(AuthConstant.WS_JWT_TOKEN_PREFIX, "").trim();
+            log.info(realToken);
+            // 从token中解析用户信息
+            userDto = JSONUtil.parse(JWSObject.parse(realToken).getPayload().toString()).toBean(UserDto.class);
         } catch (Exception e) {
-            log.error("parse token error {0}", e);
+            log.error("parse token error", e);
             return Mono.empty();
         }
 
@@ -104,7 +105,7 @@ public class ChatHandler implements WebSocketHandler {
             handleMessage(msg, userId);
             log.info("doOnNext");
         }).doOnError(e -> {
-            log.error("{0}", e);
+            log.error("", e);
             log.error("doOnError");
             removeUser(userId);
             session.close().toProcessor().then();
@@ -135,7 +136,7 @@ public class ChatHandler implements WebSocketHandler {
                 ProtoMsg.PushMessage.newBuilder()
                         .setContentType(ProtoMsg.ContentType.TEXT)
                         .setTime(System.currentTimeMillis())
-                        .setContent("你好我好大家好")
+                        .setContent("嘿嘿")
                         .build();
 
         ProtoMsg.Message message =
@@ -143,7 +144,7 @@ public class ChatHandler implements WebSocketHandler {
                         .setMessageType(ProtoMsg.MessageType.PUSH_MESSAGE)
                         .setTo(userId)
                         .setPushMessage(pushMessage)
-                        .setSequence(489257)
+                        .setSequence(4892257)
                         .build();
         sendTo(message);
     }

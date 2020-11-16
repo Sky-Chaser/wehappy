@@ -33,7 +33,7 @@ public class PushHandler implements WebSocketHandler {
 
     @Override
     public List<String> getSubProtocols() {
-        return Collections.singletonList(AuthConstant.JWT_TOKEN_PREFIX);
+        return Collections.singletonList(AuthConstant.JWT_TOKEN_PREFIX.trim());
     }
 
     @Override
@@ -50,11 +50,11 @@ public class PushHandler implements WebSocketHandler {
                 return Mono.empty();
             }
 
-            String realToken = token.replace(AuthConstant.WS_JWT_TOKEN_PREFIX, "");
+            String realToken = token.replace(AuthConstant.WS_JWT_TOKEN_PREFIX, "").trim();
             // 从token中解析用户信息并设置到Header中去
             userDto = JSONUtil.parse(JWSObject.parse(realToken).getPayload().toString()).toBean(UserDto.class);
         } catch (Exception e) {
-            log.error("parse token error {0}", e);
+            log.error("parse token error", e);
             return Mono.empty();
         }
 
@@ -134,7 +134,7 @@ public class PushHandler implements WebSocketHandler {
         try{
             clients.get(message.getTo()).sendData(message);
         } catch (Exception e) {
-            log.error("推送消息出错, {0}", e);
+            log.error("推送消息出错", e);
         }
     }
 }

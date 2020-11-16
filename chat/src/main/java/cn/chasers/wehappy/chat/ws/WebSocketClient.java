@@ -33,8 +33,6 @@ public class WebSocketClient implements Serializable {
      */
     public void sendData(ProtoMsg.Message message) {
         byte[] body = message.toByteArray();
-        int len = Integer.BYTES + body.length;
-        byte[] head = Convert.intToBytes(len);
-        sink.next(session.binaryMessage(bufferFactory -> bufferFactory.allocateBuffer(len).write(head).write(body)));
+        sink.next(session.binaryMessage(bufferFactory -> bufferFactory.wrap(body)));
     }
 }
