@@ -1,3 +1,91 @@
+// 全局自增消息Id
+let id = 1;
+// 接收推送的wsUrl
+let receiveWsUrl = "ws://localhost:9901/receive";
+// 发送消息的wsUrl
+let sendWsUrl = "ws://localhost:9901/chat";
+// token, 用于身份认证
+let subProtocols = ["Bearer",];
+
+// 接收推送消息的websocket对象
+let receiveWebSocket;
+// 发送消息的websocket对象
+let sendWebSocket;
+
+let chatTypeInput;
+let toIdInput;
+let messageInput;
+let responseInput;
+let sendMessageButton;
+let clearResponseButton;
+let userId1Input;
+let userId2Input;
+let loginButton;
+
+window.onload = () => {
+    chatTypeInput = document.getElementById("chatType");
+    toIdInput = document.getElementById("toId");
+    messageInput = document.getElementById("message");
+    responseInput = document.getElementById("response");
+    sendMessageButton = document.getElementById("sendMessage");
+    clearResponseButton = document.getElementById("clearResponse")
+    loginButton = document.getElementById("login");
+    userId1Input = document.getElementById("userId1");
+    userId2Input = document.getElementById("userId2");
+    sendMessageButton.onclick = function () {
+        if (chatTypeInput.value) {
+            sendSingleChatMessage(toIdInput.value, proto.ContentType.TEXT, messageInput.value);
+        } else {
+            sendGroupChatMessage(toIdInput.value, proto.ContentType.TEXT, messageInput.value);
+        }
+    }
+
+    clearResponseButton.onclick = function () {
+        responseInput.value = '';
+    }
+
+    loginButton.onclick = function () {
+        subProtocols.push(userId2Input.checked ? userId1Input.value : userId2Input.value);
+        receiveWebSocket = new WehappyWebSocket(receiveWsUrl, subProtocols);
+        sendWebSocket = new WehappyWebSocket(sendWsUrl, subProtocols);
+
+        /**
+         * 接受到消息(感知到服务端发来消息)
+         * @param ev
+         */
+        receiveWebSocket.webSocket.onmessage = function (ev) {
+            let message;
+            if (ev.data instanceof ArrayBuffer) {
+                message = proto.Message.deserializeBinary(ev.data);
+            } else {
+                message = ev.data
+            }
+            responseInput.value += "\n sequence: " + message.getSequence();
+            responseInput.value += "\n id: " + message.getId();
+            responseInput.value += "\n type: " + message.getMessagetype();
+            responseInput.value += "\n to: " + message.getTo();
+            responseInput.value += "\n content: " + JSON.stringify(getPushMessageContent(message.getPushmessage()));
+        }
+
+        /**
+         * 相当于连接开启(感知到连接开启)
+         * @param ev
+         */
+        receiveWebSocket.webSocket.onopen = function (ev) {
+            responseInput.value = "连接开启了.."
+        }
+
+        /**
+         * 相当于连接关闭(感知到连接关闭)
+         * @param ev
+         */
+        receiveWebSocket.webSocket.onclose = function (ev) {
+            console.log(ev)
+            responseInput.value += "\n" + "连接关闭了.."
+        }
+    }
+}
+
 /**
  * wehappy项目中用到的所有websocket操作都通过该类封装
  * @param url ws地址
@@ -12,57 +100,6 @@ function WehappyWebSocket(url, protocols) {
 
     this.webSocket = protocols ? new WebSocket(url, protocols) : new WebSocket(url)
     this.webSocket.binaryType = "arraybuffer";
-}
-
-// 全局自增消息Id
-let id = 1;
-// 接收推送的wsUrl
-let receiveWsUrl = "ws://localhost:9001/receive";
-// 发送消息的wsUrl
-let sendWsUrl = "ws://localhost:9001/chat";
-// token,用于身份认证
-let token = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMyNzQ5OTYwNDAzOTcwODY3MywiZXhwIjoxNjA1NDIxOTY5LCJ1c2VyX25hbWUiOiJsb2xsaXBvcCIsImp0aSI6ImNlMGZmNjQ0LWQwNmMtNDZiYi04NGQzLTBmY2NmMmU5MWQ4NiIsImNsaWVudF9pZCI6InBvcnRhbCIsInNjb3BlIjpbImFsbCJdfQ.WhpxtkSa5Aw0hh-9kjXIutfdjw-2TpOGGCRhE0IZlPuYc_nYeqvhh4Bw4u19Y9gDQYybl4Vlp2Ui_tatgDuYrhFHIGtQRGknUcczi-5Cafp6sT12t958wqwZyqDjOSIBFCWIxvbwH7Qg4h7elTwZGlHQF6Psp-1j_yGMzD4k8dc4i7zbhFfCTB5qfNzpWVDU12KFUR-5N44ncqYaCd8N_VwtoN75inoj7Y011n5-McrKBC7BlGgGidQ4aOn1IgU-efTLBNDen09yx1144Z-iU3tYUpCHFJFq77MLX9PaS-6IExXS8k7UTIu_t9c_ggw-BjjDWc8PcMxkVxw_XHL_Pw";
-// 接收推送消息的websocket对象
-let receiveWebSocket = new WehappyWebSocket(receiveWsUrl, [token])
-// 发送消息的websocket对象
-let sendWebSocket = new WehappyWebSocket(sendWsUrl, [token])
-
-/**
- * 接受到消息(感知到服务端发来消息)
- * @param ev
- */
-receiveWebSocket.webSocket.onmessage = function (ev) {
-    let message;
-    if (ev.data instanceof ArrayBuffer) {
-        message = proto.Message.deserializeBinary(ev.data);
-    } else {
-        message = ev.data
-    }
-    const rt = document.getElementById("responseText");
-    rt.value += "\n sequence: " + message.getSequence();
-    rt.value += "\n id: " + message.getId();
-    rt.value += "\n type: " + message.getMessagetype();
-    rt.value += "\n to: " + message.getTo();
-    rt.value += "\n content: " + JSON.stringify(getPushMessageContent(message.getPushmessage()));
-}
-
-/**
- * 相当于连接开启(感知到连接开启)
- * @param ev
- */
-receiveWebSocket.webSocket.onopen = function (ev) {
-    const rt = document.getElementById("responseText");
-    rt.value = "连接开启了.."
-}
-
-/**
- * 相当于连接关闭(感知到连接关闭)
- * @param ev
- */
-receiveWebSocket.webSocket.onclose = function (ev) {
-    console.log(ev)
-    const rt = document.getElementById("responseText");
-    rt.value = rt.value + "\n" + "连接关闭了.."
 }
 
 /**
@@ -113,8 +150,8 @@ function sendSingleChatMessage(to, contentType, content) {
  * @param contentType 消息内容类型
  * @param content 消息内容
  */
-function sendGroupChatMessage(groupId, contentType, content) {
-    sendMessage(buildMessage(proto.MessageType.GROUP_MESSAGE, 0, buildChatMessage(contentType, groupId, content)))
+function sendGroupChatMessage(to, contentType, content) {
+    sendMessage(buildMessage(proto.MessageType.GROUP_MESSAGE, 0, buildChatMessage(contentType, to, content)))
 }
 
 /**
@@ -151,7 +188,7 @@ function buildMessage(messageType, to, msg) {
  * 发送消息到服务器
  * @param message
  */
-function sendMessage(message) {
+function sendMessage(message, sendWebSocket) {
     // 先判断socket是否创建好
     if (!sendWebSocket) {
         return;

@@ -10,16 +10,34 @@
 <script>
 
 </script>
-<form onsubmit="return false">
+<div>
     <div>
-        <textarea name="message" style="height: 500px; width: 800px"></textarea>
-        <input type="button" value="发送消息" onclick="send(this.form.message.value)">
+        <label for="userId1">请选择登录用户：</label>
+        <label for="userId1">lollipop：</label>
+        <input id="userId1" name="userId" type="radio" checked value="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMyNzQ5OTYwNDAzOTcwODY3MywiZXhwIjoxNjA1NDIxOTY5LCJ1c2VyX25hbWUiOiJsb2xsaXBvcCIsImp0aSI6ImNlMGZmNjQ0LWQwNmMtNDZiYi04NGQzLTBmY2NmMmU5MWQ4NiIsImNsaWVudF9pZCI6InBvcnRhbCIsInNjb3BlIjpbImFsbCJdfQ.WhpxtkSa5Aw0hh-9kjXIutfdjw-2TpOGGCRhE0IZlPuYc_nYeqvhh4Bw4u19Y9gDQYybl4Vlp2Ui_tatgDuYrhFHIGtQRGknUcczi-5Cafp6sT12t958wqwZyqDjOSIBFCWIxvbwH7Qg4h7elTwZGlHQF6Psp-1j_yGMzD4k8dc4i7zbhFfCTB5qfNzpWVDU12KFUR-5N44ncqYaCd8N_VwtoN75inoj7Y011n5-McrKBC7BlGgGidQ4aOn1IgU-efTLBNDen09yx1144Z-iU3tYUpCHFJFq77MLX9PaS-6IExXS8k7UTIu_t9c_ggw-BjjDWc8PcMxkVxw_XHL_Pw">
+        <label for="userId2">hanggegreat：</label>
+        <input id="userId2" name="userId" type="radio" value="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMyODE5ODU3NzQyMDU5NTIwMiwiZXhwIjoxNjA1NTg4NjUyLCJ1c2VyX25hbWUiOiJoYW5nZ2VncmVhdCIsImp0aSI6IjUzNzRiZWRlLWEwNmYtNGM5Ni04Yzk3LTZmNzY0ODFlODUwNyIsImNsaWVudF9pZCI6InBvcnRhbCIsInNjb3BlIjpbImFsbCJdfQ.LYv3mOJTjRQ-m4Hzxd3dTkY0kleo_yTpSEtcykVJPz1qVZKl6GjArqe3OZMpfLl9BUlX7dwkFhrOk2P-MZ3j2-AHLcGH8w2JxupwIx71LsMEXIEPEZ9IwHHcGSPErUwBi8fF63iaAHhi5BfDIisQOTlUuvX7VT9DYX5VRg6dgLPq3HuiNam9Cz02Scg-DcAElux-2MWYYLQR5aYuTWbJp5P6xO6zJAK-TVbbo4dd6WknDNipvVwMLuSIOR1XAcXIzlVvV0VjyHHPwotad18pXlq5ITjvYwjJ6OCqtrLRLBPcIbYWPYCmXjuQZO7igjwVBPayRn26qcKnIaux4A5LWA">
+        <button id="login">登录</button>
+        <br><br>
     </div>
 
     <div>
-        <textarea id="responseText" style="height: 500px; width: 800px"></textarea>
-        <input type="button" value="清空内容" onclick="document.getElementById('responseText').value=''">
+        <label for="chatType">是否为群聊模式：</label>
+        <input id="chatType" type="checkbox">
+        <br><br>
     </div>
-</form>
+    <div>
+        <label for="toId">用户Id或群聊Id：</label>
+        <input id="toId" type="text" placeholder="Id">
+        <br><br>
+    </div>
+    <textarea id="message" style="height: 350px; width: 800px"></textarea>
+    <button id="sendMessage">发送消息</button>
+</div>
+
+<div>
+    <textarea id="response" style="height: 350px; width: 800px"></textarea>
+    <button id="clearResponse">清空内容</button>
+</div>
 </body>
 </html>

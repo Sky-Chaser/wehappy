@@ -19,7 +19,7 @@
 4. `chat`: `ChatApplication`, 聊天服务
 
 ### 访问swagger文档
-1. `url`: `localhost:9001/doc.html`
+1. `url`: `localhost:9901/doc.html`
 
 #### 架构设计
 

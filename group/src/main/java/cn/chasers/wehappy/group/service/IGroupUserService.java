@@ -1,6 +1,5 @@
 package cn.chasers.wehappy.group.service;
 
-import cn.chasers.wehappy.common.api.CommonResult;
 import cn.chasers.wehappy.group.entity.Group;
 import cn.chasers.wehappy.group.entity.GroupUser;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -62,9 +61,10 @@ public interface IGroupUserService extends IService<GroupUser> {
 
     /**
      * 删除群组管理员
-     * @param userId        欲删除的管理员ID
-     * @param groupId       群组ID
-     * @return              返回是否删除成功
+     *
+     * @param userId  欲删除的管理员ID
+     * @param groupId 群组ID
+     * @return 返回是否删除成功
      */
     boolean deleteAdmin(Long userId, Long groupId);
 
