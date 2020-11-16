@@ -1,6 +1,6 @@
 package cn.chasers.wehappy.chat.config;
 
-import cn.chasers.wehappy.chat.handler.MessageHandler;
+import cn.chasers.wehappy.chat.ws.ChatHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -22,11 +22,11 @@ import java.util.Map;
 public class WebSocketConfiguration {
 
     @Bean
-    public HandlerMapping webSocketMapping(MessageHandler messageHandler) {
+    public HandlerMapping webSocketMapping(ChatHandler chatHandler) {
 
         // 使用 map 指定 WebSocket 协议的路由，路由为 ws://localhost:8005/chat
         Map<String, WebSocketHandler> map = new HashMap<>(2);
-        map.put("/chat", messageHandler);
+        map.put("/chat", chatHandler);
 
         // SimpleUrlHandlerMapping 指定了 WebSocket 的路由配置
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();

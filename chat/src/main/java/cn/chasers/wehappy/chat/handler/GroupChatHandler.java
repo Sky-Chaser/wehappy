@@ -1,5 +1,6 @@
 package cn.chasers.wehappy.chat.handler;
 
+import cn.chasers.wehappy.chat.ws.WebSocketClient;
 import cn.chasers.wehappy.common.config.SnowflakeConfig;
 import cn.chasers.wehappy.chat.handler.dispatcher.MessageHandler;
 import cn.chasers.wehappy.chat.mq.Producer;
@@ -8,6 +9,7 @@ import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.socket.WebSocketSession;
 
 /**
  * 群聊消息处理类
@@ -29,7 +31,7 @@ public class GroupChatHandler implements MessageHandler {
     }
 
     @Override
-    public void execute(Channel channel, ProtoMsg.Message msg) {
+    public void execute(ProtoMsg.Message msg, WebSocketClient client) {
         log.info("GroupChatHandler [execute] {}", msg);
         ProtoMsg.ResponseMessage response = ProtoMsg.ResponseMessage.newBuilder()
                 .setId(msg.getChatMessage().getId())
@@ -47,7 +49,7 @@ public class GroupChatHandler implements MessageHandler {
                         .setResponseMessage(response)
                         .build();
 
-        channel.writeAndFlush(replyMessage);
+        client.sendData(replyMessage);
 
         ProtoMsg.Message redirectMessage =
                 ProtoMsg.Message.newBuilder()
