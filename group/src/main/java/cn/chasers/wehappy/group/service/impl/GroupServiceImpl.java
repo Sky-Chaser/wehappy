@@ -8,7 +8,7 @@ import cn.chasers.wehappy.group.entity.GroupUser;
 import cn.chasers.wehappy.group.mapper.GroupMapper;
 import cn.chasers.wehappy.group.service.IGroupService;
 import cn.chasers.wehappy.group.service.IGroupUserService;
-import cn.chasers.wehappy.group.util.UserUtil;
+import cn.chasers.wehappy.common.util.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

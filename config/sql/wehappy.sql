@@ -251,3 +251,4 @@ CREATE TABLE `small_red_envelope`
 ) COMMENT = '小红包信息表';
 
 INSERT INTO `user_db`.`user` (`id`, `email`, `username`, `password`, `sex`, `avatar`, `gmt_create`, `gmt_modified`, `status`, `number_like`) VALUES (1327499604039708673, '1093275610@163.com', 'lollipop', '$2a$10$vFmR4Xiv7tK4HkuYrkjwCeE1TjH7I06EBGlFCYlOwhFmVrDNwKXWq', 0, 'default.jpg', '2020-11-14 14:32:24', '2020-11-14 14:32:24', 1, 0);
+INSERT INTO `user_db`.`user` (`id`, `email`, `username`, `password`, `sex`, `avatar`, `gmt_create`, `gmt_modified`, `status`, `number_like`) VALUES (1328198577420595202, 'nhuy@qq.com', 'hanggegreat', '$2a$10$CKkfkjouC/htFVivZFUF1u7cG75Vdx8zKovYIGbQ2maSV3i0QlrJa', 0, 'default.jpg', '2020-11-16 12:49:52', '2020-11-16 12:49:52', 1, 0);

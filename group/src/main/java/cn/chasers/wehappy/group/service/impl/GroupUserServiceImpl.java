@@ -3,7 +3,6 @@ package cn.chasers.wehappy.group.service.impl;
 import cn.chasers.wehappy.common.api.CommonResult;
 import cn.chasers.wehappy.common.domain.UserDto;
 import cn.chasers.wehappy.common.exception.Asserts;
-import cn.chasers.wehappy.common.msg.ProtoMsg;
 import cn.chasers.wehappy.group.constant.MessageConstant;
 import cn.chasers.wehappy.group.entity.Group;
 import cn.chasers.wehappy.group.entity.GroupUser;
@@ -12,15 +11,13 @@ import cn.chasers.wehappy.group.mapper.GroupMapper;
 import cn.chasers.wehappy.group.mapper.GroupUserMapper;
 import cn.chasers.wehappy.group.service.IGroupService;
 import cn.chasers.wehappy.group.service.IGroupUserService;
-import cn.chasers.wehappy.group.util.UserUtil;
+import cn.chasers.wehappy.common.util.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -46,8 +43,6 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
         this.request = request;
         this.groupService = groupService;
     }
-
-
 
     @Override
     public boolean invite(Long userId, Long groupId) {

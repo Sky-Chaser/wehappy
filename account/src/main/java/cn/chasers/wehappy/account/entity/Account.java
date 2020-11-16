@@ -31,5 +31,4 @@ public class Account extends BaseEntity {
     @ApiModelProperty(value = "状态：0表示正常，1表示被冻结")
     private Integer status;
 
-
 }

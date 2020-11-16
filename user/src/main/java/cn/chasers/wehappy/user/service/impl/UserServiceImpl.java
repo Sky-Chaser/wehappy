@@ -1,10 +1,8 @@
 package cn.chasers.wehappy.user.service.impl;
 
-import cn.chasers.wehappy.common.api.ResultCode;
-import cn.chasers.wehappy.common.constant.AuthConstant;
-import cn.chasers.wehappy.common.domain.UserDto;
 import cn.chasers.wehappy.common.exception.Asserts;
 import cn.chasers.wehappy.common.service.IRedisService;
+import cn.chasers.wehappy.common.util.UserUtil;
 import cn.chasers.wehappy.user.constant.MessageConstant;
 import cn.chasers.wehappy.user.entity.User;
 import cn.chasers.wehappy.user.mapper.UserMapper;
@@ -13,7 +11,6 @@ import cn.chasers.wehappy.user.service.IUserCacheService;
 import cn.chasers.wehappy.user.service.IUserService;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -139,18 +136,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public User getCurrentUser() {
-        String userStr = request.getHeader(AuthConstant.USER_TOKEN_HEADER);
-        if (StrUtil.isEmpty(userStr)) {
-            Asserts.fail(ResultCode.UNAUTHORIZED);
-        }
-
-        UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
-        User user = userCacheService.getUser(userDto.getId());
+        long userId = UserUtil.getCurrentUserId(request);
+        User user = userCacheService.getUser(userId);
         if (user != null) {
             return user;
         }
 
-        user = getById(userDto.getId());
+        user = getById(userId);
         userCacheService.setUser(user);
         return user;
     }
