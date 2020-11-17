@@ -6,13 +6,13 @@ package cn.chasers.wehappy.common.msg;
 public final class ProtoMsg {
   private ProtoMsg() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
+          com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
+          com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
+            (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   /**
    * <pre>
@@ -22,96 +22,80 @@ public final class ProtoMsg {
    * Protobuf enum {@code MessageType}
    */
   public enum MessageType
-      implements com.google.protobuf.ProtocolMessageEnum {
+          implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <pre>
-     * 心跳消息，客户端发送和服务端响应
+     * 私聊消息，客户端请求
      * </pre>
      *
-     * <code>HEART_BRAT_MESSAGE = 0;</code>
+     * <code>SINGLE_MESSAGE = 0;</code>
      */
-    HEART_BRAT_MESSAGE(0),
+    SINGLE_MESSAGE(0),
     /**
      * <pre>
-     * 私聊消息，客户端请求和服务端转发
+     * 群聊消息，客户端请求
      * </pre>
      *
-     * <code>SINGLE_MESSAGE = 1;</code>
+     * <code>GROUP_MESSAGE = 1;</code>
      */
-    SINGLE_MESSAGE(1),
-    /**
-     * <pre>
-     * 群聊消息，客户端请求和服务端转发
-     * </pre>
-     *
-     * <code>GROUP_MESSAGE = 2;</code>
-     */
-    GROUP_MESSAGE(2),
+    GROUP_MESSAGE(1),
     /**
      * <pre>
      * 响应消息，服务端响应
      * </pre>
      *
-     * <code>RESPONSE_MESSAGE = 3;</code>
+     * <code>RESPONSE_MESSAGE = 2;</code>
      */
-    RESPONSE_MESSAGE(3),
+    RESPONSE_MESSAGE(2),
     /**
      * <pre>
      * 推送消息，服务端发送
      * </pre>
      *
-     * <code>PUSH_MESSAGE = 4;</code>
+     * <code>PUSH_MESSAGE = 3;</code>
      */
-    PUSH_MESSAGE(4),
+    PUSH_MESSAGE(3),
     UNRECOGNIZED(-1),
     ;
 
     /**
      * <pre>
-     * 心跳消息，客户端发送和服务端响应
+     * 私聊消息，客户端请求
      * </pre>
      *
-     * <code>HEART_BRAT_MESSAGE = 0;</code>
+     * <code>SINGLE_MESSAGE = 0;</code>
      */
-    public static final int HEART_BRAT_MESSAGE_VALUE = 0;
+    public static final int SINGLE_MESSAGE_VALUE = 0;
     /**
      * <pre>
-     * 私聊消息，客户端请求和服务端转发
+     * 群聊消息，客户端请求
      * </pre>
      *
-     * <code>SINGLE_MESSAGE = 1;</code>
+     * <code>GROUP_MESSAGE = 1;</code>
      */
-    public static final int SINGLE_MESSAGE_VALUE = 1;
-    /**
-     * <pre>
-     * 群聊消息，客户端请求和服务端转发
-     * </pre>
-     *
-     * <code>GROUP_MESSAGE = 2;</code>
-     */
-    public static final int GROUP_MESSAGE_VALUE = 2;
+    public static final int GROUP_MESSAGE_VALUE = 1;
     /**
      * <pre>
      * 响应消息，服务端响应
      * </pre>
      *
-     * <code>RESPONSE_MESSAGE = 3;</code>
+     * <code>RESPONSE_MESSAGE = 2;</code>
      */
-    public static final int RESPONSE_MESSAGE_VALUE = 3;
+    public static final int RESPONSE_MESSAGE_VALUE = 2;
     /**
      * <pre>
      * 推送消息，服务端发送
      * </pre>
      *
-     * <code>PUSH_MESSAGE = 4;</code>
+     * <code>PUSH_MESSAGE = 3;</code>
      */
-    public static final int PUSH_MESSAGE_VALUE = 4;
+    public static final int PUSH_MESSAGE_VALUE = 3;
 
 
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
+                "Can't get the number of an unknown enum value.");
       }
       return value;
     }
@@ -132,51 +116,50 @@ public final class ProtoMsg {
      */
     public static MessageType forNumber(int value) {
       switch (value) {
-        case 0: return HEART_BRAT_MESSAGE;
-        case 1: return SINGLE_MESSAGE;
-        case 2: return GROUP_MESSAGE;
-        case 3: return RESPONSE_MESSAGE;
-        case 4: return PUSH_MESSAGE;
+        case 0: return SINGLE_MESSAGE;
+        case 1: return GROUP_MESSAGE;
+        case 2: return RESPONSE_MESSAGE;
+        case 3: return PUSH_MESSAGE;
         default: return null;
       }
     }
 
     public static com.google.protobuf.Internal.EnumLiteMap<MessageType>
-        internalGetValueMap() {
+    internalGetValueMap() {
       return internalValueMap;
     }
     private static final com.google.protobuf.Internal.EnumLiteMap<
-        MessageType> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<MessageType>() {
-            public MessageType findValueByNumber(int number) {
-              return MessageType.forNumber(number);
-            }
-          };
+            MessageType> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<MessageType>() {
+              public MessageType findValueByNumber(int number) {
+                return MessageType.forNumber(number);
+              }
+            };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
+    getValueDescriptor() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+                "Can't get the descriptor of an unrecognized enum value.");
       }
       return getDescriptor().getValues().get(ordinal());
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
+    getDescriptorForType() {
       return getDescriptor();
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
+    getDescriptor() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.getDescriptor().getEnumTypes().get(0);
     }
 
     private static final MessageType[] VALUES = values();
 
     public static MessageType valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
+                "EnumValueDescriptor is not for this type.");
       }
       if (desc.getIndex() == -1) {
         return UNRECOGNIZED;
@@ -201,7 +184,7 @@ public final class ProtoMsg {
    * Protobuf enum {@code ContentType}
    */
   public enum ContentType
-      implements com.google.protobuf.ProtocolMessageEnum {
+          implements com.google.protobuf.ProtocolMessageEnum {
     /**
      * <pre>
      * 文本消息
@@ -370,7 +353,7 @@ public final class ProtoMsg {
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
+                "Can't get the number of an unknown enum value.");
       }
       return value;
     }
@@ -406,41 +389,41 @@ public final class ProtoMsg {
     }
 
     public static com.google.protobuf.Internal.EnumLiteMap<ContentType>
-        internalGetValueMap() {
+    internalGetValueMap() {
       return internalValueMap;
     }
     private static final com.google.protobuf.Internal.EnumLiteMap<
-        ContentType> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<ContentType>() {
-            public ContentType findValueByNumber(int number) {
-              return ContentType.forNumber(number);
-            }
-          };
+            ContentType> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<ContentType>() {
+              public ContentType findValueByNumber(int number) {
+                return ContentType.forNumber(number);
+              }
+            };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
+    getValueDescriptor() {
       if (this == UNRECOGNIZED) {
         throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
+                "Can't get the descriptor of an unrecognized enum value.");
       }
       return getDescriptor().getValues().get(ordinal());
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
+    getDescriptorForType() {
       return getDescriptor();
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
+    getDescriptor() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.getDescriptor().getEnumTypes().get(1);
     }
 
     private static final ContentType[] VALUES = values();
 
     public static ContentType valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
         throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
+                "EnumValueDescriptor is not for this type.");
       }
       if (desc.getIndex() == -1) {
         return UNRECOGNIZED;
@@ -458,35 +441,15 @@ public final class ProtoMsg {
   }
 
   public interface ChatMessageOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:ChatMessage)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     * 消息id
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     * @return The id.
-     */
-    java.lang.String getId();
-    /**
-     * <pre>
-     * 消息id
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     * @return The bytes for id.
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+          // @@protoc_insertion_point(interface_extends:ChatMessage)
+          com.google.protobuf.MessageOrBuilder {
 
     /**
      * <pre>
      * 发送者id
      * </pre>
      *
-     * <code>int64 from = 2;</code>
+     * <code>int64 from = 1;</code>
      * @return The from.
      */
     long getFrom();
@@ -496,7 +459,7 @@ public final class ProtoMsg {
      * 群聊表示群Id，私聊表示用户Id
      * </pre>
      *
-     * <code>int64 to = 3;</code>
+     * <code>int64 to = 2;</code>
      * @return The to.
      */
     long getTo();
@@ -506,7 +469,7 @@ public final class ProtoMsg {
      * 时间戳
      * </pre>
      *
-     * <code>uint64 time = 4;</code>
+     * <code>uint64 time = 3;</code>
      * @return The time.
      */
     long getTime();
@@ -516,7 +479,7 @@ public final class ProtoMsg {
      * 消息类型
      * </pre>
      *
-     * <code>.ContentType contentType = 5;</code>
+     * <code>.ContentType contentType = 4;</code>
      * @return The enum numeric value on the wire for contentType.
      */
     int getContentTypeValue();
@@ -525,7 +488,7 @@ public final class ProtoMsg {
      * 消息类型
      * </pre>
      *
-     * <code>.ContentType contentType = 5;</code>
+     * <code>.ContentType contentType = 4;</code>
      * @return The contentType.
      */
     cn.chasers.wehappy.common.msg.ProtoMsg.ContentType getContentType();
@@ -535,7 +498,7 @@ public final class ProtoMsg {
      * 文本消息表示内容，图片视频消息表示链接
      * </pre>
      *
-     * <code>string content = 6;</code>
+     * <code>string content = 5;</code>
      * @return The content.
      */
     java.lang.String getContent();
@@ -544,11 +507,11 @@ public final class ProtoMsg {
      * 文本消息表示内容，图片视频消息表示链接
      * </pre>
      *
-     * <code>string content = 6;</code>
+     * <code>string content = 5;</code>
      * @return The bytes for content.
      */
     com.google.protobuf.ByteString
-        getContentBytes();
+    getContentBytes();
   }
   /**
    * <pre>
@@ -558,16 +521,15 @@ public final class ProtoMsg {
    * Protobuf type {@code ChatMessage}
    */
   public static final class ChatMessage extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:ChatMessage)
-      ChatMessageOrBuilder {
-  private static final long serialVersionUID = 0L;
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:ChatMessage)
+          ChatMessageOrBuilder {
+    private static final long serialVersionUID = 0L;
     // Use ChatMessage.newBuilder() to construct.
     private ChatMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private ChatMessage() {
-      id_ = "";
       contentType_ = 0;
       content_ = "";
     }
@@ -575,7 +537,7 @@ public final class ProtoMsg {
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
+            UnusedPrivateParameter unused) {
       return new ChatMessage();
     }
 
@@ -585,15 +547,15 @@ public final class ProtoMsg {
       return this.unknownFields;
     }
     private ChatMessage(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+              com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -602,34 +564,28 @@ public final class ProtoMsg {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              id_ = s;
-              break;
-            }
-            case 16: {
+            case 8: {
 
               from_ = input.readInt64();
               break;
             }
-            case 24: {
+            case 16: {
 
               to_ = input.readInt64();
               break;
             }
-            case 32: {
+            case 24: {
 
               time_ = input.readUInt64();
               break;
             }
-            case 40: {
+            case 32: {
               int rawValue = input.readEnum();
 
               contentType_ = rawValue;
               break;
             }
-            case 50: {
+            case 42: {
               java.lang.String s = input.readStringRequireUtf8();
 
               content_ = s;
@@ -637,7 +593,7 @@ public final class ProtoMsg {
             }
             default: {
               if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+                      input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -648,79 +604,33 @@ public final class ProtoMsg {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+                e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
+    getDescriptor() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ChatMessage_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
+    internalGetFieldAccessorTable() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ChatMessage_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder.class);
+              .ensureFieldAccessorsInitialized(
+                      cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder.class);
     }
 
-    public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
-    /**
-     * <pre>
-     * 消息id
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     * @return The id.
-     */
-    @java.lang.Override
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 消息id
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     * @return The bytes for id.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int FROM_FIELD_NUMBER = 2;
+    public static final int FROM_FIELD_NUMBER = 1;
     private long from_;
     /**
      * <pre>
      * 发送者id
      * </pre>
      *
-     * <code>int64 from = 2;</code>
+     * <code>int64 from = 1;</code>
      * @return The from.
      */
     @java.lang.Override
@@ -728,14 +638,14 @@ public final class ProtoMsg {
       return from_;
     }
 
-    public static final int TO_FIELD_NUMBER = 3;
+    public static final int TO_FIELD_NUMBER = 2;
     private long to_;
     /**
      * <pre>
      * 群聊表示群Id，私聊表示用户Id
      * </pre>
      *
-     * <code>int64 to = 3;</code>
+     * <code>int64 to = 2;</code>
      * @return The to.
      */
     @java.lang.Override
@@ -743,14 +653,14 @@ public final class ProtoMsg {
       return to_;
     }
 
-    public static final int TIME_FIELD_NUMBER = 4;
+    public static final int TIME_FIELD_NUMBER = 3;
     private long time_;
     /**
      * <pre>
      * 时间戳
      * </pre>
      *
-     * <code>uint64 time = 4;</code>
+     * <code>uint64 time = 3;</code>
      * @return The time.
      */
     @java.lang.Override
@@ -758,14 +668,14 @@ public final class ProtoMsg {
       return time_;
     }
 
-    public static final int CONTENTTYPE_FIELD_NUMBER = 5;
+    public static final int CONTENTTYPE_FIELD_NUMBER = 4;
     private int contentType_;
     /**
      * <pre>
      * 消息类型
      * </pre>
      *
-     * <code>.ContentType contentType = 5;</code>
+     * <code>.ContentType contentType = 4;</code>
      * @return The enum numeric value on the wire for contentType.
      */
     @java.lang.Override public int getContentTypeValue() {
@@ -776,7 +686,7 @@ public final class ProtoMsg {
      * 消息类型
      * </pre>
      *
-     * <code>.ContentType contentType = 5;</code>
+     * <code>.ContentType contentType = 4;</code>
      * @return The contentType.
      */
     @java.lang.Override public cn.chasers.wehappy.common.msg.ProtoMsg.ContentType getContentType() {
@@ -785,14 +695,14 @@ public final class ProtoMsg {
       return result == null ? cn.chasers.wehappy.common.msg.ProtoMsg.ContentType.UNRECOGNIZED : result;
     }
 
-    public static final int CONTENT_FIELD_NUMBER = 6;
+    public static final int CONTENT_FIELD_NUMBER = 5;
     private volatile java.lang.Object content_;
     /**
      * <pre>
      * 文本消息表示内容，图片视频消息表示链接
      * </pre>
      *
-     * <code>string content = 6;</code>
+     * <code>string content = 5;</code>
      * @return The content.
      */
     @java.lang.Override
@@ -801,8 +711,8 @@ public final class ProtoMsg {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         content_ = s;
         return s;
@@ -813,17 +723,17 @@ public final class ProtoMsg {
      * 文本消息表示内容，图片视频消息表示链接
      * </pre>
      *
-     * <code>string content = 6;</code>
+     * <code>string content = 5;</code>
      * @return The bytes for content.
      */
     @java.lang.Override
     public com.google.protobuf.ByteString
-        getContentBytes() {
+    getContentBytes() {
       java.lang.Object ref = content_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         content_ = b;
         return b;
       } else {
@@ -844,24 +754,21 @@ public final class ProtoMsg {
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
-      }
+            throws java.io.IOException {
       if (from_ != 0L) {
-        output.writeInt64(2, from_);
+        output.writeInt64(1, from_);
       }
       if (to_ != 0L) {
-        output.writeInt64(3, to_);
+        output.writeInt64(2, to_);
       }
       if (time_ != 0L) {
-        output.writeUInt64(4, time_);
+        output.writeUInt64(3, time_);
       }
       if (contentType_ != cn.chasers.wehappy.common.msg.ProtoMsg.ContentType.TEXT.getNumber()) {
-        output.writeEnum(5, contentType_);
+        output.writeEnum(4, contentType_);
       }
       if (!getContentBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, content_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, content_);
       }
       unknownFields.writeTo(output);
     }
@@ -872,27 +779,24 @@ public final class ProtoMsg {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
-      }
       if (from_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, from_);
+                .computeInt64Size(1, from_);
       }
       if (to_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, to_);
+                .computeInt64Size(2, to_);
       }
       if (time_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(4, time_);
+                .computeUInt64Size(3, time_);
       }
       if (contentType_ != cn.chasers.wehappy.common.msg.ProtoMsg.ContentType.TEXT.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(5, contentType_);
+                .computeEnumSize(4, contentType_);
       }
       if (!getContentBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, content_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, content_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -902,24 +806,22 @@ public final class ProtoMsg {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-       return true;
+        return true;
       }
       if (!(obj instanceof cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage)) {
         return super.equals(obj);
       }
       cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage other = (cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage) obj;
 
-      if (!getId()
-          .equals(other.getId())) return false;
       if (getFrom()
-          != other.getFrom()) return false;
+              != other.getFrom()) return false;
       if (getTo()
-          != other.getTo()) return false;
+              != other.getTo()) return false;
       if (getTime()
-          != other.getTime()) return false;
+              != other.getTime()) return false;
       if (contentType_ != other.contentType_) return false;
       if (!getContent()
-          .equals(other.getContent())) return false;
+              .equals(other.getContent())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -931,17 +833,15 @@ public final class ProtoMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
       hash = (37 * hash) + FROM_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getFrom());
+              getFrom());
       hash = (37 * hash) + TO_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getTo());
+              getTo());
       hash = (37 * hash) + TIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getTime());
+              getTime());
       hash = (37 * hash) + CONTENTTYPE_FIELD_NUMBER;
       hash = (53 * hash) + contentType_;
       hash = (37 * hash) + CONTENT_FIELD_NUMBER;
@@ -952,73 +852,73 @@ public final class ProtoMsg {
     }
 
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+              .parseDelimitedWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
     @java.lang.Override
@@ -1032,12 +932,12 @@ public final class ProtoMsg {
     @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
+              ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1049,20 +949,20 @@ public final class ProtoMsg {
      * Protobuf type {@code ChatMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:ChatMessage)
-        cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder {
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:ChatMessage)
+            cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
+      getDescriptor() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ChatMessage_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
+      internalGetFieldAccessorTable() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ChatMessage_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder.class);
+                .ensureFieldAccessorsInitialized(
+                        cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder.class);
       }
 
       // Construct using cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.newBuilder()
@@ -1071,7 +971,7 @@ public final class ProtoMsg {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1083,8 +983,6 @@ public final class ProtoMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
-
         from_ = 0L;
 
         to_ = 0L;
@@ -1100,7 +998,7 @@ public final class ProtoMsg {
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
+      getDescriptorForType() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ChatMessage_descriptor;
       }
 
@@ -1121,7 +1019,6 @@ public final class ProtoMsg {
       @java.lang.Override
       public cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage buildPartial() {
         cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage result = new cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage(this);
-        result.id_ = id_;
         result.from_ = from_;
         result.to_ = to_;
         result.time_ = time_;
@@ -1137,30 +1034,30 @@ public final class ProtoMsg {
       }
       @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
       @java.lang.Override
@@ -1175,10 +1072,6 @@ public final class ProtoMsg {
 
       public Builder mergeFrom(cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage other) {
         if (other == cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
-        }
         if (other.getFrom() != 0L) {
           setFrom(other.getFrom());
         }
@@ -1207,9 +1100,9 @@ public final class ProtoMsg {
 
       @java.lang.Override
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
         cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -1224,109 +1117,13 @@ public final class ProtoMsg {
         return this;
       }
 
-      private java.lang.Object id_ = "";
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @return The id.
-       */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @return The bytes for id.
-       */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearId() {
-        
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @param value The bytes for id to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-
       private long from_ ;
       /**
        * <pre>
        * 发送者id
        * </pre>
        *
-       * <code>int64 from = 2;</code>
+       * <code>int64 from = 1;</code>
        * @return The from.
        */
       @java.lang.Override
@@ -1338,12 +1135,12 @@ public final class ProtoMsg {
        * 发送者id
        * </pre>
        *
-       * <code>int64 from = 2;</code>
+       * <code>int64 from = 1;</code>
        * @param value The from to set.
        * @return This builder for chaining.
        */
       public Builder setFrom(long value) {
-        
+
         from_ = value;
         onChanged();
         return this;
@@ -1353,11 +1150,11 @@ public final class ProtoMsg {
        * 发送者id
        * </pre>
        *
-       * <code>int64 from = 2;</code>
+       * <code>int64 from = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearFrom() {
-        
+
         from_ = 0L;
         onChanged();
         return this;
@@ -1369,7 +1166,7 @@ public final class ProtoMsg {
        * 群聊表示群Id，私聊表示用户Id
        * </pre>
        *
-       * <code>int64 to = 3;</code>
+       * <code>int64 to = 2;</code>
        * @return The to.
        */
       @java.lang.Override
@@ -1381,12 +1178,12 @@ public final class ProtoMsg {
        * 群聊表示群Id，私聊表示用户Id
        * </pre>
        *
-       * <code>int64 to = 3;</code>
+       * <code>int64 to = 2;</code>
        * @param value The to to set.
        * @return This builder for chaining.
        */
       public Builder setTo(long value) {
-        
+
         to_ = value;
         onChanged();
         return this;
@@ -1396,11 +1193,11 @@ public final class ProtoMsg {
        * 群聊表示群Id，私聊表示用户Id
        * </pre>
        *
-       * <code>int64 to = 3;</code>
+       * <code>int64 to = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearTo() {
-        
+
         to_ = 0L;
         onChanged();
         return this;
@@ -1412,7 +1209,7 @@ public final class ProtoMsg {
        * 时间戳
        * </pre>
        *
-       * <code>uint64 time = 4;</code>
+       * <code>uint64 time = 3;</code>
        * @return The time.
        */
       @java.lang.Override
@@ -1424,12 +1221,12 @@ public final class ProtoMsg {
        * 时间戳
        * </pre>
        *
-       * <code>uint64 time = 4;</code>
+       * <code>uint64 time = 3;</code>
        * @param value The time to set.
        * @return This builder for chaining.
        */
       public Builder setTime(long value) {
-        
+
         time_ = value;
         onChanged();
         return this;
@@ -1439,11 +1236,11 @@ public final class ProtoMsg {
        * 时间戳
        * </pre>
        *
-       * <code>uint64 time = 4;</code>
+       * <code>uint64 time = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearTime() {
-        
+
         time_ = 0L;
         onChanged();
         return this;
@@ -1455,7 +1252,7 @@ public final class ProtoMsg {
        * 消息类型
        * </pre>
        *
-       * <code>.ContentType contentType = 5;</code>
+       * <code>.ContentType contentType = 4;</code>
        * @return The enum numeric value on the wire for contentType.
        */
       @java.lang.Override public int getContentTypeValue() {
@@ -1466,12 +1263,12 @@ public final class ProtoMsg {
        * 消息类型
        * </pre>
        *
-       * <code>.ContentType contentType = 5;</code>
+       * <code>.ContentType contentType = 4;</code>
        * @param value The enum numeric value on the wire for contentType to set.
        * @return This builder for chaining.
        */
       public Builder setContentTypeValue(int value) {
-        
+
         contentType_ = value;
         onChanged();
         return this;
@@ -1481,7 +1278,7 @@ public final class ProtoMsg {
        * 消息类型
        * </pre>
        *
-       * <code>.ContentType contentType = 5;</code>
+       * <code>.ContentType contentType = 4;</code>
        * @return The contentType.
        */
       @java.lang.Override
@@ -1495,7 +1292,7 @@ public final class ProtoMsg {
        * 消息类型
        * </pre>
        *
-       * <code>.ContentType contentType = 5;</code>
+       * <code>.ContentType contentType = 4;</code>
        * @param value The contentType to set.
        * @return This builder for chaining.
        */
@@ -1503,7 +1300,7 @@ public final class ProtoMsg {
         if (value == null) {
           throw new NullPointerException();
         }
-        
+
         contentType_ = value.getNumber();
         onChanged();
         return this;
@@ -1513,11 +1310,11 @@ public final class ProtoMsg {
        * 消息类型
        * </pre>
        *
-       * <code>.ContentType contentType = 5;</code>
+       * <code>.ContentType contentType = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearContentType() {
-        
+
         contentType_ = 0;
         onChanged();
         return this;
@@ -1529,14 +1326,14 @@ public final class ProtoMsg {
        * 文本消息表示内容，图片视频消息表示链接
        * </pre>
        *
-       * <code>string content = 6;</code>
+       * <code>string content = 5;</code>
        * @return The content.
        */
       public java.lang.String getContent() {
         java.lang.Object ref = content_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
+                  (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           content_ = s;
           return s;
@@ -1549,16 +1346,16 @@ public final class ProtoMsg {
        * 文本消息表示内容，图片视频消息表示链接
        * </pre>
        *
-       * <code>string content = 6;</code>
+       * <code>string content = 5;</code>
        * @return The bytes for content.
        */
       public com.google.protobuf.ByteString
-          getContentBytes() {
+      getContentBytes() {
         java.lang.Object ref = content_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           content_ = b;
           return b;
         } else {
@@ -1570,16 +1367,16 @@ public final class ProtoMsg {
        * 文本消息表示内容，图片视频消息表示链接
        * </pre>
        *
-       * <code>string content = 6;</code>
+       * <code>string content = 5;</code>
        * @param value The content to set.
        * @return This builder for chaining.
        */
       public Builder setContent(
-          java.lang.String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  
+          throw new NullPointerException();
+        }
+
         content_ = value;
         onChanged();
         return this;
@@ -1589,11 +1386,11 @@ public final class ProtoMsg {
        * 文本消息表示内容，图片视频消息表示链接
        * </pre>
        *
-       * <code>string content = 6;</code>
+       * <code>string content = 5;</code>
        * @return This builder for chaining.
        */
       public Builder clearContent() {
-        
+
         content_ = getDefaultInstance().getContent();
         onChanged();
         return this;
@@ -1603,30 +1400,30 @@ public final class ProtoMsg {
        * 文本消息表示内容，图片视频消息表示链接
        * </pre>
        *
-       * <code>string content = 6;</code>
+       * <code>string content = 5;</code>
        * @param value The bytes for content to set.
        * @return This builder for chaining.
        */
       public Builder setContentBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
         content_ = value;
         onChanged();
         return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
@@ -1645,12 +1442,12 @@ public final class ProtoMsg {
     }
 
     private static final com.google.protobuf.Parser<ChatMessage>
-        PARSER = new com.google.protobuf.AbstractParser<ChatMessage>() {
+            PARSER = new com.google.protobuf.AbstractParser<ChatMessage>() {
       @java.lang.Override
       public ChatMessage parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
         return new ChatMessage(input, extensionRegistry);
       }
     };
@@ -1672,35 +1469,15 @@ public final class ProtoMsg {
   }
 
   public interface ResponseMessageOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:ResponseMessage)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     * 消息id
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     * @return The id.
-     */
-    java.lang.String getId();
-    /**
-     * <pre>
-     * 消息id
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     * @return The bytes for id.
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+          // @@protoc_insertion_point(interface_extends:ResponseMessage)
+          com.google.protobuf.MessageOrBuilder {
 
     /**
      * <pre>
      * 发送成功或失败
      * </pre>
      *
-     * <code>bool result = 2;</code>
+     * <code>bool result = 1;</code>
      * @return The result.
      */
     boolean getResult();
@@ -1710,7 +1487,7 @@ public final class ProtoMsg {
      * 错误码
      * </pre>
      *
-     * <code>uint32 code = 3;</code>
+     * <code>uint32 code = 2;</code>
      * @return The code.
      */
     int getCode();
@@ -1720,7 +1497,7 @@ public final class ProtoMsg {
      * 错误描述
      * </pre>
      *
-     * <code>string info = 4;</code>
+     * <code>string info = 3;</code>
      * @return The info.
      */
     java.lang.String getInfo();
@@ -1729,18 +1506,18 @@ public final class ProtoMsg {
      * 错误描述
      * </pre>
      *
-     * <code>string info = 4;</code>
+     * <code>string info = 3;</code>
      * @return The bytes for info.
      */
     com.google.protobuf.ByteString
-        getInfoBytes();
+    getInfoBytes();
 
     /**
      * <pre>
      * 错误描述是否提示给用户
      * </pre>
      *
-     * <code>bool expose = 5;</code>
+     * <code>bool expose = 4;</code>
      * @return The expose.
      */
     boolean getExpose();
@@ -1753,23 +1530,22 @@ public final class ProtoMsg {
    * Protobuf type {@code ResponseMessage}
    */
   public static final class ResponseMessage extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:ResponseMessage)
-      ResponseMessageOrBuilder {
-  private static final long serialVersionUID = 0L;
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:ResponseMessage)
+          ResponseMessageOrBuilder {
+    private static final long serialVersionUID = 0L;
     // Use ResponseMessage.newBuilder() to construct.
     private ResponseMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private ResponseMessage() {
-      id_ = "";
       info_ = "";
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
+            UnusedPrivateParameter unused) {
       return new ResponseMessage();
     }
 
@@ -1779,15 +1555,15 @@ public final class ProtoMsg {
       return this.unknownFields;
     }
     private ResponseMessage(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+              com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -1796,36 +1572,30 @@ public final class ProtoMsg {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              id_ = s;
-              break;
-            }
-            case 16: {
+            case 8: {
 
               result_ = input.readBool();
               break;
             }
-            case 24: {
+            case 16: {
 
               code_ = input.readUInt32();
               break;
             }
-            case 34: {
+            case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
               info_ = s;
               break;
             }
-            case 40: {
+            case 32: {
 
               expose_ = input.readBool();
               break;
             }
             default: {
               if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+                      input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -1836,79 +1606,33 @@ public final class ProtoMsg {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+                e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
+    getDescriptor() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ResponseMessage_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
+    internalGetFieldAccessorTable() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ResponseMessage_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder.class);
+              .ensureFieldAccessorsInitialized(
+                      cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder.class);
     }
 
-    public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
-    /**
-     * <pre>
-     * 消息id
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     * @return The id.
-     */
-    @java.lang.Override
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 消息id
-     * </pre>
-     *
-     * <code>string id = 1;</code>
-     * @return The bytes for id.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int RESULT_FIELD_NUMBER = 2;
+    public static final int RESULT_FIELD_NUMBER = 1;
     private boolean result_;
     /**
      * <pre>
      * 发送成功或失败
      * </pre>
      *
-     * <code>bool result = 2;</code>
+     * <code>bool result = 1;</code>
      * @return The result.
      */
     @java.lang.Override
@@ -1916,14 +1640,14 @@ public final class ProtoMsg {
       return result_;
     }
 
-    public static final int CODE_FIELD_NUMBER = 3;
+    public static final int CODE_FIELD_NUMBER = 2;
     private int code_;
     /**
      * <pre>
      * 错误码
      * </pre>
      *
-     * <code>uint32 code = 3;</code>
+     * <code>uint32 code = 2;</code>
      * @return The code.
      */
     @java.lang.Override
@@ -1931,14 +1655,14 @@ public final class ProtoMsg {
       return code_;
     }
 
-    public static final int INFO_FIELD_NUMBER = 4;
+    public static final int INFO_FIELD_NUMBER = 3;
     private volatile java.lang.Object info_;
     /**
      * <pre>
      * 错误描述
      * </pre>
      *
-     * <code>string info = 4;</code>
+     * <code>string info = 3;</code>
      * @return The info.
      */
     @java.lang.Override
@@ -1947,8 +1671,8 @@ public final class ProtoMsg {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         info_ = s;
         return s;
@@ -1959,17 +1683,17 @@ public final class ProtoMsg {
      * 错误描述
      * </pre>
      *
-     * <code>string info = 4;</code>
+     * <code>string info = 3;</code>
      * @return The bytes for info.
      */
     @java.lang.Override
     public com.google.protobuf.ByteString
-        getInfoBytes() {
+    getInfoBytes() {
       java.lang.Object ref = info_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         info_ = b;
         return b;
       } else {
@@ -1977,14 +1701,14 @@ public final class ProtoMsg {
       }
     }
 
-    public static final int EXPOSE_FIELD_NUMBER = 5;
+    public static final int EXPOSE_FIELD_NUMBER = 4;
     private boolean expose_;
     /**
      * <pre>
      * 错误描述是否提示给用户
      * </pre>
      *
-     * <code>bool expose = 5;</code>
+     * <code>bool expose = 4;</code>
      * @return The expose.
      */
     @java.lang.Override
@@ -2005,21 +1729,18 @@ public final class ProtoMsg {
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
-      }
+            throws java.io.IOException {
       if (result_ != false) {
-        output.writeBool(2, result_);
+        output.writeBool(1, result_);
       }
       if (code_ != 0) {
-        output.writeUInt32(3, code_);
+        output.writeUInt32(2, code_);
       }
       if (!getInfoBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, info_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, info_);
       }
       if (expose_ != false) {
-        output.writeBool(5, expose_);
+        output.writeBool(4, expose_);
       }
       unknownFields.writeTo(output);
     }
@@ -2030,23 +1751,20 @@ public final class ProtoMsg {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
-      }
       if (result_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, result_);
+                .computeBoolSize(1, result_);
       }
       if (code_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(3, code_);
+                .computeUInt32Size(2, code_);
       }
       if (!getInfoBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, info_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, info_);
       }
       if (expose_ != false) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, expose_);
+                .computeBoolSize(4, expose_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2056,23 +1774,21 @@ public final class ProtoMsg {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-       return true;
+        return true;
       }
       if (!(obj instanceof cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage)) {
         return super.equals(obj);
       }
       cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage other = (cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage) obj;
 
-      if (!getId()
-          .equals(other.getId())) return false;
       if (getResult()
-          != other.getResult()) return false;
+              != other.getResult()) return false;
       if (getCode()
-          != other.getCode()) return false;
+              != other.getCode()) return false;
       if (!getInfo()
-          .equals(other.getInfo())) return false;
+              .equals(other.getInfo())) return false;
       if (getExpose()
-          != other.getExpose()) return false;
+              != other.getExpose()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -2084,91 +1800,89 @@ public final class ProtoMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
       hash = (37 * hash) + RESULT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getResult());
+              getResult());
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + getCode();
       hash = (37 * hash) + INFO_FIELD_NUMBER;
       hash = (53 * hash) + getInfo().hashCode();
       hash = (37 * hash) + EXPOSE_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getExpose());
+              getExpose());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+              .parseDelimitedWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
     @java.lang.Override
@@ -2182,12 +1896,12 @@ public final class ProtoMsg {
     @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
+              ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -2199,20 +1913,20 @@ public final class ProtoMsg {
      * Protobuf type {@code ResponseMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:ResponseMessage)
-        cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder {
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:ResponseMessage)
+            cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
+      getDescriptor() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ResponseMessage_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
+      internalGetFieldAccessorTable() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ResponseMessage_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder.class);
+                .ensureFieldAccessorsInitialized(
+                        cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder.class);
       }
 
       // Construct using cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.newBuilder()
@@ -2221,7 +1935,7 @@ public final class ProtoMsg {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -2233,8 +1947,6 @@ public final class ProtoMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        id_ = "";
-
         result_ = false;
 
         code_ = 0;
@@ -2248,7 +1960,7 @@ public final class ProtoMsg {
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
+      getDescriptorForType() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_ResponseMessage_descriptor;
       }
 
@@ -2269,7 +1981,6 @@ public final class ProtoMsg {
       @java.lang.Override
       public cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage buildPartial() {
         cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage result = new cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage(this);
-        result.id_ = id_;
         result.result_ = result_;
         result.code_ = code_;
         result.info_ = info_;
@@ -2284,30 +1995,30 @@ public final class ProtoMsg {
       }
       @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
       @java.lang.Override
@@ -2322,10 +2033,6 @@ public final class ProtoMsg {
 
       public Builder mergeFrom(cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage other) {
         if (other == cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
-        }
         if (other.getResult() != false) {
           setResult(other.getResult());
         }
@@ -2351,9 +2058,9 @@ public final class ProtoMsg {
 
       @java.lang.Override
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
         cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -2368,109 +2075,13 @@ public final class ProtoMsg {
         return this;
       }
 
-      private java.lang.Object id_ = "";
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @return The id.
-       */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @return The bytes for id.
-       */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearId() {
-        
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 消息id
-       * </pre>
-       *
-       * <code>string id = 1;</code>
-       * @param value The bytes for id to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-
       private boolean result_ ;
       /**
        * <pre>
        * 发送成功或失败
        * </pre>
        *
-       * <code>bool result = 2;</code>
+       * <code>bool result = 1;</code>
        * @return The result.
        */
       @java.lang.Override
@@ -2482,12 +2093,12 @@ public final class ProtoMsg {
        * 发送成功或失败
        * </pre>
        *
-       * <code>bool result = 2;</code>
+       * <code>bool result = 1;</code>
        * @param value The result to set.
        * @return This builder for chaining.
        */
       public Builder setResult(boolean value) {
-        
+
         result_ = value;
         onChanged();
         return this;
@@ -2497,11 +2108,11 @@ public final class ProtoMsg {
        * 发送成功或失败
        * </pre>
        *
-       * <code>bool result = 2;</code>
+       * <code>bool result = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearResult() {
-        
+
         result_ = false;
         onChanged();
         return this;
@@ -2513,7 +2124,7 @@ public final class ProtoMsg {
        * 错误码
        * </pre>
        *
-       * <code>uint32 code = 3;</code>
+       * <code>uint32 code = 2;</code>
        * @return The code.
        */
       @java.lang.Override
@@ -2525,12 +2136,12 @@ public final class ProtoMsg {
        * 错误码
        * </pre>
        *
-       * <code>uint32 code = 3;</code>
+       * <code>uint32 code = 2;</code>
        * @param value The code to set.
        * @return This builder for chaining.
        */
       public Builder setCode(int value) {
-        
+
         code_ = value;
         onChanged();
         return this;
@@ -2540,11 +2151,11 @@ public final class ProtoMsg {
        * 错误码
        * </pre>
        *
-       * <code>uint32 code = 3;</code>
+       * <code>uint32 code = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearCode() {
-        
+
         code_ = 0;
         onChanged();
         return this;
@@ -2556,14 +2167,14 @@ public final class ProtoMsg {
        * 错误描述
        * </pre>
        *
-       * <code>string info = 4;</code>
+       * <code>string info = 3;</code>
        * @return The info.
        */
       public java.lang.String getInfo() {
         java.lang.Object ref = info_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
+                  (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           info_ = s;
           return s;
@@ -2576,16 +2187,16 @@ public final class ProtoMsg {
        * 错误描述
        * </pre>
        *
-       * <code>string info = 4;</code>
+       * <code>string info = 3;</code>
        * @return The bytes for info.
        */
       public com.google.protobuf.ByteString
-          getInfoBytes() {
+      getInfoBytes() {
         java.lang.Object ref = info_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           info_ = b;
           return b;
         } else {
@@ -2597,16 +2208,16 @@ public final class ProtoMsg {
        * 错误描述
        * </pre>
        *
-       * <code>string info = 4;</code>
+       * <code>string info = 3;</code>
        * @param value The info to set.
        * @return This builder for chaining.
        */
       public Builder setInfo(
-          java.lang.String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  
+          throw new NullPointerException();
+        }
+
         info_ = value;
         onChanged();
         return this;
@@ -2616,11 +2227,11 @@ public final class ProtoMsg {
        * 错误描述
        * </pre>
        *
-       * <code>string info = 4;</code>
+       * <code>string info = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearInfo() {
-        
+
         info_ = getDefaultInstance().getInfo();
         onChanged();
         return this;
@@ -2630,17 +2241,17 @@ public final class ProtoMsg {
        * 错误描述
        * </pre>
        *
-       * <code>string info = 4;</code>
+       * <code>string info = 3;</code>
        * @param value The bytes for info to set.
        * @return This builder for chaining.
        */
       public Builder setInfoBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
         info_ = value;
         onChanged();
         return this;
@@ -2652,7 +2263,7 @@ public final class ProtoMsg {
        * 错误描述是否提示给用户
        * </pre>
        *
-       * <code>bool expose = 5;</code>
+       * <code>bool expose = 4;</code>
        * @return The expose.
        */
       @java.lang.Override
@@ -2664,12 +2275,12 @@ public final class ProtoMsg {
        * 错误描述是否提示给用户
        * </pre>
        *
-       * <code>bool expose = 5;</code>
+       * <code>bool expose = 4;</code>
        * @param value The expose to set.
        * @return This builder for chaining.
        */
       public Builder setExpose(boolean value) {
-        
+
         expose_ = value;
         onChanged();
         return this;
@@ -2679,24 +2290,24 @@ public final class ProtoMsg {
        * 错误描述是否提示给用户
        * </pre>
        *
-       * <code>bool expose = 5;</code>
+       * <code>bool expose = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearExpose() {
-        
+
         expose_ = false;
         onChanged();
         return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
@@ -2715,12 +2326,12 @@ public final class ProtoMsg {
     }
 
     private static final com.google.protobuf.Parser<ResponseMessage>
-        PARSER = new com.google.protobuf.AbstractParser<ResponseMessage>() {
+            PARSER = new com.google.protobuf.AbstractParser<ResponseMessage>() {
       @java.lang.Override
       public ResponseMessage parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
         return new ResponseMessage(input, extensionRegistry);
       }
     };
@@ -2742,8 +2353,8 @@ public final class ProtoMsg {
   }
 
   public interface PushMessageOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:PushMessage)
-      com.google.protobuf.MessageOrBuilder {
+          // @@protoc_insertion_point(interface_extends:PushMessage)
+          com.google.protobuf.MessageOrBuilder {
 
     /**
      * <pre>
@@ -2792,7 +2403,7 @@ public final class ProtoMsg {
      * @return The bytes for content.
      */
     com.google.protobuf.ByteString
-        getContentBytes();
+    getContentBytes();
   }
   /**
    * <pre>
@@ -2802,10 +2413,10 @@ public final class ProtoMsg {
    * Protobuf type {@code PushMessage}
    */
   public static final class PushMessage extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:PushMessage)
-      PushMessageOrBuilder {
-  private static final long serialVersionUID = 0L;
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:PushMessage)
+          PushMessageOrBuilder {
+    private static final long serialVersionUID = 0L;
     // Use PushMessage.newBuilder() to construct.
     private PushMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -2818,7 +2429,7 @@ public final class ProtoMsg {
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
+            UnusedPrivateParameter unused) {
       return new PushMessage();
     }
 
@@ -2828,15 +2439,15 @@ public final class ProtoMsg {
       return this.unknownFields;
     }
     private PushMessage(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+              com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -2864,7 +2475,7 @@ public final class ProtoMsg {
             }
             default: {
               if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+                      input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -2875,23 +2486,23 @@ public final class ProtoMsg {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+                e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
+    getDescriptor() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_PushMessage_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
+    internalGetFieldAccessorTable() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_PushMessage_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder.class);
+              .ensureFieldAccessorsInitialized(
+                      cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder.class);
     }
 
     public static final int TIME_FIELD_NUMBER = 1;
@@ -2952,8 +2563,8 @@ public final class ProtoMsg {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         content_ = s;
         return s;
@@ -2969,12 +2580,12 @@ public final class ProtoMsg {
      */
     @java.lang.Override
     public com.google.protobuf.ByteString
-        getContentBytes() {
+    getContentBytes() {
       java.lang.Object ref = content_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
         content_ = b;
         return b;
       } else {
@@ -2995,7 +2606,7 @@ public final class ProtoMsg {
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
+            throws java.io.IOException {
       if (time_ != 0L) {
         output.writeUInt64(1, time_);
       }
@@ -3016,11 +2627,11 @@ public final class ProtoMsg {
       size = 0;
       if (time_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(1, time_);
+                .computeUInt64Size(1, time_);
       }
       if (contentType_ != cn.chasers.wehappy.common.msg.ProtoMsg.ContentType.TEXT.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, contentType_);
+                .computeEnumSize(2, contentType_);
       }
       if (!getContentBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, content_);
@@ -3033,7 +2644,7 @@ public final class ProtoMsg {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-       return true;
+        return true;
       }
       if (!(obj instanceof cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage)) {
         return super.equals(obj);
@@ -3041,10 +2652,10 @@ public final class ProtoMsg {
       cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage other = (cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage) obj;
 
       if (getTime()
-          != other.getTime()) return false;
+              != other.getTime()) return false;
       if (contentType_ != other.contentType_) return false;
       if (!getContent()
-          .equals(other.getContent())) return false;
+              .equals(other.getContent())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -3058,7 +2669,7 @@ public final class ProtoMsg {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getTime());
+              getTime());
       hash = (37 * hash) + CONTENTTYPE_FIELD_NUMBER;
       hash = (53 * hash) + contentType_;
       hash = (37 * hash) + CONTENT_FIELD_NUMBER;
@@ -3069,73 +2680,73 @@ public final class ProtoMsg {
     }
 
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+              .parseDelimitedWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
     @java.lang.Override
@@ -3149,12 +2760,12 @@ public final class ProtoMsg {
     @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
+              ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -3166,20 +2777,20 @@ public final class ProtoMsg {
      * Protobuf type {@code PushMessage}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:PushMessage)
-        cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder {
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:PushMessage)
+            cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
+      getDescriptor() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_PushMessage_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
+      internalGetFieldAccessorTable() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_PushMessage_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder.class);
+                .ensureFieldAccessorsInitialized(
+                        cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.class, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder.class);
       }
 
       // Construct using cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.newBuilder()
@@ -3188,7 +2799,7 @@ public final class ProtoMsg {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -3211,7 +2822,7 @@ public final class ProtoMsg {
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
+      getDescriptorForType() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_PushMessage_descriptor;
       }
 
@@ -3245,30 +2856,30 @@ public final class ProtoMsg {
       }
       @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
       @java.lang.Override
@@ -3305,9 +2916,9 @@ public final class ProtoMsg {
 
       @java.lang.Override
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
         cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -3345,7 +2956,7 @@ public final class ProtoMsg {
        * @return This builder for chaining.
        */
       public Builder setTime(long value) {
-        
+
         time_ = value;
         onChanged();
         return this;
@@ -3359,7 +2970,7 @@ public final class ProtoMsg {
        * @return This builder for chaining.
        */
       public Builder clearTime() {
-        
+
         time_ = 0L;
         onChanged();
         return this;
@@ -3387,7 +2998,7 @@ public final class ProtoMsg {
        * @return This builder for chaining.
        */
       public Builder setContentTypeValue(int value) {
-        
+
         contentType_ = value;
         onChanged();
         return this;
@@ -3419,7 +3030,7 @@ public final class ProtoMsg {
         if (value == null) {
           throw new NullPointerException();
         }
-        
+
         contentType_ = value.getNumber();
         onChanged();
         return this;
@@ -3433,7 +3044,7 @@ public final class ProtoMsg {
        * @return This builder for chaining.
        */
       public Builder clearContentType() {
-        
+
         contentType_ = 0;
         onChanged();
         return this;
@@ -3452,7 +3063,7 @@ public final class ProtoMsg {
         java.lang.Object ref = content_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
+                  (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           content_ = s;
           return s;
@@ -3469,12 +3080,12 @@ public final class ProtoMsg {
        * @return The bytes for content.
        */
       public com.google.protobuf.ByteString
-          getContentBytes() {
+      getContentBytes() {
         java.lang.Object ref = content_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
           content_ = b;
           return b;
         } else {
@@ -3491,11 +3102,11 @@ public final class ProtoMsg {
        * @return This builder for chaining.
        */
       public Builder setContent(
-          java.lang.String value) {
+              java.lang.String value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  
+          throw new NullPointerException();
+        }
+
         content_ = value;
         onChanged();
         return this;
@@ -3509,7 +3120,7 @@ public final class ProtoMsg {
        * @return This builder for chaining.
        */
       public Builder clearContent() {
-        
+
         content_ = getDefaultInstance().getContent();
         onChanged();
         return this;
@@ -3524,25 +3135,25 @@ public final class ProtoMsg {
        * @return This builder for chaining.
        */
       public Builder setContentBytes(
-          com.google.protobuf.ByteString value) {
+              com.google.protobuf.ByteString value) {
         if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
         content_ = value;
         onChanged();
         return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
@@ -3561,12 +3172,12 @@ public final class ProtoMsg {
     }
 
     private static final com.google.protobuf.Parser<PushMessage>
-        PARSER = new com.google.protobuf.AbstractParser<PushMessage>() {
+            PARSER = new com.google.protobuf.AbstractParser<PushMessage>() {
       @java.lang.Override
       public PushMessage parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
         return new PushMessage(input, extensionRegistry);
       }
     };
@@ -3588,15 +3199,45 @@ public final class ProtoMsg {
   }
 
   public interface MessageOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:Message)
-      com.google.protobuf.MessageOrBuilder {
+          // @@protoc_insertion_point(interface_extends:Message)
+          com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * 序列号,服务端生成,用于消息排序
+     * </pre>
+     *
+     * <code>int64 sequence = 1;</code>
+     * @return The sequence.
+     */
+    long getSequence();
+
+    /**
+     * <pre>
+     * 消息id,由客户端生成,用于消息确认
+     * </pre>
+     *
+     * <code>string id = 2;</code>
+     * @return The id.
+     */
+    java.lang.String getId();
+    /**
+     * <pre>
+     * 消息id,由客户端生成,用于消息确认
+     * </pre>
+     *
+     * <code>string id = 2;</code>
+     * @return The bytes for id.
+     */
+    com.google.protobuf.ByteString
+    getIdBytes();
 
     /**
      * <pre>
      * 消息类型
      * </pre>
      *
-     * <code>.MessageType messageType = 1;</code>
+     * <code>.MessageType messageType = 3;</code>
      * @return The enum numeric value on the wire for messageType.
      */
     int getMessageTypeValue();
@@ -3605,37 +3246,27 @@ public final class ProtoMsg {
      * 消息类型
      * </pre>
      *
-     * <code>.MessageType messageType = 1;</code>
+     * <code>.MessageType messageType = 3;</code>
      * @return The messageType.
      */
     cn.chasers.wehappy.common.msg.ProtoMsg.MessageType getMessageType();
 
     /**
      * <pre>
-     * 推送用户的Id
+     * 发送给的用户的Id
      * </pre>
      *
-     * <code>int64 to = 2;</code>
+     * <code>int64 to = 4;</code>
      * @return The to.
      */
     long getTo();
 
     /**
      * <pre>
-     * 序列号
-     * </pre>
-     *
-     * <code>int64 sequence = 3;</code>
-     * @return The sequence.
-     */
-    long getSequence();
-
-    /**
-     * <pre>
      * 聊天消息
      * </pre>
      *
-     * <code>.ChatMessage chatMessage = 4;</code>
+     * <code>.ChatMessage chatMessage = 5;</code>
      * @return Whether the chatMessage field is set.
      */
     boolean hasChatMessage();
@@ -3644,7 +3275,7 @@ public final class ProtoMsg {
      * 聊天消息
      * </pre>
      *
-     * <code>.ChatMessage chatMessage = 4;</code>
+     * <code>.ChatMessage chatMessage = 5;</code>
      * @return The chatMessage.
      */
     cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage getChatMessage();
@@ -3653,7 +3284,7 @@ public final class ProtoMsg {
      * 聊天消息
      * </pre>
      *
-     * <code>.ChatMessage chatMessage = 4;</code>
+     * <code>.ChatMessage chatMessage = 5;</code>
      */
     cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder getChatMessageOrBuilder();
 
@@ -3662,7 +3293,7 @@ public final class ProtoMsg {
      * 响应消息
      * </pre>
      *
-     * <code>.ResponseMessage responseMessage = 5;</code>
+     * <code>.ResponseMessage responseMessage = 6;</code>
      * @return Whether the responseMessage field is set.
      */
     boolean hasResponseMessage();
@@ -3671,7 +3302,7 @@ public final class ProtoMsg {
      * 响应消息
      * </pre>
      *
-     * <code>.ResponseMessage responseMessage = 5;</code>
+     * <code>.ResponseMessage responseMessage = 6;</code>
      * @return The responseMessage.
      */
     cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage getResponseMessage();
@@ -3680,7 +3311,7 @@ public final class ProtoMsg {
      * 响应消息
      * </pre>
      *
-     * <code>.ResponseMessage responseMessage = 5;</code>
+     * <code>.ResponseMessage responseMessage = 6;</code>
      */
     cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder getResponseMessageOrBuilder();
 
@@ -3689,7 +3320,7 @@ public final class ProtoMsg {
      * 推送消息
      * </pre>
      *
-     * <code>.PushMessage pushMessage = 6;</code>
+     * <code>.PushMessage pushMessage = 7;</code>
      * @return Whether the pushMessage field is set.
      */
     boolean hasPushMessage();
@@ -3698,7 +3329,7 @@ public final class ProtoMsg {
      * 推送消息
      * </pre>
      *
-     * <code>.PushMessage pushMessage = 6;</code>
+     * <code>.PushMessage pushMessage = 7;</code>
      * @return The pushMessage.
      */
     cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage getPushMessage();
@@ -3707,7 +3338,7 @@ public final class ProtoMsg {
      * 推送消息
      * </pre>
      *
-     * <code>.PushMessage pushMessage = 6;</code>
+     * <code>.PushMessage pushMessage = 7;</code>
      */
     cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder getPushMessageOrBuilder();
   }
@@ -3719,22 +3350,23 @@ public final class ProtoMsg {
    * Protobuf type {@code Message}
    */
   public static final class Message extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:Message)
-      MessageOrBuilder {
-  private static final long serialVersionUID = 0L;
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:Message)
+          MessageOrBuilder {
+    private static final long serialVersionUID = 0L;
     // Use Message.newBuilder() to construct.
     private Message(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
     private Message() {
+      id_ = "";
       messageType_ = 0;
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
+            UnusedPrivateParameter unused) {
       return new Message();
     }
 
@@ -3744,15 +3376,15 @@ public final class ProtoMsg {
       return this.unknownFields;
     }
     private Message(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
+              com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
         boolean done = false;
         while (!done) {
@@ -3762,22 +3394,28 @@ public final class ProtoMsg {
               done = true;
               break;
             case 8: {
+
+              sequence_ = input.readInt64();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              id_ = s;
+              break;
+            }
+            case 24: {
               int rawValue = input.readEnum();
 
               messageType_ = rawValue;
               break;
             }
-            case 16: {
+            case 32: {
 
               to_ = input.readInt64();
               break;
             }
-            case 24: {
-
-              sequence_ = input.readInt64();
-              break;
-            }
-            case 34: {
+            case 42: {
               cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder subBuilder = null;
               if (chatMessage_ != null) {
                 subBuilder = chatMessage_.toBuilder();
@@ -3790,7 +3428,7 @@ public final class ProtoMsg {
 
               break;
             }
-            case 42: {
+            case 50: {
               cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder subBuilder = null;
               if (responseMessage_ != null) {
                 subBuilder = responseMessage_.toBuilder();
@@ -3803,7 +3441,7 @@ public final class ProtoMsg {
 
               break;
             }
-            case 50: {
+            case 58: {
               cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder subBuilder = null;
               if (pushMessage_ != null) {
                 subBuilder = pushMessage_.toBuilder();
@@ -3818,7 +3456,7 @@ public final class ProtoMsg {
             }
             default: {
               if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+                      input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -3829,33 +3467,94 @@ public final class ProtoMsg {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+                e).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
+    getDescriptor() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_Message_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
+    internalGetFieldAccessorTable() {
       return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_Message_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              cn.chasers.wehappy.common.msg.ProtoMsg.Message.class, cn.chasers.wehappy.common.msg.ProtoMsg.Message.Builder.class);
+              .ensureFieldAccessorsInitialized(
+                      cn.chasers.wehappy.common.msg.ProtoMsg.Message.class, cn.chasers.wehappy.common.msg.ProtoMsg.Message.Builder.class);
     }
 
-    public static final int MESSAGETYPE_FIELD_NUMBER = 1;
+    public static final int SEQUENCE_FIELD_NUMBER = 1;
+    private long sequence_;
+    /**
+     * <pre>
+     * 序列号,服务端生成,用于消息排序
+     * </pre>
+     *
+     * <code>int64 sequence = 1;</code>
+     * @return The sequence.
+     */
+    @java.lang.Override
+    public long getSequence() {
+      return sequence_;
+    }
+
+    public static final int ID_FIELD_NUMBER = 2;
+    private volatile java.lang.Object id_;
+    /**
+     * <pre>
+     * 消息id,由客户端生成,用于消息确认
+     * </pre>
+     *
+     * <code>string id = 2;</code>
+     * @return The id.
+     */
+    @java.lang.Override
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        id_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * 消息id,由客户端生成,用于消息确认
+     * </pre>
+     *
+     * <code>string id = 2;</code>
+     * @return The bytes for id.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+    getIdBytes() {
+      java.lang.Object ref = id_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
+        id_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MESSAGETYPE_FIELD_NUMBER = 3;
     private int messageType_;
     /**
      * <pre>
      * 消息类型
      * </pre>
      *
-     * <code>.MessageType messageType = 1;</code>
+     * <code>.MessageType messageType = 3;</code>
      * @return The enum numeric value on the wire for messageType.
      */
     @java.lang.Override public int getMessageTypeValue() {
@@ -3866,7 +3565,7 @@ public final class ProtoMsg {
      * 消息类型
      * </pre>
      *
-     * <code>.MessageType messageType = 1;</code>
+     * <code>.MessageType messageType = 3;</code>
      * @return The messageType.
      */
     @java.lang.Override public cn.chasers.wehappy.common.msg.ProtoMsg.MessageType getMessageType() {
@@ -3875,14 +3574,14 @@ public final class ProtoMsg {
       return result == null ? cn.chasers.wehappy.common.msg.ProtoMsg.MessageType.UNRECOGNIZED : result;
     }
 
-    public static final int TO_FIELD_NUMBER = 2;
+    public static final int TO_FIELD_NUMBER = 4;
     private long to_;
     /**
      * <pre>
-     * 推送用户的Id
+     * 发送给的用户的Id
      * </pre>
      *
-     * <code>int64 to = 2;</code>
+     * <code>int64 to = 4;</code>
      * @return The to.
      */
     @java.lang.Override
@@ -3890,29 +3589,14 @@ public final class ProtoMsg {
       return to_;
     }
 
-    public static final int SEQUENCE_FIELD_NUMBER = 3;
-    private long sequence_;
-    /**
-     * <pre>
-     * 序列号
-     * </pre>
-     *
-     * <code>int64 sequence = 3;</code>
-     * @return The sequence.
-     */
-    @java.lang.Override
-    public long getSequence() {
-      return sequence_;
-    }
-
-    public static final int CHATMESSAGE_FIELD_NUMBER = 4;
+    public static final int CHATMESSAGE_FIELD_NUMBER = 5;
     private cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage chatMessage_;
     /**
      * <pre>
      * 聊天消息
      * </pre>
      *
-     * <code>.ChatMessage chatMessage = 4;</code>
+     * <code>.ChatMessage chatMessage = 5;</code>
      * @return Whether the chatMessage field is set.
      */
     @java.lang.Override
@@ -3924,7 +3608,7 @@ public final class ProtoMsg {
      * 聊天消息
      * </pre>
      *
-     * <code>.ChatMessage chatMessage = 4;</code>
+     * <code>.ChatMessage chatMessage = 5;</code>
      * @return The chatMessage.
      */
     @java.lang.Override
@@ -3936,21 +3620,21 @@ public final class ProtoMsg {
      * 聊天消息
      * </pre>
      *
-     * <code>.ChatMessage chatMessage = 4;</code>
+     * <code>.ChatMessage chatMessage = 5;</code>
      */
     @java.lang.Override
     public cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder getChatMessageOrBuilder() {
       return getChatMessage();
     }
 
-    public static final int RESPONSEMESSAGE_FIELD_NUMBER = 5;
+    public static final int RESPONSEMESSAGE_FIELD_NUMBER = 6;
     private cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage responseMessage_;
     /**
      * <pre>
      * 响应消息
      * </pre>
      *
-     * <code>.ResponseMessage responseMessage = 5;</code>
+     * <code>.ResponseMessage responseMessage = 6;</code>
      * @return Whether the responseMessage field is set.
      */
     @java.lang.Override
@@ -3962,7 +3646,7 @@ public final class ProtoMsg {
      * 响应消息
      * </pre>
      *
-     * <code>.ResponseMessage responseMessage = 5;</code>
+     * <code>.ResponseMessage responseMessage = 6;</code>
      * @return The responseMessage.
      */
     @java.lang.Override
@@ -3974,21 +3658,21 @@ public final class ProtoMsg {
      * 响应消息
      * </pre>
      *
-     * <code>.ResponseMessage responseMessage = 5;</code>
+     * <code>.ResponseMessage responseMessage = 6;</code>
      */
     @java.lang.Override
     public cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder getResponseMessageOrBuilder() {
       return getResponseMessage();
     }
 
-    public static final int PUSHMESSAGE_FIELD_NUMBER = 6;
+    public static final int PUSHMESSAGE_FIELD_NUMBER = 7;
     private cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage pushMessage_;
     /**
      * <pre>
      * 推送消息
      * </pre>
      *
-     * <code>.PushMessage pushMessage = 6;</code>
+     * <code>.PushMessage pushMessage = 7;</code>
      * @return Whether the pushMessage field is set.
      */
     @java.lang.Override
@@ -4000,7 +3684,7 @@ public final class ProtoMsg {
      * 推送消息
      * </pre>
      *
-     * <code>.PushMessage pushMessage = 6;</code>
+     * <code>.PushMessage pushMessage = 7;</code>
      * @return The pushMessage.
      */
     @java.lang.Override
@@ -4012,7 +3696,7 @@ public final class ProtoMsg {
      * 推送消息
      * </pre>
      *
-     * <code>.PushMessage pushMessage = 6;</code>
+     * <code>.PushMessage pushMessage = 7;</code>
      */
     @java.lang.Override
     public cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder getPushMessageOrBuilder() {
@@ -4032,24 +3716,27 @@ public final class ProtoMsg {
 
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (messageType_ != cn.chasers.wehappy.common.msg.ProtoMsg.MessageType.HEART_BRAT_MESSAGE.getNumber()) {
-        output.writeEnum(1, messageType_);
+            throws java.io.IOException {
+      if (sequence_ != 0L) {
+        output.writeInt64(1, sequence_);
+      }
+      if (!getIdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, id_);
+      }
+      if (messageType_ != cn.chasers.wehappy.common.msg.ProtoMsg.MessageType.SINGLE_MESSAGE.getNumber()) {
+        output.writeEnum(3, messageType_);
       }
       if (to_ != 0L) {
-        output.writeInt64(2, to_);
-      }
-      if (sequence_ != 0L) {
-        output.writeInt64(3, sequence_);
+        output.writeInt64(4, to_);
       }
       if (chatMessage_ != null) {
-        output.writeMessage(4, getChatMessage());
+        output.writeMessage(5, getChatMessage());
       }
       if (responseMessage_ != null) {
-        output.writeMessage(5, getResponseMessage());
+        output.writeMessage(6, getResponseMessage());
       }
       if (pushMessage_ != null) {
-        output.writeMessage(6, getPushMessage());
+        output.writeMessage(7, getPushMessage());
       }
       unknownFields.writeTo(output);
     }
@@ -4060,29 +3747,32 @@ public final class ProtoMsg {
       if (size != -1) return size;
 
       size = 0;
-      if (messageType_ != cn.chasers.wehappy.common.msg.ProtoMsg.MessageType.HEART_BRAT_MESSAGE.getNumber()) {
+      if (sequence_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, messageType_);
+                .computeInt64Size(1, sequence_);
+      }
+      if (!getIdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, id_);
+      }
+      if (messageType_ != cn.chasers.wehappy.common.msg.ProtoMsg.MessageType.SINGLE_MESSAGE.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+                .computeEnumSize(3, messageType_);
       }
       if (to_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, to_);
-      }
-      if (sequence_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, sequence_);
+                .computeInt64Size(4, to_);
       }
       if (chatMessage_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getChatMessage());
+                .computeMessageSize(5, getChatMessage());
       }
       if (responseMessage_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getResponseMessage());
+                .computeMessageSize(6, getResponseMessage());
       }
       if (pushMessage_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, getPushMessage());
+                .computeMessageSize(7, getPushMessage());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4092,32 +3782,34 @@ public final class ProtoMsg {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-       return true;
+        return true;
       }
       if (!(obj instanceof cn.chasers.wehappy.common.msg.ProtoMsg.Message)) {
         return super.equals(obj);
       }
       cn.chasers.wehappy.common.msg.ProtoMsg.Message other = (cn.chasers.wehappy.common.msg.ProtoMsg.Message) obj;
 
+      if (getSequence()
+              != other.getSequence()) return false;
+      if (!getId()
+              .equals(other.getId())) return false;
       if (messageType_ != other.messageType_) return false;
       if (getTo()
-          != other.getTo()) return false;
-      if (getSequence()
-          != other.getSequence()) return false;
+              != other.getTo()) return false;
       if (hasChatMessage() != other.hasChatMessage()) return false;
       if (hasChatMessage()) {
         if (!getChatMessage()
-            .equals(other.getChatMessage())) return false;
+                .equals(other.getChatMessage())) return false;
       }
       if (hasResponseMessage() != other.hasResponseMessage()) return false;
       if (hasResponseMessage()) {
         if (!getResponseMessage()
-            .equals(other.getResponseMessage())) return false;
+                .equals(other.getResponseMessage())) return false;
       }
       if (hasPushMessage() != other.hasPushMessage()) return false;
       if (hasPushMessage()) {
         if (!getPushMessage()
-            .equals(other.getPushMessage())) return false;
+                .equals(other.getPushMessage())) return false;
       }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
@@ -4130,14 +3822,16 @@ public final class ProtoMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SEQUENCE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+              getSequence());
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId().hashCode();
       hash = (37 * hash) + MESSAGETYPE_FIELD_NUMBER;
       hash = (53 * hash) + messageType_;
       hash = (37 * hash) + TO_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getTo());
-      hash = (37 * hash) + SEQUENCE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getSequence());
+              getTo());
       if (hasChatMessage()) {
         hash = (37 * hash) + CHATMESSAGE_FIELD_NUMBER;
         hash = (53 * hash) + getChatMessage().hashCode();
@@ -4156,73 +3850,73 @@ public final class ProtoMsg {
     }
 
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+              .parseDelimitedWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+              .parseWithIOException(PARSER, input);
     }
     public static cn.chasers.wehappy.common.msg.ProtoMsg.Message parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+              .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
     @java.lang.Override
@@ -4236,12 +3930,12 @@ public final class ProtoMsg {
     @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
+              ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -4253,20 +3947,20 @@ public final class ProtoMsg {
      * Protobuf type {@code Message}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:Message)
-        cn.chasers.wehappy.common.msg.ProtoMsg.MessageOrBuilder {
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:Message)
+            cn.chasers.wehappy.common.msg.ProtoMsg.MessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
+      getDescriptor() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_Message_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
+      internalGetFieldAccessorTable() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_Message_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                cn.chasers.wehappy.common.msg.ProtoMsg.Message.class, cn.chasers.wehappy.common.msg.ProtoMsg.Message.Builder.class);
+                .ensureFieldAccessorsInitialized(
+                        cn.chasers.wehappy.common.msg.ProtoMsg.Message.class, cn.chasers.wehappy.common.msg.ProtoMsg.Message.Builder.class);
       }
 
       // Construct using cn.chasers.wehappy.common.msg.ProtoMsg.Message.newBuilder()
@@ -4275,7 +3969,7 @@ public final class ProtoMsg {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -4287,11 +3981,13 @@ public final class ProtoMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        sequence_ = 0L;
+
+        id_ = "";
+
         messageType_ = 0;
 
         to_ = 0L;
-
-        sequence_ = 0L;
 
         if (chatMessageBuilder_ == null) {
           chatMessage_ = null;
@@ -4316,7 +4012,7 @@ public final class ProtoMsg {
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
+      getDescriptorForType() {
         return cn.chasers.wehappy.common.msg.ProtoMsg.internal_static_Message_descriptor;
       }
 
@@ -4337,9 +4033,10 @@ public final class ProtoMsg {
       @java.lang.Override
       public cn.chasers.wehappy.common.msg.ProtoMsg.Message buildPartial() {
         cn.chasers.wehappy.common.msg.ProtoMsg.Message result = new cn.chasers.wehappy.common.msg.ProtoMsg.Message(this);
+        result.sequence_ = sequence_;
+        result.id_ = id_;
         result.messageType_ = messageType_;
         result.to_ = to_;
-        result.sequence_ = sequence_;
         if (chatMessageBuilder_ == null) {
           result.chatMessage_ = chatMessage_;
         } else {
@@ -4365,30 +4062,30 @@ public final class ProtoMsg {
       }
       @java.lang.Override
       public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
       @java.lang.Override
@@ -4403,14 +4100,18 @@ public final class ProtoMsg {
 
       public Builder mergeFrom(cn.chasers.wehappy.common.msg.ProtoMsg.Message other) {
         if (other == cn.chasers.wehappy.common.msg.ProtoMsg.Message.getDefaultInstance()) return this;
+        if (other.getSequence() != 0L) {
+          setSequence(other.getSequence());
+        }
+        if (!other.getId().isEmpty()) {
+          id_ = other.id_;
+          onChanged();
+        }
         if (other.messageType_ != 0) {
           setMessageTypeValue(other.getMessageTypeValue());
         }
         if (other.getTo() != 0L) {
           setTo(other.getTo());
-        }
-        if (other.getSequence() != 0L) {
-          setSequence(other.getSequence());
         }
         if (other.hasChatMessage()) {
           mergeChatMessage(other.getChatMessage());
@@ -4433,9 +4134,9 @@ public final class ProtoMsg {
 
       @java.lang.Override
       public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
         cn.chasers.wehappy.common.msg.ProtoMsg.Message parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -4450,13 +4151,152 @@ public final class ProtoMsg {
         return this;
       }
 
+      private long sequence_ ;
+      /**
+       * <pre>
+       * 序列号,服务端生成,用于消息排序
+       * </pre>
+       *
+       * <code>int64 sequence = 1;</code>
+       * @return The sequence.
+       */
+      @java.lang.Override
+      public long getSequence() {
+        return sequence_;
+      }
+      /**
+       * <pre>
+       * 序列号,服务端生成,用于消息排序
+       * </pre>
+       *
+       * <code>int64 sequence = 1;</code>
+       * @param value The sequence to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSequence(long value) {
+
+        sequence_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 序列号,服务端生成,用于消息排序
+       * </pre>
+       *
+       * <code>int64 sequence = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSequence() {
+
+        sequence_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object id_ = "";
+      /**
+       * <pre>
+       * 消息id,由客户端生成,用于消息确认
+       * </pre>
+       *
+       * <code>string id = 2;</code>
+       * @return The id.
+       */
+      public java.lang.String getId() {
+        java.lang.Object ref = id_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          id_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 消息id,由客户端生成,用于消息确认
+       * </pre>
+       *
+       * <code>string id = 2;</code>
+       * @return The bytes for id.
+       */
+      public com.google.protobuf.ByteString
+      getIdBytes() {
+        java.lang.Object ref = id_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (java.lang.String) ref);
+          id_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 消息id,由客户端生成,用于消息确认
+       * </pre>
+       *
+       * <code>string id = 2;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setId(
+              java.lang.String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 消息id,由客户端生成,用于消息确认
+       * </pre>
+       *
+       * <code>string id = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearId() {
+
+        id_ = getDefaultInstance().getId();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 消息id,由客户端生成,用于消息确认
+       * </pre>
+       *
+       * <code>string id = 2;</code>
+       * @param value The bytes for id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIdBytes(
+              com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
+        id_ = value;
+        onChanged();
+        return this;
+      }
+
       private int messageType_ = 0;
       /**
        * <pre>
        * 消息类型
        * </pre>
        *
-       * <code>.MessageType messageType = 1;</code>
+       * <code>.MessageType messageType = 3;</code>
        * @return The enum numeric value on the wire for messageType.
        */
       @java.lang.Override public int getMessageTypeValue() {
@@ -4467,12 +4307,12 @@ public final class ProtoMsg {
        * 消息类型
        * </pre>
        *
-       * <code>.MessageType messageType = 1;</code>
+       * <code>.MessageType messageType = 3;</code>
        * @param value The enum numeric value on the wire for messageType to set.
        * @return This builder for chaining.
        */
       public Builder setMessageTypeValue(int value) {
-        
+
         messageType_ = value;
         onChanged();
         return this;
@@ -4482,7 +4322,7 @@ public final class ProtoMsg {
        * 消息类型
        * </pre>
        *
-       * <code>.MessageType messageType = 1;</code>
+       * <code>.MessageType messageType = 3;</code>
        * @return The messageType.
        */
       @java.lang.Override
@@ -4496,7 +4336,7 @@ public final class ProtoMsg {
        * 消息类型
        * </pre>
        *
-       * <code>.MessageType messageType = 1;</code>
+       * <code>.MessageType messageType = 3;</code>
        * @param value The messageType to set.
        * @return This builder for chaining.
        */
@@ -4504,7 +4344,7 @@ public final class ProtoMsg {
         if (value == null) {
           throw new NullPointerException();
         }
-        
+
         messageType_ = value.getNumber();
         onChanged();
         return this;
@@ -4514,11 +4354,11 @@ public final class ProtoMsg {
        * 消息类型
        * </pre>
        *
-       * <code>.MessageType messageType = 1;</code>
+       * <code>.MessageType messageType = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearMessageType() {
-        
+
         messageType_ = 0;
         onChanged();
         return this;
@@ -4527,10 +4367,10 @@ public final class ProtoMsg {
       private long to_ ;
       /**
        * <pre>
-       * 推送用户的Id
+       * 发送给的用户的Id
        * </pre>
        *
-       * <code>int64 to = 2;</code>
+       * <code>int64 to = 4;</code>
        * @return The to.
        */
       @java.lang.Override
@@ -4539,86 +4379,43 @@ public final class ProtoMsg {
       }
       /**
        * <pre>
-       * 推送用户的Id
+       * 发送给的用户的Id
        * </pre>
        *
-       * <code>int64 to = 2;</code>
+       * <code>int64 to = 4;</code>
        * @param value The to to set.
        * @return This builder for chaining.
        */
       public Builder setTo(long value) {
-        
+
         to_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * 推送用户的Id
+       * 发送给的用户的Id
        * </pre>
        *
-       * <code>int64 to = 2;</code>
+       * <code>int64 to = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearTo() {
-        
-        to_ = 0L;
-        onChanged();
-        return this;
-      }
 
-      private long sequence_ ;
-      /**
-       * <pre>
-       * 序列号
-       * </pre>
-       *
-       * <code>int64 sequence = 3;</code>
-       * @return The sequence.
-       */
-      @java.lang.Override
-      public long getSequence() {
-        return sequence_;
-      }
-      /**
-       * <pre>
-       * 序列号
-       * </pre>
-       *
-       * <code>int64 sequence = 3;</code>
-       * @param value The sequence to set.
-       * @return This builder for chaining.
-       */
-      public Builder setSequence(long value) {
-        
-        sequence_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 序列号
-       * </pre>
-       *
-       * <code>int64 sequence = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearSequence() {
-        
-        sequence_ = 0L;
+        to_ = 0L;
         onChanged();
         return this;
       }
 
       private cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage chatMessage_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder> chatMessageBuilder_;
+              cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder> chatMessageBuilder_;
       /**
        * <pre>
        * 聊天消息
        * </pre>
        *
-       * <code>.ChatMessage chatMessage = 4;</code>
+       * <code>.ChatMessage chatMessage = 5;</code>
        * @return Whether the chatMessage field is set.
        */
       public boolean hasChatMessage() {
@@ -4629,7 +4426,7 @@ public final class ProtoMsg {
        * 聊天消息
        * </pre>
        *
-       * <code>.ChatMessage chatMessage = 4;</code>
+       * <code>.ChatMessage chatMessage = 5;</code>
        * @return The chatMessage.
        */
       public cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage getChatMessage() {
@@ -4644,7 +4441,7 @@ public final class ProtoMsg {
        * 聊天消息
        * </pre>
        *
-       * <code>.ChatMessage chatMessage = 4;</code>
+       * <code>.ChatMessage chatMessage = 5;</code>
        */
       public Builder setChatMessage(cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage value) {
         if (chatMessageBuilder_ == null) {
@@ -4664,10 +4461,10 @@ public final class ProtoMsg {
        * 聊天消息
        * </pre>
        *
-       * <code>.ChatMessage chatMessage = 4;</code>
+       * <code>.ChatMessage chatMessage = 5;</code>
        */
       public Builder setChatMessage(
-          cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder builderForValue) {
+              cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder builderForValue) {
         if (chatMessageBuilder_ == null) {
           chatMessage_ = builderForValue.build();
           onChanged();
@@ -4682,13 +4479,13 @@ public final class ProtoMsg {
        * 聊天消息
        * </pre>
        *
-       * <code>.ChatMessage chatMessage = 4;</code>
+       * <code>.ChatMessage chatMessage = 5;</code>
        */
       public Builder mergeChatMessage(cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage value) {
         if (chatMessageBuilder_ == null) {
           if (chatMessage_ != null) {
             chatMessage_ =
-              cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.newBuilder(chatMessage_).mergeFrom(value).buildPartial();
+                    cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.newBuilder(chatMessage_).mergeFrom(value).buildPartial();
           } else {
             chatMessage_ = value;
           }
@@ -4704,7 +4501,7 @@ public final class ProtoMsg {
        * 聊天消息
        * </pre>
        *
-       * <code>.ChatMessage chatMessage = 4;</code>
+       * <code>.ChatMessage chatMessage = 5;</code>
        */
       public Builder clearChatMessage() {
         if (chatMessageBuilder_ == null) {
@@ -4722,10 +4519,10 @@ public final class ProtoMsg {
        * 聊天消息
        * </pre>
        *
-       * <code>.ChatMessage chatMessage = 4;</code>
+       * <code>.ChatMessage chatMessage = 5;</code>
        */
       public cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder getChatMessageBuilder() {
-        
+
         onChanged();
         return getChatMessageFieldBuilder().getBuilder();
       }
@@ -4734,14 +4531,14 @@ public final class ProtoMsg {
        * 聊天消息
        * </pre>
        *
-       * <code>.ChatMessage chatMessage = 4;</code>
+       * <code>.ChatMessage chatMessage = 5;</code>
        */
       public cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder getChatMessageOrBuilder() {
         if (chatMessageBuilder_ != null) {
           return chatMessageBuilder_.getMessageOrBuilder();
         } else {
           return chatMessage_ == null ?
-              cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.getDefaultInstance() : chatMessage_;
+                  cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.getDefaultInstance() : chatMessage_;
         }
       }
       /**
@@ -4749,14 +4546,14 @@ public final class ProtoMsg {
        * 聊天消息
        * </pre>
        *
-       * <code>.ChatMessage chatMessage = 4;</code>
+       * <code>.ChatMessage chatMessage = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder> 
-          getChatMessageFieldBuilder() {
+              cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder>
+      getChatMessageFieldBuilder() {
         if (chatMessageBuilder_ == null) {
           chatMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder>(
+                  cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ChatMessageOrBuilder>(
                   getChatMessage(),
                   getParentForChildren(),
                   isClean());
@@ -4767,13 +4564,13 @@ public final class ProtoMsg {
 
       private cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage responseMessage_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder> responseMessageBuilder_;
+              cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder> responseMessageBuilder_;
       /**
        * <pre>
        * 响应消息
        * </pre>
        *
-       * <code>.ResponseMessage responseMessage = 5;</code>
+       * <code>.ResponseMessage responseMessage = 6;</code>
        * @return Whether the responseMessage field is set.
        */
       public boolean hasResponseMessage() {
@@ -4784,7 +4581,7 @@ public final class ProtoMsg {
        * 响应消息
        * </pre>
        *
-       * <code>.ResponseMessage responseMessage = 5;</code>
+       * <code>.ResponseMessage responseMessage = 6;</code>
        * @return The responseMessage.
        */
       public cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage getResponseMessage() {
@@ -4799,7 +4596,7 @@ public final class ProtoMsg {
        * 响应消息
        * </pre>
        *
-       * <code>.ResponseMessage responseMessage = 5;</code>
+       * <code>.ResponseMessage responseMessage = 6;</code>
        */
       public Builder setResponseMessage(cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage value) {
         if (responseMessageBuilder_ == null) {
@@ -4819,10 +4616,10 @@ public final class ProtoMsg {
        * 响应消息
        * </pre>
        *
-       * <code>.ResponseMessage responseMessage = 5;</code>
+       * <code>.ResponseMessage responseMessage = 6;</code>
        */
       public Builder setResponseMessage(
-          cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder builderForValue) {
+              cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder builderForValue) {
         if (responseMessageBuilder_ == null) {
           responseMessage_ = builderForValue.build();
           onChanged();
@@ -4837,13 +4634,13 @@ public final class ProtoMsg {
        * 响应消息
        * </pre>
        *
-       * <code>.ResponseMessage responseMessage = 5;</code>
+       * <code>.ResponseMessage responseMessage = 6;</code>
        */
       public Builder mergeResponseMessage(cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage value) {
         if (responseMessageBuilder_ == null) {
           if (responseMessage_ != null) {
             responseMessage_ =
-              cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.newBuilder(responseMessage_).mergeFrom(value).buildPartial();
+                    cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.newBuilder(responseMessage_).mergeFrom(value).buildPartial();
           } else {
             responseMessage_ = value;
           }
@@ -4859,7 +4656,7 @@ public final class ProtoMsg {
        * 响应消息
        * </pre>
        *
-       * <code>.ResponseMessage responseMessage = 5;</code>
+       * <code>.ResponseMessage responseMessage = 6;</code>
        */
       public Builder clearResponseMessage() {
         if (responseMessageBuilder_ == null) {
@@ -4877,10 +4674,10 @@ public final class ProtoMsg {
        * 响应消息
        * </pre>
        *
-       * <code>.ResponseMessage responseMessage = 5;</code>
+       * <code>.ResponseMessage responseMessage = 6;</code>
        */
       public cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder getResponseMessageBuilder() {
-        
+
         onChanged();
         return getResponseMessageFieldBuilder().getBuilder();
       }
@@ -4889,14 +4686,14 @@ public final class ProtoMsg {
        * 响应消息
        * </pre>
        *
-       * <code>.ResponseMessage responseMessage = 5;</code>
+       * <code>.ResponseMessage responseMessage = 6;</code>
        */
       public cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder getResponseMessageOrBuilder() {
         if (responseMessageBuilder_ != null) {
           return responseMessageBuilder_.getMessageOrBuilder();
         } else {
           return responseMessage_ == null ?
-              cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.getDefaultInstance() : responseMessage_;
+                  cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.getDefaultInstance() : responseMessage_;
         }
       }
       /**
@@ -4904,14 +4701,14 @@ public final class ProtoMsg {
        * 响应消息
        * </pre>
        *
-       * <code>.ResponseMessage responseMessage = 5;</code>
+       * <code>.ResponseMessage responseMessage = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder> 
-          getResponseMessageFieldBuilder() {
+              cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder>
+      getResponseMessageFieldBuilder() {
         if (responseMessageBuilder_ == null) {
           responseMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder>(
+                  cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.ResponseMessageOrBuilder>(
                   getResponseMessage(),
                   getParentForChildren(),
                   isClean());
@@ -4922,13 +4719,13 @@ public final class ProtoMsg {
 
       private cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage pushMessage_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder> pushMessageBuilder_;
+              cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder> pushMessageBuilder_;
       /**
        * <pre>
        * 推送消息
        * </pre>
        *
-       * <code>.PushMessage pushMessage = 6;</code>
+       * <code>.PushMessage pushMessage = 7;</code>
        * @return Whether the pushMessage field is set.
        */
       public boolean hasPushMessage() {
@@ -4939,7 +4736,7 @@ public final class ProtoMsg {
        * 推送消息
        * </pre>
        *
-       * <code>.PushMessage pushMessage = 6;</code>
+       * <code>.PushMessage pushMessage = 7;</code>
        * @return The pushMessage.
        */
       public cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage getPushMessage() {
@@ -4954,7 +4751,7 @@ public final class ProtoMsg {
        * 推送消息
        * </pre>
        *
-       * <code>.PushMessage pushMessage = 6;</code>
+       * <code>.PushMessage pushMessage = 7;</code>
        */
       public Builder setPushMessage(cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage value) {
         if (pushMessageBuilder_ == null) {
@@ -4974,10 +4771,10 @@ public final class ProtoMsg {
        * 推送消息
        * </pre>
        *
-       * <code>.PushMessage pushMessage = 6;</code>
+       * <code>.PushMessage pushMessage = 7;</code>
        */
       public Builder setPushMessage(
-          cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder builderForValue) {
+              cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder builderForValue) {
         if (pushMessageBuilder_ == null) {
           pushMessage_ = builderForValue.build();
           onChanged();
@@ -4992,13 +4789,13 @@ public final class ProtoMsg {
        * 推送消息
        * </pre>
        *
-       * <code>.PushMessage pushMessage = 6;</code>
+       * <code>.PushMessage pushMessage = 7;</code>
        */
       public Builder mergePushMessage(cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage value) {
         if (pushMessageBuilder_ == null) {
           if (pushMessage_ != null) {
             pushMessage_ =
-              cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.newBuilder(pushMessage_).mergeFrom(value).buildPartial();
+                    cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.newBuilder(pushMessage_).mergeFrom(value).buildPartial();
           } else {
             pushMessage_ = value;
           }
@@ -5014,7 +4811,7 @@ public final class ProtoMsg {
        * 推送消息
        * </pre>
        *
-       * <code>.PushMessage pushMessage = 6;</code>
+       * <code>.PushMessage pushMessage = 7;</code>
        */
       public Builder clearPushMessage() {
         if (pushMessageBuilder_ == null) {
@@ -5032,10 +4829,10 @@ public final class ProtoMsg {
        * 推送消息
        * </pre>
        *
-       * <code>.PushMessage pushMessage = 6;</code>
+       * <code>.PushMessage pushMessage = 7;</code>
        */
       public cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder getPushMessageBuilder() {
-        
+
         onChanged();
         return getPushMessageFieldBuilder().getBuilder();
       }
@@ -5044,14 +4841,14 @@ public final class ProtoMsg {
        * 推送消息
        * </pre>
        *
-       * <code>.PushMessage pushMessage = 6;</code>
+       * <code>.PushMessage pushMessage = 7;</code>
        */
       public cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder getPushMessageOrBuilder() {
         if (pushMessageBuilder_ != null) {
           return pushMessageBuilder_.getMessageOrBuilder();
         } else {
           return pushMessage_ == null ?
-              cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.getDefaultInstance() : pushMessage_;
+                  cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.getDefaultInstance() : pushMessage_;
         }
       }
       /**
@@ -5059,14 +4856,14 @@ public final class ProtoMsg {
        * 推送消息
        * </pre>
        *
-       * <code>.PushMessage pushMessage = 6;</code>
+       * <code>.PushMessage pushMessage = 7;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder> 
-          getPushMessageFieldBuilder() {
+              cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder>
+      getPushMessageFieldBuilder() {
         if (pushMessageBuilder_ == null) {
           pushMessageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder>(
+                  cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessage.Builder, cn.chasers.wehappy.common.msg.ProtoMsg.PushMessageOrBuilder>(
                   getPushMessage(),
                   getParentForChildren(),
                   isClean());
@@ -5076,13 +4873,13 @@ public final class ProtoMsg {
       }
       @java.lang.Override
       public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
       public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
       }
 
@@ -5101,12 +4898,12 @@ public final class ProtoMsg {
     }
 
     private static final com.google.protobuf.Parser<Message>
-        PARSER = new com.google.protobuf.AbstractParser<Message>() {
+            PARSER = new com.google.protobuf.AbstractParser<Message>() {
       @java.lang.Override
       public Message parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
         return new Message(input, extensionRegistry);
       }
     };
@@ -5128,85 +4925,84 @@ public final class ProtoMsg {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ChatMessage_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ChatMessage_fieldAccessorTable;
+          internal_static_ChatMessage_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_ChatMessage_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_ResponseMessage_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_ResponseMessage_fieldAccessorTable;
+          internal_static_ResponseMessage_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_ResponseMessage_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_PushMessage_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_PushMessage_fieldAccessorTable;
+          internal_static_PushMessage_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_PushMessage_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_Message_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_Message_fieldAccessorTable;
+          internal_static_Message_descriptor;
+  private static final
+  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internal_static_Message_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
+  getDescriptor() {
     return descriptor;
   }
   private static  com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
+          descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016ProtoMsg.proto\"u\n\013ChatMessage\022\n\n\002id\030\001 " +
-      "\001(\t\022\014\n\004from\030\002 \001(\003\022\n\n\002to\030\003 \001(\003\022\014\n\004time\030\004 " +
-      "\001(\004\022!\n\013contentType\030\005 \001(\0162\014.ContentType\022\017" +
-      "\n\007content\030\006 \001(\t\"Y\n\017ResponseMessage\022\n\n\002id" +
-      "\030\001 \001(\t\022\016\n\006result\030\002 \001(\010\022\014\n\004code\030\003 \001(\r\022\014\n\004" +
-      "info\030\004 \001(\t\022\016\n\006expose\030\005 \001(\010\"O\n\013PushMessag" +
-      "e\022\014\n\004time\030\001 \001(\004\022!\n\013contentType\030\002 \001(\0162\014.C" +
-      "ontentType\022\017\n\007content\030\003 \001(\t\"\273\001\n\007Message\022" +
-      "!\n\013messageType\030\001 \001(\0162\014.MessageType\022\n\n\002to" +
-      "\030\002 \001(\003\022\020\n\010sequence\030\003 \001(\003\022!\n\013chatMessage\030" +
-      "\004 \001(\0132\014.ChatMessage\022)\n\017responseMessage\030\005" +
-      " \001(\0132\020.ResponseMessage\022!\n\013pushMessage\030\006 " +
-      "\001(\0132\014.PushMessage*t\n\013MessageType\022\026\n\022HEAR" +
-      "T_BRAT_MESSAGE\020\000\022\022\n\016SINGLE_MESSAGE\020\001\022\021\n\r" +
-      "GROUP_MESSAGE\020\002\022\024\n\020RESPONSE_MESSAGE\020\003\022\020\n" +
-      "\014PUSH_MESSAGE\020\004*\261\001\n\013ContentType\022\010\n\004TEXT\020" +
-      "\000\022\016\n\nSYSTEM_MSG\020\001\022\t\n\005IMAGE\020\002\022\t\n\005VOICE\020\003\022" +
-      "\t\n\005VIDEO\020\004\022\016\n\nVOICE_CALL\020\005\022\016\n\nVIDEO_CALL" +
-      "\020\006\022\027\n\023SINGLE_RED_ENVELOPE\020\007\022\025\n\021FAIR_RED_" +
-      "ENVELOPE\020\010\022\027\n\023UNFAIR_RED_ENVELOPE\020\tB+\n\035c" +
-      "n.chasers.wehappy.common.msgB\010ProtoMsgH\001" +
-      "b\006proto3"
+            "\n\016ProtoMsg.proto\"i\n\013ChatMessage\022\014\n\004from\030" +
+                    "\001 \001(\003\022\n\n\002to\030\002 \001(\003\022\014\n\004time\030\003 \001(\004\022!\n\013conte" +
+                    "ntType\030\004 \001(\0162\014.ContentType\022\017\n\007content\030\005 " +
+                    "\001(\t\"M\n\017ResponseMessage\022\016\n\006result\030\001 \001(\010\022\014" +
+                    "\n\004code\030\002 \001(\r\022\014\n\004info\030\003 \001(\t\022\016\n\006expose\030\004 \001" +
+                    "(\010\"O\n\013PushMessage\022\014\n\004time\030\001 \001(\004\022!\n\013conte" +
+                    "ntType\030\002 \001(\0162\014.ContentType\022\017\n\007content\030\003 " +
+                    "\001(\t\"\307\001\n\007Message\022\020\n\010sequence\030\001 \001(\003\022\n\n\002id\030" +
+                    "\002 \001(\t\022!\n\013messageType\030\003 \001(\0162\014.MessageType" +
+                    "\022\n\n\002to\030\004 \001(\003\022!\n\013chatMessage\030\005 \001(\0132\014.Chat" +
+                    "Message\022)\n\017responseMessage\030\006 \001(\0132\020.Respo" +
+                    "nseMessage\022!\n\013pushMessage\030\007 \001(\0132\014.PushMe" +
+                    "ssage*\\\n\013MessageType\022\022\n\016SINGLE_MESSAGE\020\000" +
+                    "\022\021\n\rGROUP_MESSAGE\020\001\022\024\n\020RESPONSE_MESSAGE\020" +
+                    "\002\022\020\n\014PUSH_MESSAGE\020\003*\261\001\n\013ContentType\022\010\n\004T" +
+                    "EXT\020\000\022\016\n\nSYSTEM_MSG\020\001\022\t\n\005IMAGE\020\002\022\t\n\005VOIC" +
+                    "E\020\003\022\t\n\005VIDEO\020\004\022\016\n\nVOICE_CALL\020\005\022\016\n\nVIDEO_" +
+                    "CALL\020\006\022\027\n\023SINGLE_RED_ENVELOPE\020\007\022\025\n\021FAIR_" +
+                    "RED_ENVELOPE\020\010\022\027\n\023UNFAIR_RED_ENVELOPE\020\tB" +
+                    "+\n\035cn.chasers.wehappy.common.msgB\010ProtoM" +
+                    "sgH\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
+            .internalBuildGeneratedFileFrom(descriptorData,
+                    new com.google.protobuf.Descriptors.FileDescriptor[] {
+                    });
     internal_static_ChatMessage_descriptor =
-      getDescriptor().getMessageTypes().get(0);
+            getDescriptor().getMessageTypes().get(0);
     internal_static_ChatMessage_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ChatMessage_descriptor,
-        new java.lang.String[] { "Id", "From", "To", "Time", "ContentType", "Content", });
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_ChatMessage_descriptor,
+            new java.lang.String[] { "From", "To", "Time", "ContentType", "Content", });
     internal_static_ResponseMessage_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+            getDescriptor().getMessageTypes().get(1);
     internal_static_ResponseMessage_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_ResponseMessage_descriptor,
-        new java.lang.String[] { "Id", "Result", "Code", "Info", "Expose", });
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_ResponseMessage_descriptor,
+            new java.lang.String[] { "Result", "Code", "Info", "Expose", });
     internal_static_PushMessage_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+            getDescriptor().getMessageTypes().get(2);
     internal_static_PushMessage_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_PushMessage_descriptor,
-        new java.lang.String[] { "Time", "ContentType", "Content", });
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_PushMessage_descriptor,
+            new java.lang.String[] { "Time", "ContentType", "Content", });
     internal_static_Message_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+            getDescriptor().getMessageTypes().get(3);
     internal_static_Message_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_Message_descriptor,
-        new java.lang.String[] { "MessageType", "To", "Sequence", "ChatMessage", "ResponseMessage", "PushMessage", });
+            com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_Message_descriptor,
+            new java.lang.String[] { "Sequence", "Id", "MessageType", "To", "ChatMessage", "ResponseMessage", "PushMessage", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

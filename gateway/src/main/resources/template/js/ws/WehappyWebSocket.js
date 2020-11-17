@@ -50,29 +50,11 @@ window.onload = () => {
         sendWebSocket = new WehappyWebSocket(sendWsUrl, subProtocols);
 
         /**
-         * 接受到消息(感知到服务端发来消息)
-         * @param ev
-         */
-        receiveWebSocket.webSocket.onmessage = function (ev) {
-            let message;
-            if (ev.data instanceof ArrayBuffer) {
-                message = proto.Message.deserializeBinary(ev.data);
-            } else {
-                message = ev.data
-            }
-            responseInput.value += "\n sequence: " + message.getSequence();
-            responseInput.value += "\n id: " + message.getId();
-            responseInput.value += "\n type: " + message.getMessagetype();
-            responseInput.value += "\n to: " + message.getTo();
-            responseInput.value += "\n content: " + JSON.stringify(getPushMessageContent(message.getPushmessage()));
-        }
-
-        /**
          * 相当于连接开启(感知到连接开启)
          * @param ev
          */
         receiveWebSocket.webSocket.onopen = function (ev) {
-            responseInput.value = "连接开启了.."
+            responseInput.value = "receiveWebSocket 连接开启了.."
         }
 
         /**
@@ -81,7 +63,24 @@ window.onload = () => {
          */
         receiveWebSocket.webSocket.onclose = function (ev) {
             console.log(ev)
-            responseInput.value += "\n" + "连接关闭了.."
+            responseInput.value += "\n" + "receiveWebSocket 连接关闭了.."
+        }
+
+        /**
+         * 相当于连接开启(感知到连接开启)
+         * @param ev
+         */
+        sendWebSocket.webSocket.onopen = function (ev) {
+            responseInput.value = "sendWebSocket 连接开启了.."
+        }
+
+        /**
+         * 相当于连接关闭(感知到连接关闭)
+         * @param ev
+         */
+        sendWebSocket.webSocket.onclose = function (ev) {
+            console.log(ev)
+            responseInput.value += "\n" + "sendWebSocket 连接关闭了.."
         }
     }
 }
@@ -98,26 +97,96 @@ function WehappyWebSocket(url, protocols) {
         alert("当前浏览器不支持websocket")
     }
 
-    this.webSocket = protocols ? new WebSocket(url, protocols) : new WebSocket(url)
+    this.webSocket = new WebSocket(url, protocols)
     this.webSocket.binaryType = "arraybuffer";
+
+
+    /**
+     * 接受到消息(感知到服务端发来消息)
+     * @param ev
+     */
+    this.webSocket.onmessage = function (ev) {
+        let message;
+        if (ev.data instanceof ArrayBuffer) {
+            message = new proto.Message.deserializeBinary(ev.data);
+        } else {
+            message = ev.data
+        }
+        responseInput.value += "\n sequence: " + message.getSequence();
+        responseInput.value += "\n id: " + message.getId();
+        responseInput.value += "\n type: " + getMessageType(message.getMessagetype());
+        responseInput.value += "\n to: " + message.getTo();
+        responseInput.value += "\n content: " + JSON.stringify(getMessageContent(message));
+        responseInput.value += "\n============================";
+    }
+}
+
+/**
+ * 解析消息类型
+ * @param messageType
+ * @returns {string}
+ */
+function getMessageType(messageType) {
+    if (proto.MessageType.SINGLE_MESSAGE === messageType) {
+        return "SingleMessage";
+    }
+
+    if (proto.MessageType.GROUP_MESSAGE === messageType) {
+        return "GroupMessage";
+    }
+
+    if (proto.MessageType.PUSH_MESSAGE === messageType) {
+        return "PushMessage";
+    }
+
+    return "ResponseMessage";
 }
 
 /**
  * 获取具体消息内容
  * @param message 消息
- * @returns {string|?proto.ChatMessage|?proto.ResponseMessage}
+ * @returns {{from: number, to: number, time: Date, contentType: !proto.ContentType, content: string}|{time: Date, contentType: !proto.ContentType, content: string}|{result: boolean, code: number, expose: boolean, info: string}}
  */
 function getMessageContent(message) {
-    if (message.getMessagetype() === proto.MessageType.HEART_BRAT_MESSAGE) {
-        return 'HEART_BEAT';
+    if (message.getMessagetype() === proto.MessageType.PUSH_MESSAGE) {
+        return getPushMessageContent(message.getPushmessage());
     }
 
     if (message.getMessagetype() === proto.MessageType.RESPONSE_MESSAGE) {
-        return message.getResponsemessage();
+        return getResponseMessageContent(message.getResponsemessage());
     }
 
     if (message.getMessagetype() === proto.MessageType.SINGLE_MESSAGE || proto.MessageType.GROUP_MESSAGE) {
-        return message.getChatmessage();
+        return getChatMessageContent(message.getChatmessage());
+    }
+}
+
+/**
+ * 解析响应消息内容
+ * @param responseMessage 响应消息
+ * @returns {{result: boolean, code: number, expose: boolean, info: string}}
+ */
+function getResponseMessageContent(responseMessage) {
+    return {
+        result: responseMessage.getResult(),
+        code: responseMessage.getCode(),
+        info: responseMessage.getInfo(),
+        expose: responseMessage.getExpose(),
+    }
+}
+
+/**
+ * 解析推送消息内容
+ * @param chatMessage 推送消息
+ * @returns {{from: number, to: number, time: Date, contentType: !proto.ContentType, content: string}}
+ */
+function getChatMessageContent(chatMessage) {
+    return {
+        from: chatMessage.getFrom(),
+        to: chatMessage.getTo(),
+        time: new Date(chatMessage.getTime()),
+        contentType: chatMessage.getContenttype(),
+        content: chatMessage.getContent(),
     }
 }
 
@@ -146,7 +215,7 @@ function sendSingleChatMessage(to, contentType, content) {
 
 /**
  * 发送群聊消息
- * @param groupId 群组Id
+ * @param to 群组Id
  * @param contentType 消息内容类型
  * @param content 消息内容
  */
@@ -188,7 +257,7 @@ function buildMessage(messageType, to, msg) {
  * 发送消息到服务器
  * @param message
  */
-function sendMessage(message, sendWebSocket) {
+function sendMessage(message) {
     // 先判断socket是否创建好
     if (!sendWebSocket) {
         return;

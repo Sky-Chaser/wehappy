@@ -1,13 +1,9 @@
-package cn.chasers.wehappy.gateway.ws;
+package cn.chasers.wehappy.chat.ws;
 
 import cn.chasers.wehappy.common.msg.ProtoMsg;
-import cn.hutool.Hutool;
 import cn.hutool.core.convert.Convert;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.FluxSink;
@@ -36,6 +32,7 @@ public class WebSocketClient implements Serializable {
      * @param message 推送的消息
      */
     public void sendData(ProtoMsg.Message message) {
-        sink.next(session.binaryMessage(bufferFactory -> bufferFactory.wrap(message.toByteArray())));
+        byte[] body = message.toByteArray();
+        sink.next(session.binaryMessage(bufferFactory -> bufferFactory.wrap(body)));
     }
 }

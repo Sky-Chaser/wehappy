@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author liamcoder
  * @date 2020/11/12 11:22 下午
  */
-@Component
 public class UserUtil {
     public static UserDto getCurrentUser(HttpServletRequest request) {
         String userStr = request.getHeader(AuthConstant.USER_TOKEN_HEADER);

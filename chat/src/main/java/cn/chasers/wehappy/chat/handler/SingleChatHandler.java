@@ -1,10 +1,10 @@
 package cn.chasers.wehappy.chat.handler;
 
+import cn.chasers.wehappy.chat.ws.WebSocketClient;
 import cn.chasers.wehappy.common.config.SnowflakeConfig;
 import cn.chasers.wehappy.chat.handler.dispatcher.MessageHandler;
 import cn.chasers.wehappy.chat.mq.Producer;
 import cn.chasers.wehappy.common.msg.ProtoMsg;
-import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,10 +29,9 @@ public class SingleChatHandler implements MessageHandler {
     }
 
     @Override
-    public void execute(Channel channel, ProtoMsg.Message msg) {
+    public void execute(ProtoMsg.Message msg, WebSocketClient client) {
         log.info("SingleChatHandler [execute] {}", msg);
         ProtoMsg.ResponseMessage response = ProtoMsg.ResponseMessage.newBuilder()
-                .setId(msg.getChatMessage().getId())
                 .setResult(true)
                 .setExpose(false)
                 .build();
@@ -41,13 +40,14 @@ public class SingleChatHandler implements MessageHandler {
 
         ProtoMsg.Message replyMessage =
                 ProtoMsg.Message.newBuilder()
+                        .setId(msg.getId())
                         .setTo(msg.getChatMessage().getFrom())
                         .setMessageType(ProtoMsg.MessageType.RESPONSE_MESSAGE)
                         .setSequence(sequence)
                         .setResponseMessage(response)
                         .build();
 
-        channel.writeAndFlush(replyMessage);
+        client.sendData(replyMessage);
 
         ProtoMsg.Message redirectMessage =
                 ProtoMsg.Message.newBuilder()

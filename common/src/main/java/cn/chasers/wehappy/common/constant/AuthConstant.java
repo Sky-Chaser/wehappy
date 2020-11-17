@@ -54,7 +54,7 @@ public interface AuthConstant {
     /**
      * JWT令牌前缀
      */
-    String WS_JWT_TOKEN_PREFIX = "Bearer, ";
+    String WS_JWT_TOKEN_PREFIX = "Bearer,";
 
     /**
      * 用户信息Http请求头

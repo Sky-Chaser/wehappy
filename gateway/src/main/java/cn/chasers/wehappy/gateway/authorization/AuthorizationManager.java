@@ -70,7 +70,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
                 if (StrUtil.isEmpty(token)) {
                     return Mono.just(new AuthorizationDecision(false));
                 }
-                token = token.replace(AuthConstant.WS_JWT_TOKEN_PREFIX, "");
+                token = token.replace(AuthConstant.WS_JWT_TOKEN_PREFIX, "").trim();
             }
 
             String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");

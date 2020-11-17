@@ -1,7 +1,7 @@
 package cn.chasers.wehappy.chat.handler.dispatcher;
 
+import cn.chasers.wehappy.chat.ws.WebSocketClient;
 import cn.chasers.wehappy.common.msg.ProtoMsg;
-import io.netty.channel.Channel;
 
 /**
  * @author lollipop
@@ -12,10 +12,10 @@ public interface MessageHandler {
     /**
      * 执行消息处理
      *
-     * @param channel 消息通道
+     * @param client websocket client
      * @param msg     消息
      */
-    void execute(Channel channel, ProtoMsg.Message msg);
+    void execute(ProtoMsg.Message msg, WebSocketClient client);
 
     /**
      * 处理的消息类型
