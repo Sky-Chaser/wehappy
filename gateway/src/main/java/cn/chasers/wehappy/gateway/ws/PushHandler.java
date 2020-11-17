@@ -42,7 +42,7 @@ public class PushHandler implements WebSocketHandler {
         InetSocketAddress remoteAddress = handshakeInfo.getRemoteAddress();
 
         String token;
-        UserDto userDto = null;
+        UserDto userDto;
 
         try {
             token = handshakeInfo.getHeaders().getFirst("Sec-WebSocket-Protocol");
@@ -102,22 +102,6 @@ public class PushHandler implements WebSocketHandler {
     private void handleClient(long userId, WebSocketClient client) {
         clients.put(userId, client);
         log.info("用户：{}，上线!", userId);
-
-        ProtoMsg.PushMessage pushMessage =
-                ProtoMsg.PushMessage.newBuilder()
-                        .setContentType(ProtoMsg.ContentType.TEXT)
-                        .setTime(System.currentTimeMillis())
-                        .setContent("你好我好大家好")
-                        .build();
-
-        ProtoMsg.Message message =
-                ProtoMsg.Message.newBuilder()
-                        .setMessageType(ProtoMsg.MessageType.PUSH_MESSAGE)
-                        .setTo(userId)
-                        .setPushMessage(pushMessage)
-                        .setSequence(489257)
-                        .build();
-        sendTo(message);
     }
 
     /**

@@ -54,7 +54,7 @@ window.onload = () => {
          * @param ev
          */
         receiveWebSocket.webSocket.onopen = function (ev) {
-            responseInput.value = "receiveWebSocket 连接开启了.."
+            responseInput.value = "\nreceiveWebSocket 连接开启了.."
         }
 
         /**
@@ -63,7 +63,7 @@ window.onload = () => {
          */
         receiveWebSocket.webSocket.onclose = function (ev) {
             console.log(ev)
-            responseInput.value += "\n" + "receiveWebSocket 连接关闭了.."
+            responseInput.value += "\nreceiveWebSocket 连接关闭了.."
         }
 
         /**
@@ -71,7 +71,7 @@ window.onload = () => {
          * @param ev
          */
         sendWebSocket.webSocket.onopen = function (ev) {
-            responseInput.value = "sendWebSocket 连接开启了.."
+            responseInput.value += "\nsendWebSocket 连接开启了.."
         }
 
         /**
@@ -80,7 +80,7 @@ window.onload = () => {
          */
         sendWebSocket.webSocket.onclose = function (ev) {
             console.log(ev)
-            responseInput.value += "\n" + "sendWebSocket 连接关闭了.."
+            responseInput.value += "\nsendWebSocket 连接关闭了.."
         }
     }
 }
@@ -112,6 +112,7 @@ function WehappyWebSocket(url, protocols) {
         } else {
             message = ev.data
         }
+
         responseInput.value += "\n sequence: " + message.getSequence();
         responseInput.value += "\n id: " + message.getId();
         responseInput.value += "\n type: " + getMessageType(message.getMessagetype());
