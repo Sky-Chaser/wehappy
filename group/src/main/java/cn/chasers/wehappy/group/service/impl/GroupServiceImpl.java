@@ -138,6 +138,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     @Override
     public Group search(String groupName) {
+        // TODO 需要修改逻辑
         Long currentUserId = UserUtil.getCurrentUserId(request);
 
         // 获取当前用户所有群组

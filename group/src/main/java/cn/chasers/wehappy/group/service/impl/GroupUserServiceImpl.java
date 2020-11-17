@@ -103,6 +103,26 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
 
     @Override
     public boolean handleApply(Long id, Boolean agree) {
+        // 验证是否存在对应id的group记录
+        Long currentUserId = UserUtil.getCurrentUserId(request);
+        Group one = groupService.getOne(new LambdaQueryWrapper<Group>()
+                .eq(Group::getId, id));
+        if (one == null) {
+            Asserts.fail(MessageConstant.GROUP_NOT_EXIST);
+        }
+
+        // 验证当前用户是否为群主/管理员（先验证群主）
+        if (!one.getOwnerId().equals(currentUserId)) {
+            List<GroupUser> groupUsers = list(new LambdaQueryWrapper<GroupUser>()
+                    .eq(GroupUser::getGroupId, id));
+            for (GroupUser groupUser : groupUsers) {
+                // TODO ...
+            }
+        }
+
+
+        // 验证申请用户已经成功发出申请
+        // 根据agree进行申请处理
         return false;
     }
 
