@@ -118,6 +118,11 @@ public class FriendServiceImpl extends ServiceImpl<FriendMapper, Friend> impleme
         return lambdaQuery().eq(Friend::getFromId, userId).list();
     }
 
+    @Override
+    public boolean isFriend(Long fromId, Long toId) {
+        return lambdaQuery().allEq(Map.of(Friend::getFromId, fromId, Friend::getToId, toId, Friend::getStatus, 1)).count() > 0;
+    }
+
     private void pushMessage(Map<String, Object> map, String toId) {
         ProtoMsg.Message message = MessageUtil.newMessage(
                 "0",

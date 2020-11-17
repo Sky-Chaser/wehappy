@@ -50,4 +50,13 @@ public interface IFriendService extends IService<Friend> {
      * @return 返回好友列表数据
      */
     List<Friend> list(Long userId);
+
+    /**
+     * 判断 fromId 和 toId 是否是好友
+     *
+     * @param fromId
+     * @param toId
+     * @return
+     */
+    boolean isFriend(Long fromId, Long toId);
 }

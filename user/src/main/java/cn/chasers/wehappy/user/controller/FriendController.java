@@ -35,6 +35,13 @@ public class FriendController {
         this.userService = userService;
     }
 
+
+    @ApiOperation("判断 from 和 to 是不是好友")
+    @GetMapping("is-friend")
+    public CommonResult<Boolean> isFriend(Long fromId, Long toId) {
+        return CommonResult.success(friendService.isFriend(fromId, toId));
+    }
+
     @ApiOperation("获取好友列表")
     @GetMapping
     public CommonResult<List<Friend>> list() {

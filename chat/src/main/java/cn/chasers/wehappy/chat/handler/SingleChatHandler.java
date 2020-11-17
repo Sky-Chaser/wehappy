@@ -1,6 +1,8 @@
 package cn.chasers.wehappy.chat.handler;
 
+import cn.chasers.wehappy.chat.feign.IFriendService;
 import cn.chasers.wehappy.chat.ws.WebSocketClient;
+import cn.chasers.wehappy.common.api.CommonResult;
 import cn.chasers.wehappy.common.config.SnowflakeConfig;
 import cn.chasers.wehappy.chat.handler.dispatcher.MessageHandler;
 import cn.chasers.wehappy.chat.mq.Producer;
@@ -9,6 +11,8 @@ import cn.chasers.wehappy.common.util.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * 私聊消息处理类
@@ -22,16 +26,37 @@ public class SingleChatHandler implements MessageHandler {
 
     private final SnowflakeConfig snowflakeConfig;
     private final Producer producer;
+    private final IFriendService friendService;
 
     @Autowired
-    public SingleChatHandler(SnowflakeConfig snowflakeConfig, Producer producer) {
+    public SingleChatHandler(SnowflakeConfig snowflakeConfig, Producer producer, IFriendService friendService) {
         this.snowflakeConfig = snowflakeConfig;
         this.producer = producer;
+        this.friendService = friendService;
     }
 
     @Override
     public void execute(ProtoMsg.Message msg, WebSocketClient client) {
-        log.info("SingleChatHandler [execute] {}", msg);
+        Long from = client.getUserId();
+        Long to = Long.parseLong(msg.getTo());
+
+        try {
+            if (!friendService.isFriend(from, to).toFuture().get().getData()) {
+                ProtoMsg.Message response = MessageUtil.newMessage(
+                        msg.getId(),
+                        "",
+                        String.valueOf(System.currentTimeMillis()),
+                        from.toString(),
+                        ProtoMsg.MessageType.RESPONSE_MESSAGE,
+                        MessageUtil.newResponseMessage(false, 1, "他不是你的好友", true)
+                );
+
+                client.sendData(response);
+                return;
+            }
+        } catch (Exception e) {
+            log.error("", e);
+        }
 
         String sequence = String.valueOf(snowflakeConfig.snowflakeId());
 
@@ -39,7 +64,7 @@ public class SingleChatHandler implements MessageHandler {
                 msg.getId(),
                 sequence,
                 String.valueOf(System.currentTimeMillis()),
-                msg.getTo(),
+                from.toString(),
                 ProtoMsg.MessageType.RESPONSE_MESSAGE,
                 MessageUtil.newResponseMessage(true, 0, null, false)
         );
@@ -54,7 +79,7 @@ public class SingleChatHandler implements MessageHandler {
                 ProtoMsg.MessageType.SINGLE_MESSAGE,
                 MessageUtil.newChatMessage(
                         msg.getTo(),
-                        client.getUserId().toString(),
+                        from.toString(),
                         msg.getChatMessage().getContentType(),
                         msg.getChatMessage().getContent()
                 )
