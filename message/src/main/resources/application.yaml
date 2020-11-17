@@ -1,0 +1,87 @@
+server:
+  port: 8008
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/message_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    druid:
+      # 连接池初始化大小
+      initial-size: 5
+      # 最小空闲连接数
+      min-idle: 10
+      # 最大连接数f
+      max-active: 20
+      web-stat-filter:
+        # 不统计这些请求数据
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      # 访问监控网页的登录用户名和密码
+      stat-view-servlet:
+        login-username: druid
+        login-password: druid
+  redis:
+    # Redis服务器地址
+    host: localhost
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password:
+    lettuce:
+      pool:
+        # 最大连接数，负值表示没有限制，默认8
+        max-active: 20
+        # 最大阻塞等待时间，负值表示没限制，默认-1
+        max-wait: -1
+        # 最大空闲连接，默认8
+        max-idle: 8
+        # 最小空闲连接，默认0
+        min-idle: 0
+  cloud:
+    sentinel:
+      transport:
+        port: 7009 #跟控制台交流的端口，随意指定一个未使用的端口即可
+        dashboard: localhost:8858 # 指定控制台服务的地址
+    stream:
+      kafka:
+        binder:
+          # kafka集群
+          brokers: localhost:9092
+      bindings:
+        # 输入通道
+        register-email-input:
+          group: message
+          # topic
+          destination: message
+          contentType: application/octet-stream
+
+# mybatis日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+# 开启SpringBoot Admin的监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+ribbon:
+  # 服务请求连接超时时间（毫秒）
+  ConnectTimeout: 10000
+  # 服务请求处理超时时间（毫秒）
+  ReadTimeout: 10000
+
+redis:
+  database: messageService
+  separator: ":"
+#  registerCode:
+#    key: 'user:register:code'
+#    expire: 300
+
+default:
+  avatar: default.jpg

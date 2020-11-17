@@ -17,6 +17,7 @@
         <module>chat</module>
         <module>media</module>
         <module>account</module>
+        <module>message</module>
     </modules>
     <packaging>pom</packaging>
     <description>We are all happy to chat!</description>

@@ -53,7 +53,7 @@ CREATE TABLE `message`
     KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '消息表';
 
-CREATE TABLE `user_unread`
+CREATE TABLE `UserUnread`
 (
     `id`                   BIGINT PRIMARY KEY,
     `user_id`              BIGINT   NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE `user_unread`
     UNIQUE `ix_user_id` (`user_id`)
 ) COMMENT = '用户未读数表';
 
-CREATE TABLE `user_friend_unread`
+CREATE TABLE `UserFriendUnread`
 (
     `id`                   BIGINT PRIMARY KEY,
     `from_id`              BIGINT   NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `user_friend_unread`
     KEY `ix_from_id_gmt_modified` (`from_id`, `gmt_modified`)
 ) COMMENT = '用户好友未读数表';
 
-CREATE TABLE `user_group_unread`
+CREATE TABLE `UserGroupUnread`
 (
     `id`                   BIGINT PRIMARY KEY,
     `user_id`              BIGINT   NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE `conversation`
     KEY `ix_from_id_gmt_modified` (`from_id`, `gmt_modified`)
 ) COMMENT = '最近会话表';
 
-CREATE TABLE `message_index`
+CREATE TABLE `MessageIndex`
 (
     `id`           BIGINT PRIMARY KEY,
     `from_id`      BIGINT   NOT NULL COMMENT '发送者id',
@@ -109,7 +109,7 @@ CREATE TABLE `message_index`
     KEY `ix_from_to_gmt_create` (`from_to`, `gmt_create`)
 ) COMMENT = '消息索引表';
 
-CREATE TABLE `group_message_index`
+CREATE TABLE `GroupMessageIndex`
 (
     `id`           BIGINT PRIMARY KEY,
     `group_id`     BIGINT   NOT NULL COMMENT '群聊id',
@@ -121,7 +121,7 @@ CREATE TABLE `group_message_index`
     KEY `ix_group_id_from_id_gmt_create` (`group_id`, `from_id`, `gmt_create`)
 ) COMMENT = '群聊信息索引表';
 
-CREATE TABLE `user_message_delete`
+CREATE TABLE `UserMessageDelete`
 (
     `id`           BIGINT PRIMARY KEY,
     `message_id`   BIGINT   NOT NULL COMMENT '消息id',
