@@ -61,4 +61,9 @@ public interface AuthConstant {
      */
     String USER_TOKEN_HEADER = "user";
 
+    /**
+     * websocket subProtocol 请求头
+     */
+    String SEC_WEBSOCKET_PROTOCOL = "Sec-WebSocket-Protocol";
+
 }

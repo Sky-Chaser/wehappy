@@ -18,12 +18,14 @@ import java.io.Serializable;
 @Slf4j
 @Data
 public class WebSocketClient implements Serializable {
+    private Long userId;
     private FluxSink<WebSocketMessage> sink;
     private WebSocketSession session;
 
-    public WebSocketClient(FluxSink<WebSocketMessage> sink, WebSocketSession session) {
+    public WebSocketClient(FluxSink<WebSocketMessage> sink, WebSocketSession session, Long userId) {
         this.sink = sink;
         this.session = session;
+        this.userId = userId;
     }
 
     /**

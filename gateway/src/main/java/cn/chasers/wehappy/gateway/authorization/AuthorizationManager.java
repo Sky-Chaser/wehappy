@@ -66,7 +66,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         try {
             String token = request.getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
             if (StrUtil.isEmpty(token)) {
-                token = request.getHeaders().getFirst("Sec-WebSocket-Protocol");
+                token = request.getHeaders().getFirst(AuthConstant.SEC_WEBSOCKET_PROTOCOL);
                 if (StrUtil.isEmpty(token)) {
                     return Mono.just(new AuthorizationDecision(false));
                 }

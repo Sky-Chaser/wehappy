@@ -12,7 +12,7 @@ let receiveWebSocket;
 // 发送消息的websocket对象
 let sendWebSocket;
 
-let chatTypeInput;
+let groupTypeInput;
 let toIdInput;
 let messageInput;
 let responseInput;
@@ -23,20 +23,20 @@ let userId2Input;
 let loginButton;
 
 window.onload = () => {
-    chatTypeInput = document.getElementById("chatType");
+    groupTypeInput = document.getElementById("groupType");
     toIdInput = document.getElementById("toId");
     messageInput = document.getElementById("message");
     responseInput = document.getElementById("response");
     sendMessageButton = document.getElementById("sendMessage");
-    clearResponseButton = document.getElementById("clearResponse")
+    clearResponseButton = document.getElementById("clearResponse");
     loginButton = document.getElementById("login");
     userId1Input = document.getElementById("userId1");
     userId2Input = document.getElementById("userId2");
     sendMessageButton.onclick = function () {
-        if (chatTypeInput.value) {
+        if (!groupTypeInput.checked) {
             sendSingleChatMessage(toIdInput.value, proto.ContentType.TEXT, messageInput.value);
         } else {
-            sendGroupChatMessage(toIdInput.value, proto.ContentType.TEXT, messageInput.value);
+            sendGroupChatMessage(toIdInput.value.valueOf(), proto.ContentType.TEXT, messageInput.value);
         }
     }
 
@@ -45,6 +45,7 @@ window.onload = () => {
     }
 
     loginButton.onclick = function () {
+        toIdInput.value = userId2Input.checked ? '1328198577420595202' : '1327499604039708673';
         subProtocols.push(userId2Input.checked ? userId1Input.value : userId2Input.value);
         receiveWebSocket = new WehappyWebSocket(receiveWsUrl, subProtocols);
         sendWebSocket = new WehappyWebSocket(sendWsUrl, subProtocols);
@@ -62,7 +63,6 @@ window.onload = () => {
          * @param ev
          */
         receiveWebSocket.webSocket.onclose = function (ev) {
-            console.log(ev)
             responseInput.value += "\nreceiveWebSocket 连接关闭了.."
         }
 
@@ -79,7 +79,6 @@ window.onload = () => {
          * @param ev
          */
         sendWebSocket.webSocket.onclose = function (ev) {
-            console.log(ev)
             responseInput.value += "\nsendWebSocket 连接关闭了.."
         }
     }
@@ -113,8 +112,11 @@ function WehappyWebSocket(url, protocols) {
             message = ev.data
         }
 
+        console.log(ev);
+
         responseInput.value += "\n sequence: " + message.getSequence();
         responseInput.value += "\n id: " + message.getId();
+        responseInput.value += "\n time: " + new Date(parseInt(message.getTime()));
         responseInput.value += "\n type: " + getMessageType(message.getMessagetype());
         responseInput.value += "\n to: " + message.getTo();
         responseInput.value += "\n content: " + JSON.stringify(getMessageContent(message));
@@ -185,7 +187,6 @@ function getChatMessageContent(chatMessage) {
     return {
         from: chatMessage.getFrom(),
         to: chatMessage.getTo(),
-        time: new Date(chatMessage.getTime()),
         contentType: chatMessage.getContenttype(),
         content: chatMessage.getContent(),
     }
@@ -198,7 +199,6 @@ function getChatMessageContent(chatMessage) {
  */
 function getPushMessageContent(pushMessage) {
     return {
-        time: new Date(pushMessage.getTime()),
         contentType: pushMessage.getContenttype(),
         content: pushMessage.getContent(),
     }
@@ -266,7 +266,7 @@ function sendMessage(message) {
 
     if (sendWebSocket.webSocket.readyState === WebSocket.OPEN) {
         // 通过socket 发送消息
-        message.setId(id++);
+        message.setId('' + id++);
         sendWebSocket.webSocket.send(message.serializeBinary());
     } else {
         alert("连接没有开启");

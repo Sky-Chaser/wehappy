@@ -11,7 +11,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.nimbusds.jose.JWSObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.HandshakeInfo;
 import org.springframework.web.reactive.socket.WebSocketHandler;
@@ -34,7 +33,11 @@ import java.util.concurrent.*;
 @Component
 @Slf4j
 public class ChatHandler implements WebSocketHandler {
-    public static ConcurrentHashMap<Long, WebSocketClient> clients = new ConcurrentHashMap<>(200);
+
+    /**
+     * 存储所有websocket客户端session信息
+     */
+    public final ConcurrentHashMap<Long, WebSocketClient> clients;
 
     private final MessageHandlerContainer messageHandlerContainer;
     private final ExecutorService executor;
@@ -42,6 +45,7 @@ public class ChatHandler implements WebSocketHandler {
     @Autowired
     public ChatHandler(MessageHandlerContainer messageHandlerContainer) {
         this.messageHandlerContainer = messageHandlerContainer;
+        clients = new ConcurrentHashMap<>(400);
         executor = new ThreadPoolExecutor(
                 200,
                 200,
@@ -62,17 +66,16 @@ public class ChatHandler implements WebSocketHandler {
         HandshakeInfo handshakeInfo = session.getHandshakeInfo();
 
         String token;
-        UserDto userDto = null;
+        UserDto userDto;
 
         try {
-            token = handshakeInfo.getHeaders().getFirst("Sec-WebSocket-Protocol");
+            token = handshakeInfo.getHeaders().getFirst(AuthConstant.SEC_WEBSOCKET_PROTOCOL);
             if (StrUtil.isEmpty(token)) {
                 return Mono.empty();
             }
 
-            String realToken = token.replace(AuthConstant.WS_JWT_TOKEN_PREFIX, "").trim();
-            log.info(realToken);
             // 从token中解析用户信息
+            String realToken = token.replace(AuthConstant.WS_JWT_TOKEN_PREFIX, "").trim();
             userDto = JSONUtil.parse(JWSObject.parse(realToken).getPayload().toString()).toBean(UserDto.class);
         } catch (Exception e) {
             log.error("parse token error", e);
@@ -85,87 +88,49 @@ public class ChatHandler implements WebSocketHandler {
 
         final long userId = userDto.getId();
 
-        // 出站
-        Mono<Void> output = session.send(Flux.create(sink -> handleClient(userId, new WebSocketClient(sink, session))));
+        // 出站，保存 websocket session 信息
+        Mono<Void> output = session.send(Flux.create(sink -> handleClient(userId, new WebSocketClient(sink, session, userId))));
 
         // 入站
-        Mono<Void> input = session.receive().doOnSubscribe(s -> {
-            log.info("发起连接:{}", s);
-        }).doOnTerminate(() -> {
-            log.info("doOnTerminate");
-        }).doOnComplete(() -> {
-            log.info("doOnComplete");
-            removeUser(userId);
-            session.close().toProcessor().then();
-        }).doOnCancel(() -> {
-            log.info("doOnCancel");
-            removeUser(userId);
-            session.close().toProcessor().then();
-        }).doOnNext(msg -> {
-            handleMessage(msg, userId);
-            log.info("doOnNext");
-        }).doOnError(e -> {
-            log.error("", e);
-            log.error("doOnError");
-            removeUser(userId);
-            session.close().toProcessor().then();
-        }).doOnRequest(r -> {
-            log.info("doOnRequest");
-        }).then();
+        Mono<Void> input = session.receive()
+                .doOnComplete(() -> {
+                    removeUser(userId);
+                    session.close().toProcessor().then();
+                })
+                .doOnCancel(() -> {
+                    removeUser(userId);
+                    session.close().toProcessor().then();
+                })
+                .doOnNext(msg -> handleMessage(msg, userId))
+                .doOnError(e -> {
+                    log.error("ws error: ", e);
+                    removeUser(userId);
+                    session.close().toProcessor().then();
+                })
+                .then();
 
         return Mono.zip(input, output).then();
     }
 
     private void handleMessage(WebSocketMessage msg, long userId) {
         try {
-            DataBuffer buffer = msg.getPayload();
-            ProtoMsg.Message message = ProtoMsg.Message.parseFrom(buffer.asByteBuffer());
+            ProtoMsg.Message message = ProtoMsg.Message.parseFrom(msg.getPayload().asByteBuffer());
             MessageHandler messageHandler = messageHandlerContainer.getMessageHandler(message.getMessageTypeValue());
-            log.info("message = {}", message);
             executor.submit(() -> messageHandler.execute(message, clients.get(userId)));
         } catch (InvalidProtocolBufferException e) {
-            log.error("e");
+            log.error("handlerMessage error: ", e);
         }
     }
 
     private void handleClient(long userId, WebSocketClient client) {
         clients.put(userId, client);
-        log.info("用户：{}，上线!", userId);
+        log.info("User：{}，online!", userId);
 
-        ProtoMsg.PushMessage pushMessage =
-                ProtoMsg.PushMessage.newBuilder()
-                        .setContentType(ProtoMsg.ContentType.TEXT)
-                        .setTime(System.currentTimeMillis())
-                        .setContent("嘿嘿")
-                        .build();
-
-        ProtoMsg.Message message =
-                ProtoMsg.Message.newBuilder()
-                        .setMessageType(ProtoMsg.MessageType.PUSH_MESSAGE)
-                        .setTo(userId)
-                        .setPushMessage(pushMessage)
-                        .setSequence(4892257)
-                        .build();
-        sendTo(message);
+        // Todo 发送上线消息到 mq
     }
 
     private void removeUser(long userId) {
         clients.remove(userId);
-        log.info("用户：{}，离线!", userId);
-    }
-
-    /**
-     * 发送消息给用户
-     *
-     * @param message 消息
-     */
-    public static void sendTo(ProtoMsg.Message message) {
-        WebSocketClient client = clients.get(message.getTo());
-        if (client == null) {
-            return;
-        }
-
-        log.info("推送消息到用户：{}，消息：{}", message.getTo(), message);
-        client.sendData(message);
+        log.info("User：{}，offline!", userId);
     }
 }

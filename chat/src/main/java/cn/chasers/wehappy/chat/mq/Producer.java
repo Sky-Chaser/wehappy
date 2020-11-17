@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.util.MimeTypeUtils;
 
 
@@ -30,9 +31,10 @@ public class Producer {
      *
      * @param message 包含消息详细内容
      */
+    @SendTo(MqSource.MESSAGE_OUTPUT)
     public void sendMessage(ProtoMsg.Message message) {
-        mqSource.messageOutput().send(MessageBuilder.withPayload(message).
-                setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build());
+        mqSource.messageOutput().send(MessageBuilder.withPayload(message.toByteArray()).
+                setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE).build());
     }
 
 }

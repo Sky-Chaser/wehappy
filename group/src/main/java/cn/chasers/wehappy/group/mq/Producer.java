@@ -33,7 +33,7 @@ public class Producer {
      */
     public void sendMessage(ProtoMsg.Message message) {
         mqSource.messageOutput().send(MessageBuilder.withPayload(message).
-                setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build());
+                setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE).build());
     }
 
 }

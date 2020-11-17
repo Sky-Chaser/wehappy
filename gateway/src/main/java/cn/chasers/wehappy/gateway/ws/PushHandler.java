@@ -45,7 +45,7 @@ public class PushHandler implements WebSocketHandler {
         UserDto userDto;
 
         try {
-            token = handshakeInfo.getHeaders().getFirst("Sec-WebSocket-Protocol");
+            token = handshakeInfo.getHeaders().getFirst(AuthConstant.SEC_WEBSOCKET_PROTOCOL);
             if (StrUtil.isEmpty(token)) {
                 return Mono.empty();
             }
@@ -110,13 +110,13 @@ public class PushHandler implements WebSocketHandler {
      * @param message 消息
      */
     public static void sendTo(ProtoMsg.Message message) {
-        if (!clients.containsKey(message.getTo())) {
+        if (!clients.containsKey(Long.parseLong(message.getTo()))) {
             return;
         }
 
         log.info("推送消息到用户：{}，消息：{}", message.getTo(), message);
         try{
-            clients.get(message.getTo()).sendData(message);
+            clients.get(Long.parseLong(message.getTo())).sendData(message);
         } catch (Exception e) {
             log.error("推送消息出错", e);
         }

@@ -3,14 +3,12 @@ package cn.chasers.wehappy.chat.mq;
 
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.stereotype.Component;
 
 /**
  * 自定义的output通道，对应 kafka 中的 topic
  *
  * @author lollipop
  */
-@Component
 public interface MqSource {
     String MESSAGE_OUTPUT = "message-output";
 

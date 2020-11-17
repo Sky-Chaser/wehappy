@@ -5,6 +5,7 @@ import cn.chasers.wehappy.common.config.SnowflakeConfig;
 import cn.chasers.wehappy.chat.handler.dispatcher.MessageHandler;
 import cn.chasers.wehappy.chat.mq.Producer;
 import cn.chasers.wehappy.common.msg.ProtoMsg;
+import cn.chasers.wehappy.common.util.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,30 +32,33 @@ public class SingleChatHandler implements MessageHandler {
     @Override
     public void execute(ProtoMsg.Message msg, WebSocketClient client) {
         log.info("SingleChatHandler [execute] {}", msg);
-        ProtoMsg.ResponseMessage response = ProtoMsg.ResponseMessage.newBuilder()
-                .setResult(true)
-                .setExpose(false)
-                .build();
 
-        long sequence = snowflakeConfig.snowflakeId();
+        String sequence = String.valueOf(snowflakeConfig.snowflakeId());
 
-        ProtoMsg.Message replyMessage =
-                ProtoMsg.Message.newBuilder()
-                        .setId(msg.getId())
-                        .setTo(msg.getChatMessage().getFrom())
-                        .setMessageType(ProtoMsg.MessageType.RESPONSE_MESSAGE)
-                        .setSequence(sequence)
-                        .setResponseMessage(response)
-                        .build();
+        ProtoMsg.Message response = MessageUtil.newMessage(
+                msg.getId(),
+                sequence,
+                String.valueOf(System.currentTimeMillis()),
+                msg.getTo(),
+                ProtoMsg.MessageType.RESPONSE_MESSAGE,
+                MessageUtil.newResponseMessage(true, 0, null, false)
+        );
 
-        client.sendData(replyMessage);
+        client.sendData(response);
 
-        ProtoMsg.Message redirectMessage =
-                ProtoMsg.Message.newBuilder()
-                        .setTo(msg.getChatMessage().getTo())
-                        .setMessageType(ProtoMsg.MessageType.SINGLE_MESSAGE)
-                        .setChatMessage(msg.getChatMessage())
-                        .build();
+        ProtoMsg.Message redirectMessage = MessageUtil.newMessage(
+                msg.getId(),
+                sequence,
+                String.valueOf(System.currentTimeMillis()),
+                msg.getTo(),
+                ProtoMsg.MessageType.SINGLE_MESSAGE,
+                MessageUtil.newChatMessage(
+                        msg.getTo(),
+                        client.getUserId().toString(),
+                        msg.getChatMessage().getContentType(),
+                        msg.getChatMessage().getContent()
+                )
+        );
 
         producer.sendMessage(redirectMessage);
     }
