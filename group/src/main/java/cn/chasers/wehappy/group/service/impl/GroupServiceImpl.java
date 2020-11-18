@@ -1,6 +1,7 @@
 package cn.chasers.wehappy.group.service.impl;
 
 import cn.chasers.wehappy.common.exception.Asserts;
+import cn.chasers.wehappy.common.util.ThreadLocalUtils;
 import cn.chasers.wehappy.group.constant.MessageConstant;
 import cn.chasers.wehappy.group.dto.UpdateGroupParams;
 import cn.chasers.wehappy.group.entity.Group;
@@ -31,15 +32,13 @@ import java.util.Map;
  */
 @Service
 public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements IGroupService {
-    private final HttpServletRequest request;
     private final IGroupUserService groupUserService;
 
     @Value("${default.avatar}")
     private String defaultAvatar;
 
     @Autowired
-    public GroupServiceImpl(HttpServletRequest request, IGroupUserService groupUserService) {
-        this.request = request;
+    public GroupServiceImpl(IGroupUserService groupUserService) {
         this.groupUserService = groupUserService;
     }
 
@@ -51,7 +50,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         group.setAdminCount(1);
         group.setAvatar(defaultAvatar);
         group.setMemberCount(1);
-        group.setOwnerId(UserUtil.getCurrentUserId(request));
+        group.setOwnerId(ThreadLocalUtils.get().getId());
         group.setStatus(0);
 
         if (!save(group)) {
@@ -127,7 +126,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         }
 
         // 校验当前用户是否为群主
-        if (!group.getOwnerId().equals(UserUtil.getCurrentUserId(request))) {
+        if (!group.getOwnerId().equals(ThreadLocalUtils.get().getId())) {
             Asserts.fail(MessageConstant.IS_NOT_ADMIN);
         }
 
@@ -139,7 +138,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     @Override
     public Group search(String groupName) {
         // TODO 需要修改逻辑
-        Long currentUserId = UserUtil.getCurrentUserId(request);
+        Long currentUserId = ThreadLocalUtils.get().getId();
 
         // 获取当前用户所有群组
         List<GroupUser> groupList = groupUserService.list(new LambdaQueryWrapper<GroupUser>()

@@ -23,15 +23,6 @@ public interface IConversationUnreadService extends IService<ConversationUnread>
     boolean increase(Long conversationId, int count);
 
     /**
-     * 更新未读个数
-     *
-     * @param conversationId 会话Id
-     * @param count          个数
-     * @return
-     */
-    boolean update(Long conversationId, int count);
-
-    /**
      * 根据会话最后一次查看的消息 Id 更新未读消息个数
      *
      * @param conversationId 会话 Id
@@ -46,5 +37,5 @@ public interface IConversationUnreadService extends IService<ConversationUnread>
      * @param conversationId 会话Id
      * @return
      */
-    ConversationUnread get(Long conversationId);
+    ConversationUnread getByConversationId(Long conversationId);
 }

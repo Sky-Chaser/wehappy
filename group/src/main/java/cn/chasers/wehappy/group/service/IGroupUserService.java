@@ -100,4 +100,21 @@ public interface IGroupUserService extends IService<GroupUser> {
      * @return 返回是否成功退出
      */
     boolean exit(Long groupId);
+
+    /**
+     * 查询群组中全部用户 Id
+     *
+     * @param id 群组 Id
+     * @return 用户 Id list
+     */
+    List<Long> getUserIds(Long id);
+
+    /**
+     * 查询群组用户信息
+     *
+     * @param groupId 群组 Id
+     * @param userId  用户 Id
+     * @return GroupUser
+     */
+    GroupUser getByGroupIdAndUserId(Long groupId, Long userId);
 }

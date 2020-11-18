@@ -41,7 +41,7 @@ public class UnreadServiceImpl extends ServiceImpl<UnreadMapper, Unread> impleme
     }
 
     @Override
-    public Integer get(Long userId) {
+    public Integer getCount(Long userId) {
         Unread unread = lambdaQuery().eq(Unread::getUserId, userId).one();
         if (unread == null) {
             return 0;

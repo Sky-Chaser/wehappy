@@ -16,5 +16,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MessageDeleteServiceImpl extends ServiceImpl<MessageDeleteMapper, MessageDelete> implements IMessageDeleteService {
-
 }

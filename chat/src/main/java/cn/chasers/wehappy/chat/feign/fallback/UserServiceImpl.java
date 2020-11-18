@@ -4,7 +4,6 @@ import cn.chasers.wehappy.chat.feign.IUserService;
 import cn.chasers.wehappy.common.api.CommonResult;
 import cn.chasers.wehappy.common.domain.UserDto;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 /**
  * 调用 `user` 服务方法的兜底类

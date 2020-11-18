@@ -3,6 +3,7 @@ package cn.chasers.wehappy.group.service.impl;
 import cn.chasers.wehappy.common.api.CommonResult;
 import cn.chasers.wehappy.common.domain.UserDto;
 import cn.chasers.wehappy.common.exception.Asserts;
+import cn.chasers.wehappy.common.util.ThreadLocalUtils;
 import cn.chasers.wehappy.group.constant.MessageConstant;
 import cn.chasers.wehappy.group.entity.Group;
 import cn.chasers.wehappy.group.entity.GroupUser;
@@ -11,15 +12,14 @@ import cn.chasers.wehappy.group.mapper.GroupMapper;
 import cn.chasers.wehappy.group.mapper.GroupUserMapper;
 import cn.chasers.wehappy.group.service.IGroupService;
 import cn.chasers.wehappy.group.service.IGroupUserService;
-import cn.chasers.wehappy.common.util.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -33,20 +33,18 @@ import java.util.Map;
 public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser> implements IGroupUserService {
     private final GroupMapper groupMapper;
     private final IUserService userService;
-    private final HttpServletRequest request;
     private final IGroupService groupService;
 
     @Autowired
-    public GroupUserServiceImpl(GroupMapper groupMapper, IUserService userService, HttpServletRequest request, IGroupService groupService, GroupUserMapper groupUserMapper) {
+    public GroupUserServiceImpl(GroupMapper groupMapper, IUserService userService, IGroupService groupService, GroupUserMapper groupUserMapper) {
         this.groupMapper = groupMapper;
         this.userService = userService;
-        this.request = request;
         this.groupService = groupService;
     }
 
     @Override
     public boolean invite(Long userId, Long groupId) {
-        Long currentUserId = UserUtil.getCurrentUserId(request);
+        Long currentUserId = ThreadLocalUtils.get().getId();
         // 校验当前用户是否为管理员/群主
         if (currentUserId != 2 && currentUserId != 3) {
             Asserts.fail(MessageConstant.IS_NOT_ADMIN);
@@ -83,7 +81,7 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
         }
 
         // 校验当前用户是否已经在群中
-        Long currentUserId = UserUtil.getCurrentUserId(request);
+        Long currentUserId = ThreadLocalUtils.get().getId();
         GroupUser groupUser = getOne(new LambdaQueryWrapper<GroupUser>()
                 .allEq(Map.of(GroupUser::getGroupId, groupId, GroupUser::getUserId, currentUserId)));
         if (groupUser != null) {
@@ -104,7 +102,7 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
     @Override
     public boolean handleApply(Long id, Boolean agree) {
         // 验证是否存在对应id的group记录
-        Long currentUserId = UserUtil.getCurrentUserId(request);
+        Long currentUserId = ThreadLocalUtils.get().getId();
         Group one = groupService.getOne(new LambdaQueryWrapper<Group>()
                 .eq(Group::getId, id));
         if (one == null) {
@@ -159,5 +157,15 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
     @Override
     public boolean exit(Long groupId) {
         return false;
+    }
+
+    @Override
+    public List<Long> getUserIds(Long id) {
+        return lambdaQuery().eq(GroupUser::getGroupId, id).list().stream().map(GroupUser::getUserId).collect(Collectors.toList());
+    }
+
+    @Override
+    public GroupUser getByGroupIdAndUserId(Long groupId, Long userId) {
+        return lambdaQuery().allEq(Map.of(GroupUser::getGroupId, groupId, GroupUser::getUserId, userId)).one();
     }
 }

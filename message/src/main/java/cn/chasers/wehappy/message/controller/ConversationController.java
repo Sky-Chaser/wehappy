@@ -1,14 +1,21 @@
 package cn.chasers.wehappy.message.controller;
 
 
+import cn.chasers.wehappy.common.api.CommonPage;
 import cn.chasers.wehappy.common.api.CommonResult;
+import cn.chasers.wehappy.common.util.ThreadLocalUtils;
 import cn.chasers.wehappy.message.dto.MessageQueryParam;
+import cn.chasers.wehappy.message.entity.Conversation;
 import cn.chasers.wehappy.message.entity.Message;
+import cn.chasers.wehappy.message.service.IConversationService;
+import cn.chasers.wehappy.message.service.IMessageService;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -22,6 +29,15 @@ import java.util.List;
 @RequestMapping("/conversation")
 public class ConversationController {
 
+    private final IMessageService messageService;
+    private final IConversationService conversationService;
+
+    @Autowired
+    public ConversationController(IMessageService messageService, IConversationService conversationService) {
+        this.messageService = messageService;
+        this.conversationService = conversationService;
+    }
+
     /**
      * 获取会话的聊天记录
      *
@@ -29,45 +45,54 @@ public class ConversationController {
      * @param param 分页参数
      * @return 消息
      */
-    @GetMapping("/{id}")
-    public CommonResult<List<Message>> getMessages(@Validated @PathVariable @ApiParam(value = "会话Id", required = true) Long id, @RequestParam MessageQueryParam param) {
-        return null;
+    @GetMapping("/messages/{id}")
+    public CommonPage<Message> getMessages(@Validated @PathVariable @ApiParam(value = "会话Id", required = true) Long id, @RequestParam MessageQueryParam param) {
+        return CommonPage.restPage(messageService.getMessagesByConversationId(id, param.getMessageId(), param.getCurrentPage(), param.getSize()));
     }
 
     /**
      * 获取会话的未读聊天记录
      *
-     * @param id    会话Id
-     * @param param 分页参数
+     * @param id 会话Id
      * @return 消息
      */
-    @GetMapping("/unread/{id}")
-    public CommonResult<List<Message>> getUnreadMessages(@Validated @PathVariable @ApiParam(value = "会话Id", required = true) Long id, @RequestParam MessageQueryParam param) {
-        return null;
+    @GetMapping("/messages/unread/{id}")
+    public CommonResult<List<Message>> getUnreadMessages(@Validated @PathVariable @ApiParam(value = "会话Id", required = true) Long id) {
+        return CommonResult.success(messageService.getUnreadMessagesByConversationId(id));
     }
 
     /**
-     * 获取私聊的聊天记录
+     * 删除会话
      *
-     * @param id    会话Id
-     * @param param 分页参数
-     * @return 消息
+     * @param id 会话Id
+     * @return 删除操作结果
      */
-    @GetMapping("/single/{id}")
-    public CommonResult<List<Message>> getFriendMessages(@Validated @PathVariable @ApiParam(value = "用户Id", required = true) Long id, @RequestParam MessageQueryParam param) {
-        return null;
+    @DeleteMapping("/{id}")
+    public CommonResult<Boolean> remove(@Validated @PathVariable @ApiParam(value = "会话Id", required = true) Long id) {
+        return CommonResult.success(conversationService.remove(id));
     }
 
     /**
-     * 获取群聊的聊天记录
+     * 根据好友 Id 或群聊 Id 获取聊天记录
      *
-     * @param id    会话Id
+     * @param toId  会话Id
+     * @param type  聊天类型
      * @param param 分页参数
      * @return 消息
      */
-    @GetMapping("/group/{id}")
-    public CommonResult<List<Message>> getGroupMessages(@Validated @PathVariable @ApiParam(value = "群聊Id", required = true) Long id, @RequestParam MessageQueryParam param) {
-        return null;
+    @GetMapping("/messages/unread/{type}/{toId}")
+    public CommonPage<Message> getMessages(@Validated @PathVariable @ApiParam(value = "会话Id", required = true) Long toId, @Validated @PathVariable @ApiParam(value = "好友 Id 或群聊 Id", required = true) Integer type, @RequestParam MessageQueryParam param) {
+        return CommonPage.restPage(messageService.getMessagesByToId(type, ThreadLocalUtils.get().getId(), toId, param.getMessageId(), param.getCurrentPage(), param.getSize()));
+    }
+
+    /**
+     * 获取会话列表
+     *
+     * @return 会话列表
+     */
+    @GetMapping
+    public CommonResult<List<Conversation>> getAll() {
+        return CommonResult.success(conversationService.listByUserId(ThreadLocalUtils.get().getId()));
     }
 
 }

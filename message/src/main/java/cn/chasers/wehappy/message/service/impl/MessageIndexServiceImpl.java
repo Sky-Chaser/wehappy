@@ -1,12 +1,20 @@
 package cn.chasers.wehappy.message.service.impl;
 
+import cn.chasers.wehappy.message.entity.Conversation;
 import cn.chasers.wehappy.message.entity.MessageIndex;
 import cn.chasers.wehappy.message.mapper.MessageIndexMapper;
+import cn.chasers.wehappy.message.service.IConversationService;
 import cn.chasers.wehappy.message.service.IMessageIndexService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -19,6 +27,15 @@ import java.util.List;
 @Service
 public class MessageIndexServiceImpl extends ServiceImpl<MessageIndexMapper, MessageIndex> implements IMessageIndexService {
 
+    private final MessageIndexMapper messageIndexMapper;
+    private final IConversationService conversationService;
+
+    @Autowired
+    public MessageIndexServiceImpl(MessageIndexMapper messageIndexMapper, IConversationService conversationService) {
+        this.messageIndexMapper = messageIndexMapper;
+        this.conversationService = conversationService;
+    }
+
     @Override
     public MessageIndex save(Integer type, Long from, Long to, Long messageId) {
         MessageIndex messageIndex = new MessageIndex();
@@ -28,10 +45,5 @@ public class MessageIndexServiceImpl extends ServiceImpl<MessageIndexMapper, Mes
         messageIndex.setMessageId(messageId);
         save(messageIndex);
         return messageIndex;
-    }
-
-    @Override
-    public List<MessageIndex> queryByConversationId(Long id, Long messageId, Long currentPage, Long size) {
-        return null;
     }
 }

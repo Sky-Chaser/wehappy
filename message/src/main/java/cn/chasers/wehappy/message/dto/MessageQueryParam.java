@@ -1,6 +1,7 @@
 package cn.chasers.wehappy.message.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,11 +14,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class MessageQueryParam {
 
-    @ApiModelProperty(value = "好友或群聊Id")
-    private Long to;
-
-    @ApiModelProperty(value = "用户名")
-    private Long time;
+    @ApiParam(value = "查询的消息 Id 都小于 messageId ")
+    private Long messageId;
 
     @ApiModelProperty(value = "当前页数")
     private Long currentPage;

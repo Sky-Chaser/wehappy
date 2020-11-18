@@ -2,7 +2,7 @@ package cn.chasers.wehappy.user.service.impl;
 
 import cn.chasers.wehappy.common.exception.Asserts;
 import cn.chasers.wehappy.common.service.IRedisService;
-import cn.chasers.wehappy.common.util.UserUtil;
+import cn.chasers.wehappy.common.util.ThreadLocalUtils;
 import cn.chasers.wehappy.user.constant.MessageConstant;
 import cn.chasers.wehappy.user.entity.User;
 import cn.chasers.wehappy.user.mapper.UserMapper;
@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -38,7 +37,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private final IUserCacheService userCacheService;
     private final UserMapper userMapper;
     private final Producer producer;
-    private final HttpServletRequest request;
 
     @Value("${redis.separator}")
     private String redisKeySeparator;
@@ -56,12 +54,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private String defaultAvatar;
 
     @Autowired
-    public UserServiceImpl(IRedisService redisService, IUserCacheService userCacheService, UserMapper userMapper, Producer producer, HttpServletRequest request) {
+    public UserServiceImpl(IRedisService redisService, IUserCacheService userCacheService, UserMapper userMapper, Producer producer) {
         this.redisService = redisService;
         this.userCacheService = userCacheService;
         this.userMapper = userMapper;
         this.producer = producer;
-        this.request = request;
     }
 
     @Override
@@ -136,7 +133,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public User getCurrentUser() {
-        long userId = UserUtil.getCurrentUserId(request);
+        long userId = ThreadLocalUtils.get().getId();
         User user = userCacheService.getUser(userId);
         if (user != null) {
             return user;

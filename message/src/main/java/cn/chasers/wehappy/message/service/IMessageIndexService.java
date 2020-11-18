@@ -1,10 +1,8 @@
 package cn.chasers.wehappy.message.service;
 
-import cn.chasers.wehappy.message.entity.Message;
 import cn.chasers.wehappy.message.entity.MessageIndex;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
 
 /**
  * <p>
@@ -25,15 +23,4 @@ public interface IMessageIndexService extends IService<MessageIndex> {
      * @return MessageIndex
      */
     MessageIndex save(Integer type, Long from, Long to, Long messageId);
-
-    /**
-     * 查询所有消息索引信息
-     *
-     * @param id          会话 Id
-     * @param messageId   消息 Id，只查询 messageId 小于这条消息的消息，null 或 0 表示从最新的开始查
-     * @param currentPage 当前页数
-     * @param size        每页记录数
-     * @return 消息索引集合
-     */
-    List<MessageIndex> queryByConversationId(Long id, Long messageId, Long currentPage, Long size);
 }

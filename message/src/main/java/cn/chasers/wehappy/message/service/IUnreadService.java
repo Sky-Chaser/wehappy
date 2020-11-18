@@ -37,5 +37,5 @@ public interface IUnreadService extends IService<Unread> {
      * @param userId 用户Id
      * @return
      */
-    Integer get(Long userId);
+    Integer getCount(Long userId);
 }

@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,7 +48,17 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean remove(Long id) {
+        Conversation conversation = getById(id);
+        if (conversation == null) {
+            return true;
+        }
+
         remove(id);
-        return conversationUnreadService.update(id, 0);
+        return conversationUnreadService.updateByLastReadMessageId(id, conversation.getMessageId());
+    }
+
+    @Override
+    public List<Conversation> listByUserId(Long id) {
+        return lambdaQuery().eq(Conversation::getFromId, id).list();
     }
 }

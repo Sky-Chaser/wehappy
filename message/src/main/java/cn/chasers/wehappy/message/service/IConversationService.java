@@ -4,6 +4,8 @@ import cn.chasers.wehappy.message.entity.Conversation;
 import cn.chasers.wehappy.message.entity.MessageIndex;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 最近会话表 服务类
@@ -30,4 +32,12 @@ public interface IConversationService extends IService<Conversation> {
      * @return 返回操作结果
      */
     boolean remove(Long id);
+
+    /**
+     * 获取用户的会话列表
+     *
+     * @param id 用户 Id
+     * @return
+     */
+    List<Conversation> listByUserId(Long id);
 }
