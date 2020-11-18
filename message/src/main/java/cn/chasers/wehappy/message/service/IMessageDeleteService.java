@@ -1,6 +1,6 @@
 package cn.chasers.wehappy.message.service;
 
-import cn.chasers.wehappy.message.entity.UserMessageDelete;
+import cn.chasers.wehappy.message.entity.MessageDelete;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author lollipop
  * @since 2020-11-16
  */
-public interface IUserMessageDeleteService extends IService<UserMessageDelete> {
+public interface IMessageDeleteService extends IService<MessageDelete> {
 
 }

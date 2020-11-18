@@ -75,12 +75,12 @@ public class PushHandler implements WebSocketHandler {
             return Mono.empty();
         }
 
-        final long userId = userDto.getId();
+        final Long userId = userDto.getId();
 
         // 出站
         Mono<Void> output = session.send(Flux.create(sink -> {
             handleClient(userId, new WebSocketClient(sink, session));
-            redisService.sAdd(onlineUsersKey, userId);
+            redisService.sAdd(onlineUsersKey, (Object)userId);
         }));
 
         // 入站

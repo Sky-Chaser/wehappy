@@ -21,9 +21,6 @@ public class Message extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "序列号")
-    private Long sequence;
-
     @ApiModelProperty(value = "时间戳")
     private Long time;
 

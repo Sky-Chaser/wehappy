@@ -23,6 +23,9 @@ public class Conversation extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "会话类型：0表示私聊，1表示群聊")
+    private Integer type;
+
     @ApiModelProperty(value = "发送者id")
     private Long fromId;
 

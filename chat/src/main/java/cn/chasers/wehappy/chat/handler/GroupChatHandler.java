@@ -31,7 +31,10 @@ public class GroupChatHandler implements MessageHandler {
 
     @Override
     public void execute(ProtoMsg.Message msg, WebSocketClient client) {
-        log.info("GroupChatHandler [execute] {}", msg);
+        Long from = client.getUserId();
+        Long to = Long.parseLong(msg.getTo());
+
+        // TODO 判断用户是否是群组中的成员，且能发送消息
 
         String sequence = String.valueOf(snowflakeConfig.snowflakeId());
 
@@ -46,17 +49,21 @@ public class GroupChatHandler implements MessageHandler {
 
         client.sendData(response);
 
-        // TODO 获取到所有群成员id，然后设置redirectMessage的to，并把消息存入kafka
+        ProtoMsg.Message redirectMessage = MessageUtil.newMessage(
+                msg.getId(),
+                sequence,
+                String.valueOf(System.currentTimeMillis()),
+                msg.getTo(),
+                ProtoMsg.MessageType.GROUP_MESSAGE,
+                MessageUtil.newChatMessage(
+                        msg.getTo(),
+                        from.toString(),
+                        msg.getChatMessage().getContentType(),
+                        msg.getChatMessage().getContent()
+                )
+        );
 
-//        ProtoMsg.Message redirectMessage = MessageUtil.newMessage(
-//                msg.getId(),
-//                sequence,
-//                msg.getTo(),
-//                ProtoMsg.MessageType.GROUP_MESSAGE,
-//                msg.getChatMessage()
-//        );
-//
-//        producer.sendMessage(redirectMessage);
+        producer.sendMessage(redirectMessage);
 
     }
 

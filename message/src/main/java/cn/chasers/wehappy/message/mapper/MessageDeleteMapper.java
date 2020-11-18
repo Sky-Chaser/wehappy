@@ -1,6 +1,6 @@
 package cn.chasers.wehappy.message.mapper;
 
-import cn.chasers.wehappy.message.entity.UserMessageDelete;
+import cn.chasers.wehappy.message.entity.MessageDelete;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author lollipop
  * @since 2020-11-16
  */
-public interface UserMessageDeleteMapper extends BaseMapper<UserMessageDelete> {
+public interface MessageDeleteMapper extends BaseMapper<MessageDelete> {
 
 }

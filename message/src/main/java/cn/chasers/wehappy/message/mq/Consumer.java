@@ -30,6 +30,6 @@ public class Consumer {
     @StreamListener(MqSink.MESSAGE_INPUT)
     public void receivePushMessage(ProtoMsg.Message message) {
         log.info("fetch message: {}", message);
-        messageService.saveMessage(message);
+        messageService.save(message);
     }
 }

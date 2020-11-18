@@ -1,6 +1,6 @@
 package cn.chasers.wehappy.message.mapper;
 
-import cn.chasers.wehappy.message.entity.UserUnread;
+import cn.chasers.wehappy.message.entity.Unread;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author lollipop
  * @since 2020-11-16
  */
-public interface UserUnreadMapper extends BaseMapper<UserUnread> {
+public interface UnreadMapper extends BaseMapper<Unread> {
 
 }

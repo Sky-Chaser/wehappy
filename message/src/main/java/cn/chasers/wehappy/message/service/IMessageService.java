@@ -14,10 +14,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IMessageService extends IService<Message> {
     /**
-     * 将从 mq 中读取到的消息进行持久化保存
+     * 1. 将从 mq 中读取到的消息进行持久化保存
+     * 2. 保存消息索引数据
+     * 3. 更新最近会话数据
+     * 4. 更新会话未读数和用户未读数
+     * 5. 当判断消息的接收者在线时，将消息发送到 kafka 中进行推送
      *
      * @param msg ProtoMsg.Message
      * @return 返回操作结果
      */
-    boolean saveMessage(ProtoMsg.Message msg);
+    boolean save(ProtoMsg.Message msg);
 }

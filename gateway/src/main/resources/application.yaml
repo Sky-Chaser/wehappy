@@ -68,7 +68,7 @@ spring:
       bindings:
         # 输入通道
         push-message-input:
-          group: gateway
+          # 不能设置消费者组，否则消息可能会被未与用户建立连接的网关服务消费
           # topic
           destination: pushMessage
           contentType: application/octet-stream

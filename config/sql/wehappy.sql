@@ -46,7 +46,6 @@ USE `message_db`;
 CREATE TABLE `message`
 (
     `id`           BIGINT PRIMARY KEY,
-    `sequence`     BIGINT   NOT NULL COMMENT '序列号',
     `time`         BIGINT   NOT NULL COMMENT '时间戳',
     `type`         TINYINT  NOT NULL DEFAULT 0 COMMENT '消息类型：0表示文本消息，1表示系统消息，2表示图片，3表示语音，4表示视频，5表示语音通话，6表示视频通话，7表示私聊红包，8表示群聊普通红包，9表示群聊运气红包',
     `content`      text     NOT NULL COMMENT '消息内容',
@@ -55,86 +54,54 @@ CREATE TABLE `message`
     KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '消息表';
 
-CREATE TABLE `user_unread`
-(
-    `id`                   BIGINT PRIMARY KEY,
-    `user_id`              BIGINT   NOT NULL,
-    `message_unread_count` INT      NOT NULL DEFAULT 0 COMMENT '总未读消息数',
-    `gmt_create`           DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified`         DATETIME NOT NULL COMMENT '更新时间',
-    UNIQUE `ix_user_id` (`user_id`)
-) COMMENT = '用户未读数表';
-
-CREATE TABLE `user_friend_unread`
-(
-    `id`                   BIGINT PRIMARY KEY,
-    `from_id`              BIGINT   NOT NULL,
-    `to_id`                BIGINT   NOT NULL,
-    `message_unread_count` INT      NOT NULL DEFAULT 0 COMMENT '总未读消息数',
-    `gmt_create`           DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified`         DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_from_id_gmt_modified` (`from_id`, `gmt_modified`)
-) COMMENT = '用户好友未读数表';
-
-CREATE TABLE `user_group_unread`
-(
-    `id`                   BIGINT PRIMARY KEY,
-    `user_id`              BIGINT   NOT NULL,
-    `group_id`             BIGINT   NOT NULL,
-    `message_unread_count` INT      NOT NULL DEFAULT 0 COMMENT '总未读消息数',
-    `gmt_create`           DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified`         DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_user_id_gmt_modified` (`user_id`, `gmt_modified`)
-) COMMENT = '用户群聊未读数表';
-
 CREATE TABLE `conversation`
 (
     `id`           BIGINT PRIMARY KEY,
-    `from_id`      BIGINT   NOT NULL COMMENT '发送者id',
-    `to_id`        BIGINT   NOT NULL COMMENT '接收者id',
+    `type`         BIGINT   NOT NULL COMMENT '会话类型：0表示私聊，1表示群聊',
+    `from`         BIGINT   NOT NULL COMMENT '发送者id',
+    `to`           BIGINT   NOT NULL COMMENT '接收者id',
     `message_id`   BIGINT   NOT NULL COMMENT '消息id',
     `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_from_id_gmt_modified` (`from_id`, `gmt_modified`)
+    KEY `ix_from_gmt_create` (`from`, `gmt_create`)
 ) COMMENT = '最近会话表';
+
+CREATE TABLE `unread`
+(
+    `id`           BIGINT PRIMARY KEY,
+    `user_id`      BIGINT   NOT NULL COMMENT '用户Id',
+    `count`        INT      NOT NULL DEFAULT 0 COMMENT '总未读消息数',
+    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
+    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
+    UNIQUE `ix_user_id` (`user_id`)
+) COMMENT = '用户未读数表';
+
+CREATE TABLE `conversation_unread`
+(
+    `id`                   BIGINT PRIMARY KEY,
+    `conversation_id`      BIGINT   NOT NULL COMMENT '会话Id',
+    `last_read_message_id` BIGINT   NOT NULL COMMENT '最后一条已读消息Id',
+    `count`                INT      NOT NULL DEFAULT 0 COMMENT '未读消息数',
+    `gmt_create`           DATETIME NOT NULL COMMENT '创建时间',
+    `gmt_modified`         DATETIME NOT NULL COMMENT '更新时间',
+    KEY `ix_conversation_id` (`conversation_id`)
+) COMMENT = '会话未读数表';
 
 CREATE TABLE `message_index`
 (
     `id`           BIGINT PRIMARY KEY,
-    `from_id`      BIGINT   NOT NULL COMMENT '发送者id',
-    `to_id`        BIGINT   NOT NULL COMMENT '接收者id',
-    `from_to`      BIGINT   NOT NULL COMMENT '发送者id_接收者id',
+    `type`         TINYINT  NOT NULL COMMENT '消息类型：0表示私聊消息，1表示群聊消息，2表示推送消息',
+    `from`         BIGINT   NOT NULL COMMENT '发送者id',
+    `to`           BIGINT   NOT NULL COMMENT '接收者id：type为1时表示群聊Id',
     `message_id`   BIGINT   NOT NULL COMMENT '消息id',
     `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
     `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    `is_deleted`   TINYINT  NOT NULL DEFAULT 0 COMMENT '是否删除：0表示未删除，1表示已删除',
-    KEY `ix_from_to_gmt_create` (`from_to`, `gmt_create`)
+    KEY `ix_from_to_message_id` (`from`, `to`, `message_id`),
+    KEY `ix_from_to_gmt_create` (`from`, `to`, `gmt_create`),
+    KEY `ix_to_gmt_create` (`to`, `gmt_create`)
 ) COMMENT = '消息索引表';
 
-CREATE TABLE `push_message_index`
-(
-    `id`           BIGINT PRIMARY KEY,
-    `to_id`        BIGINT   NOT NULL COMMENT '接收者id',
-    `message_id`   BIGINT   NOT NULL COMMENT '消息id',
-    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    `is_deleted`   TINYINT  NOT NULL DEFAULT 0 COMMENT '是否删除：0表示未删除，1表示已删除',
-    KEY `ix_to_gmt_create` (`gmt_create`)
-) COMMENT = '推送消息索引表';
-
-CREATE TABLE `group_message_index`
-(
-    `id`           BIGINT PRIMARY KEY,
-    `group_id`     BIGINT   NOT NULL COMMENT '群聊id',
-    `from_id`      BIGINT   NOT NULL DEFAULT 1 COMMENT '消息发送用户id',
-    `message_id`   BIGINT   NOT NULL DEFAULT 1 COMMENT '消息id',
-    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    KEY `ix_group_id_gmt_create` (`group_id`, `gmt_create`),
-    KEY `ix_group_id_from_id_gmt_create` (`group_id`, `from_id`, `gmt_create`)
-) COMMENT = '群聊信息索引表';
-
-CREATE TABLE `user_message_delete`
+CREATE TABLE `message_delete`
 (
     `id`           BIGINT PRIMARY KEY,
     `message_id`   BIGINT   NOT NULL COMMENT '消息id',

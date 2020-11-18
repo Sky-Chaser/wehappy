@@ -14,10 +14,13 @@ public class MessageUtil {
     public static ProtoMsg.Message newMessage(String id, String sequence, String time, String to, ProtoMsg.MessageType messageType, Object msg) {
         ProtoMsg.Message.Builder builder = ProtoMsg.Message.newBuilder()
                 .setId(id)
-                .setSequence(sequence)
                 .setTime(time)
                 .setMessageType(messageType)
                 .setTo(to);
+
+        if (sequence != null) {
+            builder.setSequence(sequence);
+        }
 
         if (messageType.equals(ProtoMsg.MessageType.GROUP_MESSAGE) || messageType.equals(ProtoMsg.MessageType.SINGLE_MESSAGE)) {
             return builder.setChatMessage((ProtoMsg.ChatMessage) msg).build();
