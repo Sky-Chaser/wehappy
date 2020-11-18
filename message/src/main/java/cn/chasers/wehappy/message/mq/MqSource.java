@@ -1,4 +1,4 @@
-package cn.chasers.wehappy.chat.mq;
+package cn.chasers.wehappy.message.mq;
 
 
 import org.springframework.cloud.stream.annotation.Output;
@@ -10,13 +10,13 @@ import org.springframework.messaging.MessageChannel;
  * @author lollipop
  */
 public interface MqSource {
-    String MESSAGE_OUTPUT = "message-output";
+    String PUSH_MESSAGE_OUTPUT = "push-message-output";
 
     /**
-     * message 服务监听并将消息落入 db
+     * 推送消息给客户端的通道
      *
      * @return 通道
      */
-    @Output(MESSAGE_OUTPUT)
-    MessageChannel messageOutput();
+    @Output(PUSH_MESSAGE_OUTPUT)
+    MessageChannel pushMessageOutput();
 }

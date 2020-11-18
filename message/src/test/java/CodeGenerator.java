@@ -109,6 +109,7 @@ public class CodeGenerator {
         strategy.setSuperEntityClass("cn.chasers.wehappy.common.entity.BaseEntity");
         // 写于父类中的公共字段
         strategy.setSuperEntityColumns("id", "gmt_create", "gmt_modified");
+        strategy.setInclude("push_message_index");
         mpg.setStrategy(strategy);
         mpg.execute();
     }

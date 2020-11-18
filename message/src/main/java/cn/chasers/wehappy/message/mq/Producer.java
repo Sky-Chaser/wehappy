@@ -1,4 +1,4 @@
-package cn.chasers.wehappy.chat.mq;
+package cn.chasers.wehappy.message.mq;
 
 import cn.chasers.wehappy.common.msg.ProtoMsg;
 import lombok.extern.slf4j.Slf4j;
@@ -27,13 +27,13 @@ public class Producer {
     }
 
     /**
-     * 向 kafka 中存储要落入 db 的消息
+     * 向 kafka 中存储要推送给客户端的消息
      *
      * @param message 包含消息详细内容
      */
-    @SendTo(MqSource.MESSAGE_OUTPUT)
-    public void sendMessage(ProtoMsg.Message message) {
-        mqSource.messageOutput().send(MessageBuilder.withPayload(message.toByteArray()).
+    @SendTo(MqSource.PUSH_MESSAGE_OUTPUT)
+    public void sendPushMessage(ProtoMsg.Message message) {
+        mqSource.pushMessageOutput().send(MessageBuilder.withPayload(message.toByteArray()).
                 setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE).build());
     }
 }

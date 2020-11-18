@@ -46,9 +46,3 @@ management:
   endpoint:
     health:
       show-details: always
-
-redis:
-  database: chatService
-  separator: ":"
-  onlineUser:
-    key: 'onlineUser'

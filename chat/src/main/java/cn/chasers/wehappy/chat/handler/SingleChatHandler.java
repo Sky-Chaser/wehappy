@@ -1,8 +1,7 @@
 package cn.chasers.wehappy.chat.handler;
 
-import cn.chasers.wehappy.chat.feign.IFriendService;
+import cn.chasers.wehappy.chat.feign.IUserService;
 import cn.chasers.wehappy.chat.ws.WebSocketClient;
-import cn.chasers.wehappy.common.api.CommonResult;
 import cn.chasers.wehappy.common.config.SnowflakeConfig;
 import cn.chasers.wehappy.chat.handler.dispatcher.MessageHandler;
 import cn.chasers.wehappy.chat.mq.Producer;
@@ -11,8 +10,6 @@ import cn.chasers.wehappy.common.util.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.ExecutionException;
 
 /**
  * 私聊消息处理类
@@ -26,13 +23,13 @@ public class SingleChatHandler implements MessageHandler {
 
     private final SnowflakeConfig snowflakeConfig;
     private final Producer producer;
-    private final IFriendService friendService;
+    private final IUserService userService;
 
     @Autowired
-    public SingleChatHandler(SnowflakeConfig snowflakeConfig, Producer producer, IFriendService friendService) {
+    public SingleChatHandler(SnowflakeConfig snowflakeConfig, Producer producer, IUserService userService) {
         this.snowflakeConfig = snowflakeConfig;
         this.producer = producer;
-        this.friendService = friendService;
+        this.userService = userService;
     }
 
     @Override
@@ -41,7 +38,7 @@ public class SingleChatHandler implements MessageHandler {
         Long to = Long.parseLong(msg.getTo());
 
         try {
-            if (!friendService.isFriend(from, to).toFuture().get().getData()) {
+            if (!userService.isFriend(from, to).getData()) {
                 ProtoMsg.Message response = MessageUtil.newMessage(
                         msg.getId(),
                         "",

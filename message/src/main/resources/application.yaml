@@ -50,10 +50,15 @@ spring:
           brokers: localhost:9092
       bindings:
         # 输入通道
-        register-email-input:
+        message-input:
           group: message
           # topic
           destination: message
+          contentType: application/octet-stream
+        # 输入通道
+        push-message-output:
+          # topic
+          destination: pushMessage
           contentType: application/octet-stream
 
 # mybatis日志
@@ -77,11 +82,5 @@ ribbon:
   ReadTimeout: 10000
 
 redis:
-  database: messageService
-  separator: ":"
-#  registerCode:
-#    key: 'user:register:code'
-#    expire: 300
-
-default:
-  avatar: default.jpg
+  onlineUsers:
+    key: 'users:online'

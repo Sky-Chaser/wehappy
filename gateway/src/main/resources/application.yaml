@@ -67,10 +67,10 @@ spring:
           brokers: localhost:9092
       bindings:
         # 输入通道
-        message-input:
+        push-message-input:
           group: gateway
           # topic
-          destination: message
+          destination: pushMessage
           contentType: application/octet-stream
   security:
     oauth2:
@@ -78,10 +78,24 @@ spring:
         jwt:
           public-key-location: classpath:public.txt
   redis:
-    database: 0
-    port: 6379
+    # Redis服务器地址
     host: localhost
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
     password:
+    lettuce:
+      pool:
+        # 最大连接数，负值表示没有限制，默认8
+        max-active: 20
+        # 最大阻塞等待时间，负值表示没限制，默认-1
+        max-wait: -1
+        # 最大空闲连接，默认8
+        max-idle: 8
+        # 最小空闲连接，默认0
+        min-idle: 0
 secure:
   ignore:
     urls: # 配置白名单路径
@@ -107,8 +121,6 @@ management: #开启SpringBoot Admin的监控
   endpoint:
     health:
       show-details: always
-ribbon:
-  ConnectTimeout: 10000 #服务请求连接超时时间（毫秒）
-  ReadTimeout: 10000 #服务请求处理超时时间（毫秒）
-logging:
-  level: log
+redis:
+  onlineUsers:
+    key: 'users:online'

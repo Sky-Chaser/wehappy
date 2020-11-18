@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 @Component
 public interface MqSink {
 
-    String MESSAGE_INPUT = "message-input";
+    String PUSH_MESSAGE_INPUT = "push-message-input";
 
     /**
      * 监听推送消息的通道
      *
      * @return 通道
      */
-    @Input(MqSink.MESSAGE_INPUT)
-    SubscribableChannel messageInput();
+    @Input(MqSink.PUSH_MESSAGE_INPUT)
+    SubscribableChannel pushMessageInput();
 }

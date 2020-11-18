@@ -3,10 +3,13 @@ package cn.chasers.wehappy.gateway.ws;
 import cn.chasers.wehappy.common.constant.AuthConstant;
 import cn.chasers.wehappy.common.domain.UserDto;
 import cn.chasers.wehappy.common.msg.ProtoMsg;
+import cn.chasers.wehappy.common.service.IRedisService;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.nimbusds.jose.JWSObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.HandshakeInfo;
 import org.springframework.web.reactive.socket.WebSocketHandler;
@@ -29,7 +32,17 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class PushHandler implements WebSocketHandler {
 
-    public static ConcurrentHashMap<Long, WebSocketClient> clients = new ConcurrentHashMap<>(200);
+    private final ConcurrentHashMap<Long, WebSocketClient> clients;
+    private final IRedisService redisService;
+
+    @Value("${redis.onlineUsers.key}")
+    private String onlineUsersKey;
+
+    @Autowired
+    public PushHandler(IRedisService redisService) {
+        this.redisService = redisService;
+        clients = new ConcurrentHashMap<>(200);
+    }
 
     @Override
     public List<String> getSubProtocols() {
@@ -65,7 +78,10 @@ public class PushHandler implements WebSocketHandler {
         final long userId = userDto.getId();
 
         // 出站
-        Mono<Void> output = session.send(Flux.create(sink -> handleClient(userId, new WebSocketClient(sink, session))));
+        Mono<Void> output = session.send(Flux.create(sink -> {
+            handleClient(userId, new WebSocketClient(sink, session));
+            redisService.sAdd(onlineUsersKey, userId);
+        }));
 
         // 入站
         Mono<Void> input = session.receive()
@@ -96,12 +112,14 @@ public class PushHandler implements WebSocketHandler {
 
     private void removeUser(long userId) {
         clients.remove(userId);
+        redisService.sRemove(onlineUsersKey, userId);
         log.info("用户：{}，离线!", userId);
     }
 
     private void handleClient(long userId, WebSocketClient client) {
         clients.put(userId, client);
         log.info("用户：{}，上线!", userId);
+
     }
 
     /**
@@ -109,7 +127,7 @@ public class PushHandler implements WebSocketHandler {
      *
      * @param message 消息
      */
-    public static void sendTo(ProtoMsg.Message message) {
+    public void sendTo(ProtoMsg.Message message) {
         if (!clients.containsKey(Long.parseLong(message.getTo()))) {
             return;
         }

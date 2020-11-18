@@ -75,9 +75,9 @@ message PushMessage {
 
 // 外层消息
 message Message {
-  // 序列号,服务端生成,用于消息排序
+  // 序列号,服务端生成, 用于消息排序
   string sequence = 1;
-  // 消息id,由客户端生成,用于消息确认
+  // 消息id,由客户端生成, 用于消息确认
   string id = 2;
   // 时间戳
   string time = 3;

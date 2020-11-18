@@ -1,5 +1,6 @@
 package cn.chasers.wehappy.message.service.impl;
 
+import cn.chasers.wehappy.common.msg.ProtoMsg;
 import cn.chasers.wehappy.message.entity.Message;
 import cn.chasers.wehappy.message.mapper.MessageMapper;
 import cn.chasers.wehappy.message.service.IMessageService;
@@ -17,4 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> implements IMessageService {
 
+    @Override
+    public boolean saveMessage(ProtoMsg.Message msg) {
+        return false;
+    }
 }

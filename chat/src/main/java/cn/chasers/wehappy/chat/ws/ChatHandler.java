@@ -125,8 +125,6 @@ public class ChatHandler implements WebSocketHandler {
     private void handleClient(long userId, WebSocketClient client) {
         clients.put(userId, client);
         log.info("User：{}，online!", userId);
-
-        // Todo 发送上线消息到 mq
     }
 
     private void removeUser(long userId) {

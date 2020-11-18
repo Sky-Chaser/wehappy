@@ -30,7 +30,7 @@ CREATE TABLE `user`
 
 CREATE TABLE `friend`
 (
-    `id`           BIGINT   PRIMARY KEY,
+    `id`           BIGINT PRIMARY KEY,
     `from_id`      BIGINT   NOT NULL COMMENT '用户id',
     `to_id`        BIGINT   NOT NULL COMMENT '好友id',
     `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
@@ -45,7 +45,9 @@ USE `message_db`;
 
 CREATE TABLE `message`
 (
-    `id`           BIGINT   PRIMARY KEY,
+    `id`           BIGINT PRIMARY KEY,
+    `sequence`     BIGINT   NOT NULL COMMENT '序列号',
+    `time`         BIGINT   NOT NULL COMMENT '时间戳',
     `type`         TINYINT  NOT NULL DEFAULT 0 COMMENT '消息类型：0表示文本消息，1表示系统消息，2表示图片，3表示语音，4表示视频，5表示语音通话，6表示视频通话，7表示私聊红包，8表示群聊普通红包，9表示群聊运气红包',
     `content`      text     NOT NULL COMMENT '消息内容',
     `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
@@ -108,6 +110,17 @@ CREATE TABLE `message_index`
     `is_deleted`   TINYINT  NOT NULL DEFAULT 0 COMMENT '是否删除：0表示未删除，1表示已删除',
     KEY `ix_from_to_gmt_create` (`from_to`, `gmt_create`)
 ) COMMENT = '消息索引表';
+
+CREATE TABLE `push_message_index`
+(
+    `id`           BIGINT PRIMARY KEY,
+    `to_id`        BIGINT   NOT NULL COMMENT '接收者id',
+    `message_id`   BIGINT   NOT NULL COMMENT '消息id',
+    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
+    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
+    `is_deleted`   TINYINT  NOT NULL DEFAULT 0 COMMENT '是否删除：0表示未删除，1表示已删除',
+    KEY `ix_to_gmt_create` (`gmt_create`)
+) COMMENT = '推送消息索引表';
 
 CREATE TABLE `group_message_index`
 (
@@ -250,5 +263,13 @@ CREATE TABLE `small_red_envelope`
     UNIQUE `ux_big_red_envelope_id_user_id` (`big_red_envelope_id`, `user_id`)
 ) COMMENT = '小红包信息表';
 
-INSERT INTO `user_db`.`user` (`id`, `email`, `username`, `password`, `sex`, `avatar`, `gmt_create`, `gmt_modified`, `status`, `number_like`) VALUES (1327499604039708673, '1093275610@163.com', 'lollipop', '$2a$10$vFmR4Xiv7tK4HkuYrkjwCeE1TjH7I06EBGlFCYlOwhFmVrDNwKXWq', 0, 'default.jpg', '2020-11-14 14:32:24', '2020-11-14 14:32:24', 1, 0);
-INSERT INTO `user_db`.`user` (`id`, `email`, `username`, `password`, `sex`, `avatar`, `gmt_create`, `gmt_modified`, `status`, `number_like`) VALUES (1328198577420595202, 'nhuy@qq.com', 'hanggegreat', '$2a$10$CKkfkjouC/htFVivZFUF1u7cG75Vdx8zKovYIGbQ2maSV3i0QlrJa', 0, 'default.jpg', '2020-11-16 12:49:52', '2020-11-16 12:49:52', 1, 0);
+INSERT INTO `user_db`.`user` (`id`, `email`, `username`, `password`, `sex`, `avatar`, `gmt_create`, `gmt_modified`,
+                              `status`, `number_like`)
+VALUES (1327499604039708673, '1093275610@163.com', 'lollipop',
+        '$2a$10$vFmR4Xiv7tK4HkuYrkjwCeE1TjH7I06EBGlFCYlOwhFmVrDNwKXWq', 0, 'default.jpg', '2020-11-14 14:32:24',
+        '2020-11-14 14:32:24', 1, 0);
+INSERT INTO `user_db`.`user` (`id`, `email`, `username`, `password`, `sex`, `avatar`, `gmt_create`, `gmt_modified`,
+                              `status`, `number_like`)
+VALUES (1328198577420595202, 'nhuy@qq.com', 'hanggegreat',
+        '$2a$10$CKkfkjouC/htFVivZFUF1u7cG75Vdx8zKovYIGbQ2maSV3i0QlrJa', 0, 'default.jpg', '2020-11-16 12:49:52',
+        '2020-11-16 12:49:52', 1, 0);

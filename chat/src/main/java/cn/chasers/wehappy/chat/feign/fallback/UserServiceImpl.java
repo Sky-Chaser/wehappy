@@ -14,7 +14,12 @@ import reactor.core.publisher.Mono;
 public class UserServiceImpl implements IUserService {
 
     @Override
-    public Mono<CommonResult<UserDto>> get(Long id) {
-        return Mono.just(CommonResult.failed("user service 暂不可用....."));
+    public CommonResult<UserDto> get(Long id) {
+        return CommonResult.failed("user service 暂不可用.....");
+    }
+
+    @Override
+    public CommonResult<Boolean> isFriend(Long fromId, Long toId) {
+        return CommonResult.failed("user service 暂不可用.....");
     }
 }
