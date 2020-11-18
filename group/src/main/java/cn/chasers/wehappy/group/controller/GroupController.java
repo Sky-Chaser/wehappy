@@ -21,13 +21,26 @@ import java.util.List;
 @RestController
 public class GroupController {
 
+    /**
+     * 查询群聊中的全部用户 Id
+     *
+     * @param id 群聊 Id
+     * @return 群聊中的全部用户 Id
+     */
     @GetMapping("/{id}/users")
-    public CommonResult<List<User>> getUsers(@ApiParam(value = "群组Id") @PathVariable Long id) {
+    public CommonResult<List<Long>> getUserIds(@ApiParam(value = "群组Id") @PathVariable Long id) {
         return null;
     }
 
+    /**
+     * 判断用户是否为群聊成员
+     *
+     * @param id     群聊 Id
+     * @param userId 用户 Id
+     * @return 返回用户是否为群聊成员
+     */
     @GetMapping("/{id}/users/{userId}")
-    public CommonResult<User> getUser(@ApiParam(value = "群组Id") @PathVariable Long id, @ApiParam(value = "用户Id") @PathVariable Long userId) {
+    public CommonResult<Boolean> isGroupUser(@ApiParam(value = "群组Id") @PathVariable Long id, @ApiParam(value = "用户Id") @PathVariable Long userId) {
         return null;
     }
 }
