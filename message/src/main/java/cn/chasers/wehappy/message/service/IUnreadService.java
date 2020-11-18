@@ -22,16 +22,6 @@ public interface IUnreadService extends IService<Unread> {
      */
     boolean increase(Long userId, int count);
 
-
-    /**
-     * 减少未读个数
-     *
-     * @param userId 用户Id
-     * @param count  个数
-     * @return
-     */
-    boolean decrease(Long userId, int count);
-
     /**
      * 更新未读个数
      *
@@ -47,5 +37,5 @@ public interface IUnreadService extends IService<Unread> {
      * @param userId 用户Id
      * @return
      */
-    boolean get(Long userId);
+    Integer get(Long userId);
 }

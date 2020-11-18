@@ -49,6 +49,7 @@
         <starter-data-redis.version>2.3.4.RELEASE</starter-data-redis.version>
         <netty.version>4.1.53.Final</netty.version>
         <protobuf.version>3.13.0</protobuf.version>
+        <redisson.version>3.13.6</redisson.version>
     </properties>
 
     <dependencies>
@@ -192,6 +193,11 @@
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
                 <version>${protobuf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

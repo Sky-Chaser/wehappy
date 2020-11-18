@@ -4,6 +4,7 @@ import cn.chasers.wehappy.message.entity.ConversationUnread;
 import cn.chasers.wehappy.message.mapper.ConversationUnreadMapper;
 import cn.chasers.wehappy.message.service.IConversationUnreadService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,14 +18,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConversationUnreadServiceImpl extends ServiceImpl<ConversationUnreadMapper, ConversationUnread> implements IConversationUnreadService {
 
-    @Override
-    public boolean increase(Long conversationId, int count) {
-        return false;
+    private final ConversationUnreadMapper conversationUnreadMapper;
+
+    @Autowired
+    public ConversationUnreadServiceImpl(ConversationUnreadMapper conversationUnreadMapper) {
+        this.conversationUnreadMapper = conversationUnreadMapper;
     }
 
     @Override
-    public boolean decrease(Long conversationId, int count) {
-        return false;
+    public boolean increase(Long conversationId, int count) {
+        ConversationUnread conversationUnread = new ConversationUnread();
+        conversationUnread.setConversationId(conversationId);
+        conversationUnread.setCount(count);
+        return conversationUnreadMapper.increase(conversationUnread);
     }
 
     @Override
@@ -33,7 +39,12 @@ public class ConversationUnreadServiceImpl extends ServiceImpl<ConversationUnrea
     }
 
     @Override
-    public boolean get(Long conversationId) {
+    public boolean updateByLastReadMessageId(Long conversationId, Long messageId) {
         return false;
+    }
+
+    @Override
+    public ConversationUnread get(Long conversationId) {
+        return getById(conversationId);
     }
 }

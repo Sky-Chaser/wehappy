@@ -4,6 +4,7 @@ import cn.chasers.wehappy.message.entity.Unread;
 import cn.chasers.wehappy.message.mapper.UnreadMapper;
 import cn.chasers.wehappy.message.service.IUnreadService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,23 +18,35 @@ import org.springframework.stereotype.Service;
 @Service
 public class UnreadServiceImpl extends ServiceImpl<UnreadMapper, Unread> implements IUnreadService {
 
-    @Override
-    public boolean increase(Long userId, int count) {
-        return false;
+    private final UnreadMapper unreadMapper;
+
+    @Autowired
+    public UnreadServiceImpl(UnreadMapper unreadMapper) {
+        this.unreadMapper = unreadMapper;
     }
 
     @Override
-    public boolean decrease(Long userId, int count) {
-        return false;
+    public boolean increase(Long userId, int count) {
+        Unread unread = new Unread();
+        unread.setUserId(userId);
+        unread.setCount(count);
+        return unreadMapper.increase(unread);
     }
 
     @Override
     public boolean update(Long userId, int count) {
-        return false;
+        Unread unread = new Unread();
+        unread.setCount(count);
+        return lambdaUpdate().eq(Unread::getUserId, userId).update(unread);
     }
 
     @Override
-    public boolean get(Long userId) {
-        return false;
+    public Integer get(Long userId) {
+        Unread unread = lambdaQuery().eq(Unread::getUserId, userId).one();
+        if (unread == null) {
+            return 0;
+        }
+
+        return unread.getCount();
     }
 }
