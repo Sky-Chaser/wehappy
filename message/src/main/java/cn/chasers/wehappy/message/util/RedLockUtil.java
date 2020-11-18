@@ -41,20 +41,4 @@ public class RedLockUtil {
         RedissonRedLock redLock = new RedissonRedLock(lock1);
         return redLock.tryLock(waitTime, leaseTime, TimeUnit.MILLISECONDS) ? redLock : null;
     }
-
-    public static void main(String[] args) {
-        RedissonRedLock lock = null;
-        try {
-            while (lock == null) {
-                lock = RedLockUtil.tryLock(500, 200000, 24345L);
-            }
-
-        } catch (Exception e) {
-            log.error("", e);
-        } finally {
-            if (lock != null) {
-                lock.unlock();
-            }
-        }
-    }
 }
