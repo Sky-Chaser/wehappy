@@ -9,18 +9,18 @@ import cn.chasers.wehappy.group.entity.GroupUser;
 import cn.chasers.wehappy.group.mapper.GroupMapper;
 import cn.chasers.wehappy.group.service.IGroupService;
 import cn.chasers.wehappy.group.service.IGroupUserService;
-import cn.chasers.wehappy.common.util.UserUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -33,24 +33,26 @@ import java.util.Map;
 @Service
 public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements IGroupService {
     private final IGroupUserService groupUserService;
+    private final GroupMapper groupMapper;
 
     @Value("${default.avatar}")
     private String defaultAvatar;
 
     @Autowired
-    public GroupServiceImpl(IGroupUserService groupUserService) {
+    public GroupServiceImpl(IGroupUserService groupUserService, GroupMapper groupMapper) {
         this.groupUserService = groupUserService;
+        this.groupMapper = groupMapper;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean create(String groupName) {
+    public boolean create(Long currentUserId, String name, String avatar) {
         Group group = new Group();
-        group.setName(groupName);
+        group.setName(name);
         group.setAdminCount(1);
-        group.setAvatar(defaultAvatar);
+        group.setAvatar(avatar == null ? defaultAvatar : avatar);
         group.setMemberCount(1);
-        group.setOwnerId(ThreadLocalUtils.get().getId());
+        group.setOwnerId(currentUserId);
         group.setStatus(0);
 
         if (!save(group)) {
@@ -73,32 +75,34 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean remove(Long groupId) {
+    public boolean remove(Long currentUserId, Long groupId) {
+        Integer count = lambdaQuery().allEq(Map.of(Group::getId, groupId, Group::getOwnerId, currentUserId)).count();
+        if (count == 0) {
+            return false;
+        }
+
         Group group = getById(groupId);
 
         if (group == null) {
             Asserts.fail(MessageConstant.GROUP_NOT_EXIST);
         }
 
-        removeById(groupId);
 
-        List<GroupUser> groupUserList = groupUserService.list(
+        List<Long> ids = groupUserService.list(
                 new LambdaQueryWrapper<GroupUser>()
-                        .allEq(Map.of(GroupUser::getGroupId, groupId)));
+                        .allEq(Map.of(GroupUser::getGroupId, groupId))).stream().map(GroupUser::getId).collect(Collectors.toList());
+        removeByIds(ids);
 
-        if (groupUserList == null || groupUserList.size() == 0) {
-            Asserts.fail(MessageConstant.ERROR_SYS);
-        }
-
-        for (GroupUser groupUser : groupUserList) {
-            groupUserService.removeById(groupUser.getId());
-        }
-
-        return true;
+        return removeById(groupId);
     }
 
     @Override
-    public boolean update(UpdateGroupParams updateGroupParams) {
+    public boolean update(Long currentUserId, UpdateGroupParams updateGroupParams) {
+        boolean admin = groupUserService.isAdmin(currentUserId, updateGroupParams.getId());
+        if (!admin) {
+            return false;
+        }
+
         Group group = getById(updateGroupParams.getId());
 
         if (group == null) {
@@ -111,7 +115,12 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     }
 
     @Override
-    public boolean transfer(Long groupId, Long toId) {
+    public boolean transfer(Long currentUserId, Long groupId, Long toId) {
+        Integer count = lambdaQuery().allEq(Map.of(Group::getId, groupId, Group::getOwnerId, currentUserId)).count();
+        if (count == 0) {
+            return false;
+        }
+
         // 校验群组是否存在
         Group group = getById(groupId);
         if (group == null) {
@@ -136,26 +145,8 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     }
 
     @Override
-    public Group search(String groupName) {
-        // TODO 需要修改逻辑
-        Long currentUserId = ThreadLocalUtils.get().getId();
-
-        // 获取当前用户所有群组
-        List<GroupUser> groupList = groupUserService.list(new LambdaQueryWrapper<GroupUser>()
-                .allEq(Map.of(GroupUser::getUserId, currentUserId)));
-        List<Long> groupIds = new ArrayList<>();
-        for (GroupUser groupUser : groupList) {
-            groupIds.add(groupUser.getGroupId());
-        }
-        List<Group> groups = listByIds(groupIds);
-
-        // 查找该群组并返回
-        for (Group group : groups) {
-            if (group.getName().equals(groupName)) {
-                return group;
-            }
-        }
-        Asserts.fail(MessageConstant.ERROR_PARAMS);
-        return null;
+    public IPage<Group> search(String groupName, long currentPage, long size) {
+        size = Math.min(10, Math.max(5, size));
+        return groupMapper.selectPage(new Page<>(currentPage, size), new LambdaQueryWrapper<Group>().like(Group::getName, groupName));
     }
 }
