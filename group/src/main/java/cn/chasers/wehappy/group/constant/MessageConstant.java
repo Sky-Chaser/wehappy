@@ -21,4 +21,14 @@ public class MessageConstant {
 
     public static final String ALREADY_EXIT_IN_GROUP = "该用户已经在群中";
 
+    public static final String ADMIN_REFUSE = "群主或者管理员不同意入群";
+
+    public static final String USER_REFUSE = "该用户不同意入群";
+
+    public static final int NORMAL_USER = 0;
+
+    public static final int ADMIN_USER = 1;
+
+    public static final int OWNER_USER = 2;
+
 }

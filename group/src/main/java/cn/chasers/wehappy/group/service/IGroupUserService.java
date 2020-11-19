@@ -36,10 +36,11 @@ public interface IGroupUserService extends IService<GroupUser> {
      * 群组管理员处理用户加入群组的申请
      *
      * @param id    group_user表的ID
+     * @param groupUserId    需要处理的入群申请
      * @param agree 是否同意
      * @return 返回是否成功处理申请
      */
-    boolean handleApply(Long id, Boolean agree);
+    boolean handleApply(Long id, Long groupUserId, Boolean agree);
 
     /**
      * 用户处理管理员/群主的邀请
@@ -117,4 +118,11 @@ public interface IGroupUserService extends IService<GroupUser> {
      * @return GroupUser
      */
     GroupUser getByGroupIdAndUserId(Long groupId, Long userId);
+
+    /**
+     * 获取所有申请加群的用户信息
+     * @param groupId   群组ID
+     * @return          返回全部的GroupUser
+     */
+    List<GroupUser> getAppliedUsers(Long groupId);
 }
