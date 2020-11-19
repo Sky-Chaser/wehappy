@@ -13,6 +13,7 @@ import cn.chasers.wehappy.group.mapper.GroupUserMapper;
 import cn.chasers.wehappy.group.service.IGroupService;
 import cn.chasers.wehappy.group.service.IGroupUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
     public boolean invite(Long userId, Long groupId) {
         Long currentUserId = ThreadLocalUtils.get().getId();
         // 校验当前用户是否为管理员/群主
-        if (currentUserId != 2 && currentUserId != 3) {
+        if (currentUserId != MessageConstant.ADMIN_USER && currentUserId != MessageConstant.OWNER_USER) {
             Asserts.fail(MessageConstant.IS_NOT_ADMIN);
         }
 
@@ -99,8 +100,10 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
         return save(groupUserInsert);
     }
 
+
+
     @Override
-    public boolean handleApply(Long id, Boolean agree) {
+    public boolean handleApply(Long id, Long groupUserId, Boolean agree) {
         // 验证是否存在对应id的group记录
         Long currentUserId = ThreadLocalUtils.get().getId();
         Group one = groupService.getOne(new LambdaQueryWrapper<Group>()
@@ -114,33 +117,61 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
             List<GroupUser> groupUsers = list(new LambdaQueryWrapper<GroupUser>()
                     .eq(GroupUser::getGroupId, id));
             for (GroupUser groupUser : groupUsers) {
-                // TODO ...
+                if (groupUser.getUserId().equals(currentUserId) && groupUser.getType() == 1) {
+                    break;
+                }
             }
+            Asserts.fail(MessageConstant.IS_NOT_ADMIN);
         }
 
-
-        // 验证申请用户已经成功发出申请
         // 根据agree进行申请处理
-        return false;
+        if (agree) {
+            return update(new LambdaUpdateWrapper<GroupUser>().eq(GroupUser::getUserId, groupUserId).set(GroupUser::getStatus, 0));
+        } else {
+            Asserts.fail(MessageConstant.ADMIN_REFUSE);
+            return false;
+        }
     }
 
     @Override
     public boolean handleInvite(Long id, Boolean agree) {
+        if (agree) {
+            return update(new LambdaUpdateWrapper<GroupUser>().eq(GroupUser::getId, id).set(GroupUser::getStatus, 0));
+        }
+        Asserts.fail(MessageConstant.USER_REFUSE);
         return false;
     }
 
     @Override
     public boolean addAdmin(Long userId, Long groupId) {
-        return false;
+        // 校验当前用户是否为群主
+        Long currentUserId = ThreadLocalUtils.get().getId();
+        Group one = groupService.getOne(new LambdaQueryWrapper<Group>().allEq(Map.of(Group::getId, groupId, Group::getOwnerId, currentUserId)));
+        if (one == null) {
+            Asserts.fail(MessageConstant.ERROR_SYS);
+        }
+
+        return update(new LambdaUpdateWrapper<GroupUser>().allEq(Map.of(GroupUser::getGroupId, groupId, GroupUser::getUserId, userId)).set(GroupUser::getType, 1));
     }
 
     @Override
     public boolean deleteAdmin(Long userId, Long groupId) {
-        return false;
+        // 校验当前用户是否为群主
+        Long currentUserId = ThreadLocalUtils.get().getId();
+        Group one = groupService.getOne(new LambdaQueryWrapper<Group>().allEq(Map.of(Group::getId, groupId, Group::getOwnerId, currentUserId)));
+        if (one == null) {
+            Asserts.fail(MessageConstant.ERROR_SYS);
+        }
+
+        return update(new LambdaUpdateWrapper<GroupUser>().allEq(Map.of(GroupUser::getGroupId, groupId, GroupUser::getUserId, userId)).set(GroupUser::getType, 0));
     }
 
     @Override
     public boolean deleteMember(Long userId, Long groupId) {
+        // 校验当前用户是否为群主、管理员
+        Long currentUserId = ThreadLocalUtils.get().getId();
+        // TODO  xxx
+
         return false;
     }
 
@@ -167,5 +198,10 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
     @Override
     public GroupUser getByGroupIdAndUserId(Long groupId, Long userId) {
         return lambdaQuery().allEq(Map.of(GroupUser::getGroupId, groupId, GroupUser::getUserId, userId)).one();
+    }
+
+    @Override
+    public List<GroupUser> getAppliedUsers(Long groupId) {
+        return list(new LambdaQueryWrapper<GroupUser>().allEq(Map.of(GroupUser::getGroupId, groupId, GroupUser::getStatus, 2)));
     }
 }

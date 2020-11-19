@@ -21,8 +21,8 @@ import java.util.List;
  * 群聊信息表 前端控制器
  * </p>
  *
- * @author lollipop
- * @since 2020-11-01
+ * @author liamcoder
+ * @since 2020-11-12
  */
 @RestController
 @Api(value = "/", tags = "群组模块")
@@ -73,5 +73,6 @@ public class GroupController {
     public CommonResult<GroupUser> getGroupUser(@ApiParam(value = "群组Id") @PathVariable Long id, @ApiParam(value = "用户Id") @PathVariable Long userId) {
         return CommonResult.success(groupUserService.getByGroupIdAndUserId(id, userId));
     }
+
 }
 
