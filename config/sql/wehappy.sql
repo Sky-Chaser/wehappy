@@ -103,12 +103,14 @@ CREATE TABLE `message_index`
 
 CREATE TABLE `message_delete`
 (
-    `id`           BIGINT PRIMARY KEY,
-    `message_id`   BIGINT   NOT NULL COMMENT '消息id',
-    `user_id`      BIGINT   NOT NULL COMMENT '用户id',
-    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    UNIQUE `ux_user_id_message_id` (`user_id`, `message_id`),
+    `id`                 BIGINT PRIMARY KEY,
+    `type`               BIGINT   NOT NULL COMMENT '消息类型：0表示私聊消息，1表示群聊消息，2表示推送消息',
+    `from`               BIGINT   NOT NULL COMMENT '发送者id',
+    `to`                 BIGINT   NOT NULL COMMENT '接收者id：type为1时表示群聊Id',
+    `message_index_id`   BIGINT   NOT NULL COMMENT '消息索引id',
+    `gmt_create`         DATETIME NOT NULL COMMENT '创建时间',
+    `gmt_modified`       DATETIME NOT NULL COMMENT '更新时间',
+    UNIQUE `ux_from_to` (`from`, `to`),
     KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '消息删除记录表';
 

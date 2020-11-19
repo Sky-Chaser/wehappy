@@ -1,4 +1,4 @@
-package cn.chasers.wehappy.common.log;
+package cn.chasers.wehappy.common.aspect.log;
 
 import cn.chasers.wehappy.common.domain.WebLog;
 import cn.hutool.core.util.StrUtil;

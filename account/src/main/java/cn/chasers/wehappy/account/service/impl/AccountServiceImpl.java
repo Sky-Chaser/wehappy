@@ -24,43 +24,41 @@ import java.math.BigDecimal;
 @Service
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements IAccountService {
 
-    private final HttpServletRequest request;
     private final AccountMapper accountMapper;
 
     @Autowired
-    public AccountServiceImpl(HttpServletRequest request, AccountMapper accountMapper) {
-        this.request = request;
+    public AccountServiceImpl(AccountMapper accountMapper) {
         this.accountMapper = accountMapper;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Account get() {
-        Account account = lambdaQuery().eq(Account::getUserId, UserUtil.getCurrentUserId(request)).one();
+    public Account get(Long userId) {
+        Account account = lambdaQuery().eq(Account::getUserId, userId).one();
         if (account != null) {
             return account;
         }
 
-        create();
-        return lambdaQuery().eq(Account::getUserId, UserUtil.getCurrentUserId(request)).one();
+        create(userId);
+        return lambdaQuery().eq(Account::getUserId, userId).one();
     }
 
     @Override
-    public boolean create() {
+    public boolean create(Long userId) {
         Account account = new Account();
-        account.setUserId(UserUtil.getCurrentUserId(request));
+        account.setUserId(userId);
         account.setMoney(new BigDecimal(0));
         account.setStatus(0);
         return save(account);
     }
 
     @Override
-    public boolean invest(@Param("money") BigDecimal money) {
-        return accountMapper.addMoney(UserUtil.getCurrentUserId(request), money);
+    public boolean invest(Long userId, BigDecimal money) {
+        return accountMapper.addMoney(userId, money);
     }
 
     @Override
-    public boolean pay(@Param("money") BigDecimal money) {
-        return accountMapper.addMoney(UserUtil.getCurrentUserId(request), money.multiply(new BigDecimal(-1)));
+    public boolean pay(Long userId, BigDecimal money) {
+        return accountMapper.addMoney(userId, money.multiply(new BigDecimal(-1)));
     }
 }

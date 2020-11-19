@@ -23,4 +23,13 @@ public interface IMessageIndexService extends IService<MessageIndex> {
      * @return MessageIndex
      */
     MessageIndex save(Integer type, Long from, Long to, Long messageId);
+
+    /**
+     * 根据 用户 Id 和 消息 Id 查询消息索引信息
+     *
+     * @param userId 用户 Id
+     * @param id     消息 Id
+     * @return 消息索引信息
+     */
+    MessageIndex getByUserIdAndMessageId(Long userId, Long id);
 }

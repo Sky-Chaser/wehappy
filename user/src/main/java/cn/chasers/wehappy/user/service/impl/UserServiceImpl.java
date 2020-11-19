@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -49,6 +51,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Value("${redis.registerCode.expire}")
     private long registerCodeExpire;
+
+    @Value("${redis.likeInfo.key}")
+    private String likeInfoKey;
+
+    @Value("${redis.likeInfo.expire}")
+    private long likeInfoExpire;
 
     @Value("${default.avatar}")
     private String defaultAvatar;
@@ -142,6 +150,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user = getById(userId);
         userCacheService.setUser(user);
         return user;
+    }
+
+    @Override
+    @Transactional
+    public Long like(Long id) {
+        long userId = ThreadLocalUtils.get().getId();
+        String key = likeInfoKey + redisKeySeparator + id;
+
+        if (redisService.sIsMember(key, userId)) {
+            return redisService.sSize(key);
+        }
+
+        User user = getById(userId);
+        if (user == null) {
+            Asserts.fail("用户不存在");
+        }
+
+        user.setNumberLike(user.getNumberLike() + 1);
+        save(user);
+
+        return redisService.sAdd(likeInfoKey + redisKeySeparator + id, userId);
+    }
+
+    @Override
+    public Long getNumberLike(Long id) {
+        return redisService.sSize(likeInfoKey + redisKeySeparator + id);
     }
 
     private String getRedisEmailCodeKey() {

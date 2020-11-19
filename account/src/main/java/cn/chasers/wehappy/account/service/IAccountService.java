@@ -16,32 +16,36 @@ import java.math.BigDecimal;
 public interface IAccountService extends IService<Account> {
 
     /**
-     * 获取当前用户账户信息
+     * 获取用户账户信息
      *
+     * @param userId 用户 Id
      * @return 返回用户账户信息
      */
-    Account get();
+    Account get(Long userId);
 
     /**
      * 当用户第一次查询账户信息时调用，用于初始化账户信息
      *
+     * @param userId 用户 Id
      * @return 返回创建是否成功
      */
-    boolean create();
+    boolean create(Long userId);
 
     /**
      * 充值操作
      *
-     * @param money 充值金额
+     * @param userId 用户 Id
+     * @param money  充值金额
      * @return 返回充值是否成功
      */
-    boolean invest(BigDecimal money);
+    boolean invest(Long userId, BigDecimal money);
 
     /**
      * 支付操作
      *
-     * @param money 支付金额
+     * @param userId 用户 Id
+     * @param money  支付金额
      * @return 返回支付是否成功
      */
-    boolean pay(BigDecimal money);
+    boolean pay(Long userId, BigDecimal money);
 }

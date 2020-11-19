@@ -74,4 +74,21 @@ public interface IUserService extends IService<User> {
      * @return 返回用户详细信息
      */
     User getCurrentUser();
+
+    /**
+     * 点赞
+     *
+     * @param id 用户 Id
+     * @return 返回最新的赞个数
+     */
+    Long like(Long id);
+
+
+    /**
+     * 查看用户最新的赞个数
+     *
+     * @param id 用户 Id
+     * @return 返回最新的赞个数
+     */
+    Long getNumberLike(Long id);
 }

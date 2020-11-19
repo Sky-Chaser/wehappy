@@ -20,7 +20,7 @@ public interface IConversationService extends IService<Conversation> {
      * 保存最近会话表信息，若记录已存在则更新
      *
      * @param index 消息索引
-     * @return 返回操作结果
+     * @return Conversation
      */
     Conversation saveOrUpdate(MessageIndex index);
 

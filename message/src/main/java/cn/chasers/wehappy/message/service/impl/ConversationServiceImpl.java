@@ -37,7 +37,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
         if (conversation == null) {
             conversation = new Conversation();
             conversation.setFromId(index.getFrom());
-            conversation.setToId(index.getId());
+            conversation.setToId(index.getTo());
         }
 
         conversation.setMessageId(index.getMessageId());

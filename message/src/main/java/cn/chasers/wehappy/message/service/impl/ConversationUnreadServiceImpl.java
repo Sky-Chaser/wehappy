@@ -9,7 +9,7 @@ import cn.chasers.wehappy.message.service.IConversationService;
 import cn.chasers.wehappy.message.service.IConversationUnreadService;
 import cn.chasers.wehappy.message.service.IMessageIndexService;
 import cn.chasers.wehappy.message.service.IUnreadService;
-import cn.chasers.wehappy.message.util.RedLockUtil;
+import cn.chasers.wehappy.common.util.RedLockUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.redisson.RedissonRedLock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,9 @@ public class ConversationUnreadServiceImpl extends ServiceImpl<ConversationUnrea
 
         RedissonRedLock lock = null;
         try {
-            while (lock == null) {
-                lock = RedLockUtil.tryLock(500, 2000, conversation.getFromId());
+            lock = RedLockUtil.tryLock(500, 2000, "unreadCount:" + conversation.getFromId());
+            if (lock == null) {
+                return false;
             }
 
             ConversationUnread conversationUnread = new ConversationUnread();
@@ -79,8 +80,9 @@ public class ConversationUnreadServiceImpl extends ServiceImpl<ConversationUnrea
 
         RedissonRedLock lock = null;
         try {
-            while (lock == null) {
-                lock = RedLockUtil.tryLock(500, 2000, conversation.getFromId());
+            lock = RedLockUtil.tryLock(500, 2000, "unreadCount:" + conversation.getFromId());
+            if (lock == null) {
+                return false;
             }
 
             int conversationUnreadCount = messageIndexService.lambdaQuery()

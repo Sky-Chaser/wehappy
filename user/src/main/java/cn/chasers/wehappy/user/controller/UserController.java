@@ -30,7 +30,7 @@ import javax.validation.constraints.Email;
  * @since 2020-10-26
  */
 @RestController
-@Api(value = "/user", tags = "用户模块")
+@Api(value = "/", tags = "用户模块")
 public class UserController {
 
     private final IUserService userService;
@@ -55,7 +55,7 @@ public class UserController {
 
     @ApiOperation("检查用户名或邮箱地址是否已经被注册过")
     @GetMapping("/check-exist/{type}/{data}")
-    public CommonResult<Boolean> checkExist(@Validated @PathVariable @ApiParam(value = "字段类型，username或email", required = true) String type, @ApiParam(value = "字段值", required = true)@Validated @PathVariable String data) {
+    public CommonResult<Boolean> checkExist(@Validated @PathVariable @ApiParam(value = "字段类型，username或email", required = true) String type, @ApiParam(value = "字段值", required = true) @Validated @PathVariable String data) {
         if (DtoConstant.USERNAME.equals(type)) {
             return CommonResult.success(userService.getByUsername(data) == null);
         }
@@ -95,5 +95,17 @@ public class UserController {
             return CommonResult.success(null);
         }
         return CommonResult.success(UserDto.builder().id(user.getId()).username(user.getUsername()).build());
+    }
+
+    @ApiOperation("给用户点赞")
+    @PostMapping("/like/{id}")
+    public CommonResult<Long> like(@Validated @ApiParam("用户ID") @PathVariable Long id) {
+        return CommonResult.success(userService.like(id));
+    }
+
+    @ApiOperation("查看用户点赞个数")
+    @GetMapping("/like/{id}")
+    public CommonResult<Long> getNumberLike(@Validated @ApiParam("用户ID") @PathVariable Long id) {
+        return CommonResult.success(userService.getNumberLike(id));
     }
 }

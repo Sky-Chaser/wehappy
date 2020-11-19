@@ -1,4 +1,4 @@
-package cn.chasers.wehappy.message.util;
+package cn.chasers.wehappy.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.Redisson;
@@ -31,11 +31,9 @@ public class RedLockUtil {
      *
      * @param waitTime  最长等待时间
      * @param leaseTime 最长持有时间
-     * @param userId    用户 Id
      * @return 获取成功或失败
      */
-    public static RedissonRedLock tryLock(long waitTime, long leaseTime, Long userId) throws Exception {
-        String resourceName = "unreadCount:" + userId;
+    public static RedissonRedLock tryLock(long waitTime, long leaseTime, String resourceName) throws Exception {
         RLock lock1 = REDISSON_CLIENT.getLock(resourceName);
 
         RedissonRedLock redLock = new RedissonRedLock(lock1);

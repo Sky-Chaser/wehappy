@@ -89,6 +89,9 @@ redis:
   userInfo:
     key: 'user:info'
     expire: 86400
+  likeInfo:
+    key: 'user:like:info'
+    expire: 86400
 
 default:
   avatar: default.jpg

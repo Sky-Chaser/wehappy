@@ -3,6 +3,7 @@ package cn.chasers.wehappy.account.mapper;
 import cn.chasers.wehappy.account.entity.Account;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
  * @author lollipop
  * @since 2020-11-12
  */
+@Repository
 public interface AccountMapper extends BaseMapper<Account> {
     /**
      * 修改 money 字段值，加上传入的参数的值
