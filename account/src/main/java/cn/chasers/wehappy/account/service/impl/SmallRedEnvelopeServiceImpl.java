@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmallRedEnvelopeServiceImpl extends ServiceImpl<SmallRedEnvelopeMapper, SmallRedEnvelope> implements ISmallRedEnvelopeService {
 
+    @Override
+    public SmallRedEnvelope get(Long userId, Long id) {
+        return null;
+    }
 }

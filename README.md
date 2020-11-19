@@ -12,9 +12,10 @@
  - [x] `message` 提供聊天记录删除接口
  - [x] `account` 用户账户信息查看
  - [x] `account` 用户账户充值、支付
- - [ ] `account` 发私聊红包、群聊普通红包、群聊运气红包
+ - [ ] `account` 发私聊红包、群聊运气红包
  - [ ] `account` 抢红包接口
  - [ ] `account` 定时退回未领取的红包
+ - [ ] `gateway` 推送消息加上客户端确认逻辑，防止数据丢失
 
 ### 环境搭建
 
@@ -34,14 +35,15 @@
 2. `user`: `UserApplication`, 用户服务
 3. `sms`: `SmsApplication`, 邮件服务
 4. `group`: `GroupApplication`, 群组服务
-5. `chat`: `ChatApplicati**on`, 聊天服务
+5. `chat`: `ChatApplication`, 聊天服务
 6. `media`: `MediaApplication`, 媒体服务
 7. `message`: `MessageApplication`, 消息服务
 8. `account`: `AccountApplication`, 账户服务
 
-### 访问swagger文档
+### 访问 `swagger` 文档
 
 1. `url`: `localhost:9901/doc.html`
+2. 聊天页面: `portal/index.html`
 
 #### 架构设计
 

@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISmallRedEnvelopeService extends IService<SmallRedEnvelope> {
 
+    /**
+     * 获取小红包详细信息
+     *
+     * @param userId 用户 Id
+     * @param id     小红包 Id
+     * @return 小红包详细信息
+     */
+    SmallRedEnvelope get(Long userId, Long id);
 }

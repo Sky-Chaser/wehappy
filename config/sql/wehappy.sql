@@ -215,7 +215,7 @@ CREATE TABLE `big_red_envelope`
     `money`        DECIMAL           NOT NULL COMMENT '总金额',
     `total`        INT               NOT NULL COMMENT '总份数',
     `remains`      INT               NOT NULL COMMENT '剩余份数',
-    `type`         TINYINT DEFAULT 6 NOT NULL COMMENT '类型：7表示私聊红包，8表示普通红包，9表示运气红包',
+    `type`         TINYINT DEFAULT 7 NOT NULL COMMENT '类型：7表示私聊红包，8表示运气红包',
     `gmt_create`   DATETIME          NOT NULL COMMENT '创建时间',
     `gmt_modified` DATETIME          NOT NULL COMMENT '更新时间',
     KEY `ix_gmt_create` (`gmt_create`)
