@@ -54,6 +54,11 @@ spring:
           # topic
           destination: message
           contentType: application/octet-stream
+        # 输出通道
+        push-message-output:
+          # topic
+          destination: pushMessage
+          contentType: application/octet-stream
 
 # mybatis日志
 mybatis-plus:
@@ -69,6 +74,15 @@ management:
   endpoint:
     health:
       show-details: always
+redis:
+  database: accountService
+  separator: ":"
+  redEnvelopeInfo:
+    key: 'red:envelope:info'
+    expire: 100000
+  redEnvelopeUserIds:
+    key: 'red:envelope:user:ids'
+    expire: 100000
 ribbon:
   # 服务请求连接超时时间（毫秒）
   ConnectTimeout: 10000

@@ -6,6 +6,8 @@ import cn.chasers.wehappy.account.service.ISmallRedEnvelopeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 小红包信息表 服务实现类
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class SmallRedEnvelopeServiceImpl extends ServiceImpl<SmallRedEnvelopeMapper, SmallRedEnvelope> implements ISmallRedEnvelopeService {
 
     @Override
-    public SmallRedEnvelope get(Long userId, Long id) {
-        return null;
+    public List<SmallRedEnvelope> getAllByBigRedEnvelopeId(Long bigId) {
+        return lambdaQuery().eq(SmallRedEnvelope::getBigRedEnvelopeId, bigId).list();
     }
 }

@@ -34,7 +34,7 @@ public class BigRedEnvelope extends BaseEntity {
     @ApiModelProperty(value = "剩余份数")
     private Integer remains;
 
-    @ApiModelProperty(value = "类型：7表示私聊红包，8表示普通红包，9表示运气红包")
+    @ApiModelProperty(value = "类型：7表示私聊红包，8表示运气红包")
     private Integer type;
 
 

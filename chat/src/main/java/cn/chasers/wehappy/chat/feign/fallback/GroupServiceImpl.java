@@ -26,11 +26,6 @@ public class GroupServiceImpl implements IGroupService {
     }
 
     @Override
-    public CommonResult<Boolean> isGroupUser(Long id, Long userId) {
-        return CommonResult.failed("group service 暂不可用.....");
-    }
-
-    @Override
     public CommonResult<Map<String, Object>> getGroupUser(Long id, Long userId) {
         return CommonResult.failed("group service 暂不可用.....");
     }

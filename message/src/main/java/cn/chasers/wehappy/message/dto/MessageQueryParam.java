@@ -1,7 +1,6 @@
 package cn.chasers.wehappy.message.dto;
 
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class MessageQueryParam {
 
-    @ApiParam(value = "查询的消息 Id 都小于 messageId ")
+    @ApiModelProperty(value = "查询的消息 Id 都小于 messageId ")
     private Long messageId;
 
     @ApiModelProperty(value = "当前页数")

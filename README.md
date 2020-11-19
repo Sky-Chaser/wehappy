@@ -12,8 +12,8 @@
  - [x] `message` 提供聊天记录删除接口
  - [x] `account` 用户账户信息查看
  - [x] `account` 用户账户充值、支付
- - [ ] `account` 发私聊红包、群聊运气红包
- - [ ] `account` 抢红包接口
+ - [x] `account` 发私聊红包、群聊运气红包
+ - [x] `account` 抢红包接口
  - [ ] `account` 定时退回未领取的红包
  - [ ] `gateway` 推送消息加上客户端确认逻辑，防止数据丢失
  - [ ] `group` 维护管理员人数字段

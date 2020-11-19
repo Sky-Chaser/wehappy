@@ -35,10 +35,8 @@ enum ContentType {
   VIDEO_CALL = 6;
   // 私聊红包
   SINGLE_RED_ENVELOPE = 7;
-  // 群聊普通红包
-  FAIR_RED_ENVELOPE = 8;
   // 群聊运气红包
-  UNFAIR_RED_ENVELOPE = 9;
+  UNFAIR_RED_ENVELOPE = 8;
 }
 
 // 聊天消息

@@ -50,15 +50,25 @@ spring:
           brokers: localhost:9092
       bindings:
         # 输入通道
-        message-input:
-          group: message
+        snap-input:
+          group: account
           # topic
-          destination: message
-          contentType: application/octet-stream
-        # 输入通道
+          destination: snap
+          contentType: text/plain
+        # 输出通道
+        snap-output:
+          # topic
+          destination: snap
+          contentType: text/plain
+        # 输出通道
         push-message-output:
           # topic
           destination: pushMessage
+          contentType: application/octet-stream
+        # 输出通道
+        message-output:
+          # topic
+          destination: message
           contentType: application/octet-stream
 
 # mybatis日志

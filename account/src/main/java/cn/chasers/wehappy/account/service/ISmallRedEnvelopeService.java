@@ -3,6 +3,8 @@ package cn.chasers.wehappy.account.service;
 import cn.chasers.wehappy.account.entity.SmallRedEnvelope;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 小红包信息表 服务类
@@ -14,11 +16,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ISmallRedEnvelopeService extends IService<SmallRedEnvelope> {
 
     /**
-     * 获取小红包详细信息
+     * 获取大红包的小红包列表
      *
-     * @param userId 用户 Id
-     * @param id     小红包 Id
-     * @return 小红包详细信息
+     * @param bigId  大红包 Id
+     * @return 小红包列表
      */
-    SmallRedEnvelope get(Long userId, Long id);
+    List<SmallRedEnvelope> getAllByBigRedEnvelopeId(Long bigId);
 }

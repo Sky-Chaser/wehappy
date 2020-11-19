@@ -1,6 +1,8 @@
 package cn.chasers.wehappy.account.service;
 
+import cn.chasers.wehappy.account.domain.RedEnvelopeInfo;
 import cn.chasers.wehappy.account.entity.BigRedEnvelope;
+import cn.chasers.wehappy.account.entity.SmallRedEnvelope;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.math.BigDecimal;
@@ -24,7 +26,7 @@ public interface IBigRedEnvelopeService extends IService<BigRedEnvelope> {
      * @param money  红包金额
      * @return 发没发出去
      */
-    Boolean send(Long userId, Long type, Long to, BigDecimal money);
+    boolean send(Long userId, Integer type, Long to, BigDecimal money);
 
     /**
      * 抢红包操作
@@ -33,14 +35,20 @@ public interface IBigRedEnvelopeService extends IService<BigRedEnvelope> {
      * @param bigRedEnvelopeId 大红包 Id
      * @return 抢没抢到
      */
-    Boolean snap(Long userId, Long bigRedEnvelopeId);
+    boolean snap(Long userId, Long bigRedEnvelopeId);
 
     /**
-     * 获取大红包详细信息
+     * 获取红包详细信息
      *
-     * @param userId 用户 Id
-     * @param id     大红包 Id
-     * @return 大红包详细信息
+     * @param id 大红包 Id
+     * @return 红包详细信息
      */
-    BigRedEnvelope get(Long userId, Long id);
+    RedEnvelopeInfo get(Long id);
+
+    /**
+     * 执行抢红包操作
+     *
+     * @param smallRedEnvelope 抢红包信息
+     */
+    void doSnap(SmallRedEnvelope smallRedEnvelope);
 }

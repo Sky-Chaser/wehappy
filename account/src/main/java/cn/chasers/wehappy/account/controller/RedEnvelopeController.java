@@ -1,5 +1,6 @@
 package cn.chasers.wehappy.account.controller;
 
+import cn.chasers.wehappy.account.domain.RedEnvelopeInfo;
 import cn.chasers.wehappy.account.entity.BigRedEnvelope;
 import cn.chasers.wehappy.account.entity.SmallRedEnvelope;
 import cn.chasers.wehappy.account.service.IBigRedEnvelopeService;
@@ -14,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -38,7 +40,7 @@ public class RedEnvelopeController {
 
     @ApiOperation("发红包")
     @PostMapping("/send")
-    public CommonResult<Boolean> send(@Validated @ApiParam("红包类型，7表示私聊红包，8表示群聊运气红包") Long type, @Validated @ApiParam("接收者Id，type为7时表示用户Id，type为8时，表示群聊Id") Long to, @Validated @ApiParam("红包金额") BigDecimal money) {
+    public CommonResult<Boolean> send(@Validated @ApiParam("红包类型，7表示私聊红包，8表示群聊运气红包") Integer type, @Validated @ApiParam("接收者Id，type为7时表示用户Id，type为8时，表示群聊Id") Long to, @Validated @ApiParam("红包金额") BigDecimal money) {
         return CommonResult.success(bigRedEnvelopeService.send(ThreadLocalUtils.get().getId(), type, to, money));
     }
 
@@ -48,16 +50,10 @@ public class RedEnvelopeController {
         return CommonResult.success(bigRedEnvelopeService.snap(ThreadLocalUtils.get().getId(), bigRedEnvelopeId));
     }
 
-    @ApiOperation("查看大红包详细信息")
-    @GetMapping("/bigRedEnvelope/{id}")
-    public CommonResult<BigRedEnvelope> getBigRedEnvelopId(@Validated @ApiParam("大红包Id") @PathVariable Long id) {
-        return CommonResult.success(bigRedEnvelopeService.get(ThreadLocalUtils.get().getId(), id));
-    }
-
-    @ApiOperation("查看小红包详细信息")
-    @GetMapping("/smallRedEnvelope/{id}")
-    public CommonResult<SmallRedEnvelope> getSmallRedEnvelopId(@Validated @ApiParam("大红包Id") @PathVariable Long id) {
-        return CommonResult.success(smallRedEnvelopeService.get(ThreadLocalUtils.get().getId(), id));
+    @ApiOperation("查看红包详细信息")
+    @GetMapping("/{id}")
+    public CommonResult<RedEnvelopeInfo> getBigRedEnvelopId(@Validated @ApiParam("大红包Id") @PathVariable Long id) {
+        return CommonResult.success(bigRedEnvelopeService.get(id));
     }
 }
 
