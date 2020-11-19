@@ -103,13 +103,13 @@ CREATE TABLE `message_index`
 
 CREATE TABLE `message_delete`
 (
-    `id`                 BIGINT PRIMARY KEY,
-    `type`               BIGINT   NOT NULL COMMENT '消息类型：0表示私聊消息，1表示群聊消息，2表示推送消息',
-    `from`               BIGINT   NOT NULL COMMENT '发送者id',
-    `to`                 BIGINT   NOT NULL COMMENT '接收者id：type为1时表示群聊Id',
-    `message_index_id`   BIGINT   NOT NULL COMMENT '消息索引id',
-    `gmt_create`         DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified`       DATETIME NOT NULL COMMENT '更新时间',
+    `id`               BIGINT PRIMARY KEY,
+    `type`             BIGINT   NOT NULL COMMENT '消息类型：0表示私聊消息，1表示群聊消息，2表示推送消息',
+    `from`             BIGINT   NOT NULL COMMENT '发送者id',
+    `to`               BIGINT   NOT NULL COMMENT '接收者id：type为1时表示群聊Id',
+    `message_index_id` BIGINT   NOT NULL COMMENT '消息索引id',
+    `gmt_create`       DATETIME NOT NULL COMMENT '创建时间',
+    `gmt_modified`     DATETIME NOT NULL COMMENT '更新时间',
     UNIQUE `ux_from_to` (`from`, `to`),
     KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '消息删除记录表';
@@ -200,11 +200,11 @@ USE `account_db`;
 CREATE TABLE `account`
 (
     `id`           BIGINT PRIMARY KEY,
-    `user_id`      BIGINT   NOT NULL COMMENT '用户id',
-    `money`        DECIMAL  NOT NULL DEFAULT 0 COMMENT '账户余额',
-    `gmt_create`   DATETIME NOT NULL COMMENT '创建时间',
-    `gmt_modified` DATETIME NOT NULL COMMENT '更新时间',
-    `status`       TINYINT  NOT NULL DEFAULT 0 COMMENT '状态：0表示正常，1表示被冻结',
+    `user_id`      BIGINT     NOT NULL COMMENT '用户id',
+    `money`        DECIMAL(2) NOT NULL DEFAULT 0 COMMENT '账户余额',
+    `gmt_create`   DATETIME   NOT NULL COMMENT '创建时间',
+    `gmt_modified` DATETIME   NOT NULL COMMENT '更新时间',
+    `status`       TINYINT    NOT NULL DEFAULT 0 COMMENT '状态：0表示正常，1表示被冻结',
     UNIQUE `ux_user_id` (`user_id`)
 ) COMMENT = '账户表';
 
@@ -212,7 +212,7 @@ CREATE TABLE `big_red_envelope`
 (
     `id`           BIGINT PRIMARY KEY,
     `user_id`      BIGINT            NOT NULL COMMENT '发送红包用户id',
-    `money`        DECIMAL           NOT NULL COMMENT '总金额',
+    `money`        DECIMAL(2)        NOT NULL COMMENT '总金额',
     `total`        INT               NOT NULL COMMENT '总份数',
     `remains`      INT               NOT NULL COMMENT '剩余份数',
     `type`         TINYINT DEFAULT 7 NOT NULL COMMENT '类型：7表示私聊红包，8表示运气红包',
@@ -224,9 +224,9 @@ CREATE TABLE `big_red_envelope`
 CREATE TABLE `small_red_envelope`
 (
     `id`                  BIGINT PRIMARY KEY,
-    `big_red_envelope_id` BIGINT           NOT NULL COMMENT '大红包id',
-    `money`               DECIMAL          NOT NULL COMMENT '金额',
     `user_id`             BIGINT DEFAULT 0 NOT NULL COMMENT '领取用户id',
+    `big_red_envelope_id` BIGINT           NOT NULL COMMENT '大红包id',
+    `money`               DECIMAL(2)       NOT NULL COMMENT '金额',
     `gmt_create`          DATETIME         NOT NULL COMMENT '创建时间',
     `gmt_modified`        DATETIME         NOT NULL COMMENT '更新时间',
     UNIQUE `ux_big_red_envelope_id_user_id` (`big_red_envelope_id`, `user_id`)
