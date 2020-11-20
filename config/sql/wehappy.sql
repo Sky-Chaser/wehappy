@@ -210,14 +210,16 @@ CREATE TABLE `account`
 
 CREATE TABLE `big_red_envelope`
 (
-    `id`           BIGINT PRIMARY KEY,
-    `user_id`      BIGINT            NOT NULL COMMENT '发送红包用户id',
-    `money`        DECIMAL(2)        NOT NULL COMMENT '总金额',
-    `total`        INT               NOT NULL COMMENT '总份数',
-    `remains`      INT               NOT NULL COMMENT '剩余份数',
-    `type`         TINYINT DEFAULT 7 NOT NULL COMMENT '类型：7表示私聊红包，8表示运气红包',
-    `gmt_create`   DATETIME          NOT NULL COMMENT '创建时间',
-    `gmt_modified` DATETIME          NOT NULL COMMENT '更新时间',
+    `id`            BIGINT PRIMARY KEY,
+    `user_id`       BIGINT            NOT NULL COMMENT '发送红包用户id',
+    `money`         DECIMAL(2)        NOT NULL COMMENT '总金额',
+    `remains_money` DECIMAL(2)        NOT NULL COMMENT '剩余金额',
+    `total`         INT               NOT NULL COMMENT '总份数',
+    `remains`       INT               NOT NULL COMMENT '剩余份数',
+    `status`        TINYINT DEFAULT 0 NOT NULL COMMENT '状态：0表示未过期，1表示已过期',
+    `type`          TINYINT DEFAULT 7 NOT NULL COMMENT '类型：7表示私聊红包，8表示运气红包',
+    `gmt_create`    DATETIME          NOT NULL COMMENT '创建时间',
+    `gmt_modified`  DATETIME          NOT NULL COMMENT '更新时间',
     KEY `ix_gmt_create` (`gmt_create`)
 ) COMMENT = '大红包信息表';
 

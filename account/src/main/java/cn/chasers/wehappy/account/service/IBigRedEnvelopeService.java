@@ -51,4 +51,9 @@ public interface IBigRedEnvelopeService extends IService<BigRedEnvelope> {
      * @param smallRedEnvelope 抢红包信息
      */
     void doSnap(SmallRedEnvelope smallRedEnvelope);
+
+    /**
+     * 退回红包的操作
+     */
+    void sendBack();
 }

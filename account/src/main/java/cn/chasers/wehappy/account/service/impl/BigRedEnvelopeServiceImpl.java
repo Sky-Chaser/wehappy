@@ -6,12 +6,13 @@ import cn.chasers.wehappy.account.entity.SmallRedEnvelope;
 import cn.chasers.wehappy.account.feign.IGroupService;
 import cn.chasers.wehappy.account.feign.IUserService;
 import cn.chasers.wehappy.account.mapper.BigRedEnvelopeMapper;
-import cn.chasers.wehappy.account.mq.Consumer;
 import cn.chasers.wehappy.account.mq.Producer;
 import cn.chasers.wehappy.account.service.IAccountService;
 import cn.chasers.wehappy.account.service.IBigRedEnvelopeService;
 import cn.chasers.wehappy.account.service.ISmallRedEnvelopeService;
+import cn.chasers.wehappy.account.util.RedEnvelopeUtil;
 import cn.chasers.wehappy.common.config.SnowflakeConfig;
+import cn.chasers.wehappy.common.entity.BaseEntity;
 import cn.chasers.wehappy.common.msg.ProtoMsg;
 import cn.chasers.wehappy.common.service.IRedisService;
 import cn.chasers.wehappy.common.util.MessageUtil;
@@ -23,8 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -179,6 +182,11 @@ public class BigRedEnvelopeServiceImpl extends ServiceImpl<BigRedEnvelopeMapper,
             return;
         }
 
+        BigDecimal money = RedEnvelopeUtil.doubleAverage(bigRedEnvelope.getRemains(), bigRedEnvelope.getRemainsMoney());
+        bigRedEnvelope.setRemainsMoney(bigRedEnvelope.getRemainsMoney().subtract(money));
+
+        smallRedEnvelope.setMoney(money);
+
         smallRedEnvelopeService.save(smallRedEnvelope);
         bigRedEnvelope.setRemains(bigRedEnvelope.getTotal() - 1);
         updateById(bigRedEnvelope);
@@ -192,6 +200,23 @@ public class BigRedEnvelopeServiceImpl extends ServiceImpl<BigRedEnvelopeMapper,
 
         redisService.hSet(redisDatabase + redisSeparator + redEnvelopeInfoKey, bigRedEnvelope.getId().toString(), redEnvelopeInfo);
         pushSnapMessage(smallRedEnvelope, bigRedEnvelope.getType());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void sendBack() {
+        List<BigRedEnvelope> bigRedEnvelopes =
+                lambdaQuery()
+                        .eq(BigRedEnvelope::getStatus, 0)
+                        .le(BaseEntity::getGmtCreate, new Date()).list();
+
+        bigRedEnvelopes.forEach(bigRedEnvelope -> bigRedEnvelope.setStatus(1));
+        bigRedEnvelopes
+                .stream()
+                .filter(bigRedEnvelope -> bigRedEnvelope.getRemains() > 0)
+                .forEach(bigRedEnvelope -> {
+                    accountService.invest(bigRedEnvelope.getUserId(), bigRedEnvelope.getRemainsMoney());
+                });
     }
 
     private void pushSnapMessage(SmallRedEnvelope smallRedEnvelope, Integer type) {

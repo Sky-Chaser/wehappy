@@ -28,11 +28,17 @@ public class BigRedEnvelope extends BaseEntity {
     @ApiModelProperty(value = "总金额")
     private BigDecimal money;
 
+    @ApiModelProperty(value = "剩余金额")
+    private BigDecimal remainsMoney;
+
     @ApiModelProperty(value = "总份数")
     private Integer total;
 
     @ApiModelProperty(value = "剩余份数")
     private Integer remains;
+
+    @ApiModelProperty(value = "状态：0表示未过期，1表示已过期")
+    private Integer status;
 
     @ApiModelProperty(value = "类型：7表示私聊红包，8表示运气红包")
     private Integer type;
